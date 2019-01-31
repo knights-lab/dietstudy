@@ -1,0 +1,17 @@
+#SampleID	UserName	StudyDayNo	StudyDate	Gender	Age	Weight	Height	BMI	Supplement	Waist.Circumference	Study.Status	oilGrams.assigned	fecal.status	fecal.time	BMI.1	Weight.Change	Plate	SampleOrder	SampleType	Timing	Activity.Factor	Medications	Dietary.Supp
+MCT.f.0188	MCTs12	1	2017-01-31	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	1:22 PM	21.1	-1.4	4	66	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0189	MCTs12	2	2017-02-01	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	5:19 PM	21.1	-1.4	5	57	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0190	MCTs12	3	2017-02-02	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	11:17 AM	21.1	-1.4	3	34	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0191	MCTs12	4	2017-02-03	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	8:45 AM	21.1	-1.4	4	16	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0192	MCTs12	5	2017-02-04	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	1:30 PM	21.1	-1.4	4	53	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0193	MCTs12	6	2017-02-05	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	12:10 PM	21.1	-1.4	6	50	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0194	MCTs12	7	2017-02-06	F	26.5	62.5	172.1	21.1	MCT	79	Complete	0	1	9:50 AM	21.1	-1.4	2	30	Sample	Pre	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0195	MCTs12	8	2017-02-07	F	26.5	62.5	172.1	21.1	MCT	79	Complete	6	1	12:10 PM	21.1	-1.4	5	73	Sample	Transition	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0196	MCTs12	9	2017-02-08	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	12:00 PM	21.1	-1.4	1	80	Sample	Transition	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0197	MCTs12	10	2017-02-09	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:40 AM	21.1	-1.4	2	54	Sample	Transition	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0198	MCTs12	11	2017-02-10	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	10:00 AM	21.1	-1.4	2	45	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0200	MCTs12	13	2017-02-12	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:30 AM	21.1	-1.4	5	39	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0201	MCTs12	14	2017-02-13	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:10 AM	21.1	-1.4	5	2	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0202	MCTs12	15	2017-02-14	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:15 AM	21.1	-1.4	1	33	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0203	MCTs12	16	2017-02-15	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:30 AM	21.1	-1.4	4	57	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin
+MCT.f.0204	MCTs12	17	2017-02-16	F	26.5	62.5	172.1	21.1	MCT	79	Complete	12	1	11:30 AM	21.1	-1.4	1	62	Sample	Post	1.375	Estrogen/progestrin bc pill	Multivitamin

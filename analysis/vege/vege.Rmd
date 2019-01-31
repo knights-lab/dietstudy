@@ -1,0 +1,235 @@
+---
+title: "Targeted analysis of fiber from Vegetables"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+This is an R markdown document. Use the Knit button at the top of Rstudio to create figures and pdf reports of this document's contents. 
+
+The goal of this document is to address the following hypothesis.
+
+Hypothesis: Intake of fiber from vegetables is correlated with microbime beta diversity.
+
+Plan to follow to test hypothesis:
+1. Start with all the fiber data summarized for each person alreadly limited to just fruits
+2. Take this data and the food map and put it into qiime to get beta-diversity distance matrix
+3. Plot pcoa
+4. Start with taxonomy clr taxonomy.
+5. beta diversity of speices. 
+6. Run transformed coordinate analyses in procrustes in r.
+
+
+```{r setup, include=FALSE, message = FALSE}
+
+# Add packages used in knitting this document here:
+require(rmarkdown)
+require(knitr)
+require(ggplot2)
+require(dplyr)
+require(vegan)
+require(ape)
+require(tibble)
+
+
+# Update this first path to be the root directory for this project on your computer
+opts_knit$set(root.dir = "/Users/Abby/Documents/Projects/dietstudy/")
+
+# This creates a figure directory in the same directory where this .Rmd document is located
+# No need to change this code unless you want figures in different formats
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+
+```{r load data, echo = FALSE}
+
+# load the map example:
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# load the fiber data
+fiber <- read.table("data/fiber/fiber.smry.otu.txt", sep = "\t", header = T, comment = "", stringsAsFactors = F)
+#fiber <- fiber %>% select(-X.FoodID)
+
+# remove soylents
+fiber <- fiber %>% select(-c(MCTs11, MCTs12))
+# remove bad data person
+fiber <- fiber %>% select(-c(MCTs05))
+
+# Do a little normalization
+# Find and get median colsums
+median_col <- median(colSums(fiber[,2:32]))
+# Normalize and multiply by median_col
+fiber[,2:32] <- sweep(fiber[,2:32], 2, colSums(fiber[,2:32]), "/")
+# fiber[,2:32] <- ceiling(fiber[,2:32] * median_col)
+fiber[,2:32] <- sqrt(sqrt(fiber[,2:32]))
+fiber[,2:32] <- fiber[,2:32]*median_col
+fiber[,2:32] <- round(fiber[,2:32])
+
+# Subset fiber to grains
+vege <- fiber %>% slice(grep("L1_Vege", fiber$taxonomy))
+
+# remove any grains with rowsums = 0
+keep <- rowSums(vege[,2:32])>0
+vege<- vege %>% filter(keep)
+
+# export for use with QIIME
+# Need X.FoodID column to be first column
+# Need taxonomy to be last column
+# Need X.FoodID to be "#FoodID" needs a # to work with QIIME
+colnames(vege)[1] <- "#FoodID" 
+write.table(vege, "data/fiber/vege_data/vege_fiber.txt", sep = "\t", row.names = F, quote = F)
+
+# process in QIIME with the tree
+```
+
+
+Create figures each in their own chunk. Give the chunck a descriptive, short name - this will become the name of the figure in the figs/ directory associated with this markdown document. This is an example - it wont work for you because you don't have the data. But this is the type of naming that makes sense. For sizing figures, try to think about the size of a future publication. So aim to have the figure sized to either be 3 inches wide, or 7.5 inches wide, these fit nicely in a two column publication. When possible - use ggplot for figures so we can combine them easily with cowplot in the future. 
+
+
+```{r sub, echo = F, fig.height=4, fig.width=4}
+# Import the beta diversity table from grains_beta (weighted or unweighted)
+food_beta <- read.table(file="data/fiber/vege_data/vege_beta/unweighted_unifrac_vege_fiber.txt")
+
+food_dist <- as.dist(food_beta)
+# refer this code to make a pcoa you will have to fix naming and play with the data structure of the dataframe called plot to get this to work.
+
+#betad as matrix 
+plot <- data.frame(pcoa(food_dist)$vectors)
+
+# move rownames to a column
+plot <- rownames_to_column(plot, var = "UserName")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot <- inner_join(plot, map, by = 'UserName')
+
+vege <- ggplot(plot, aes(x = Axis.1, y = Axis.2)) +
+  geom_point(aes(fill = plot$UserName), alpha=1, pch = 21, size = 3) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  labs(title="Uweighted Unifrac Vegetable Fiber") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic() +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "none",
+        legend.title = element_blank())
+
+vege
+
+```
+```{r sub2, echo = F, fig.height=4, fig.width=4}
+# Import the beta diversity table for taxonomy
+taxa_beta <- read.table(file="../dietstudy/data/processed_UN_tax/UN_tax_beta/euclidean_UN_taxonomy_clr_s.txt")
+
+taxa_beta <- taxa_beta[rownames(taxa_beta) %in% rownames(food_beta),colnames(taxa_beta) %in% colnames(food_beta)]
+
+tax_dist <- as.dist(taxa_beta)
+
+#betad as matrix 
+plot_taxa <- data.frame(pcoa(tax_dist)$vectors)
+
+# move rownames to a column
+plot_taxa <- rownames_to_column(plot_taxa, var = "UserName")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot_taxa <- inner_join(plot_taxa, map, by = 'UserName')
+
+Taxa <- ggplot(plot_taxa, aes(x = Axis.1, y = Axis.2)) +
+  geom_point(aes(fill = plot_taxa$UserName), alpha=1, pch = 21, size = 3) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  labs(title="Taxa Euclidean CLR") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic() +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "none",
+        legend.title = element_blank())
+
+Taxa
+
+```
+
+# Is procrustes significant?
+
+```{r grain_fiber_micro_pro, echo = F, include =T, fig.height=4, fig.width=4}
+set.seed(7)
+
+# make pcoas 
+pcoa_f <- as.data.frame(pcoa(food_dist)$vectors)
+pcoa_t <- as.data.frame(pcoa(tax_dist)$vectors)
+
+# procrustes
+pro <- procrustes(pcoa_f, pcoa_t)
+pro_test <- protest(pcoa_f, pcoa_t, perm = 999)
+
+eigen <- sqrt(pro$svd$d)
+percent_var <- signif(eigen/sum(eigen), 4)*100
+
+beta_pro <- data.frame(pro$X)
+trans_pro <- data.frame(pro$Yrot)
+beta_pro$UserName <- rownames(beta_pro)
+beta_pro$type <- "Vegetable Fiber (Unweighted Unifrac)"
+trans_pro$UserName <- rownames(trans_pro)
+trans_pro$type <- "Microbiome (CLR-Euclidean)"
+
+colnames(trans_pro) <- colnames(beta_pro)
+
+pval <- signif(pro_test$signif, 1)
+
+plot <- rbind(beta_pro, trans_pro)
+
+food_micro <- ggplot(plot) +
+  geom_point(size = 4, alpha=0.75, aes(x = Axis.1, y = Axis.2, fill = type), pch=21) +
+  scale_fill_manual(values = c("#E71D36", "#5DD047")) +
+  theme_bw() +
+  geom_line(aes(x= Axis.1, y=Axis.2, group=UserName), col = "black", alpha = 0.7) +
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(size = 10),
+        legend.title = element_blank(),
+        legend.key.size = unit(0.2, "in"),
+        legend.text = element_text(size=5),
+        legend.position = 'bottom',
+        axis.text = element_text(size=5),
+        axis.title = element_text(size=8)) +
+  annotate("text", x = 0.2, y = -0.27, label = paste0("p-value=",pval)) +
+  xlab(paste0("PC 1 [",percent_var[1],"%]")) +
+  ylab(paste0("PC 2 [",percent_var[2],"%]")) 
+
+food_micro
+
+```
+
+```{r diet alpha v. stability, echo = F, fig.height=4, fig.width=4}
+# load vege alpha diversity
+alpha <- read.delim(file = "data/fiber/vege_data/vege_alpha.txt", sep = "\t")
+colnames(alpha)[1] <- "UserName"
+
+beta_cloud <- read.delim(file = "../dietstudy/analysis/beta_diversity/beta_div_cloud.txt", sep = "\t")
+
+# food alpha v. beta cloud?
+test <- merge(beta_cloud, alpha)
+test <- test[!test$UserName %in% c("MCTs11", "MCTs12"),] # drop soylents
+cor <- cor((1/test$ave_cloud), test$PD_whole_tree, method = "spearman")
+pval <- cor.test((1/test$ave_cloud), test$PD_whole_tree, method = "spearman", exact = F)$p.value
+
+  rho <- paste("italic(r) == ", round(cor, 3))
+  p <- paste("italic(pval) ==", round(pval, 3))
+  labels = data.frame(y = quantile((1/test$ave_cloud))[1], 
+                      x =40, 
+                      label = paste(rho, p, sep = " ~ "))
+
+ggplot(test, aes(y = (1/ave_cloud), x = PD_whole_tree)) + 
+  geom_smooth(method = "lm", color = "black", fill = "grey") +
+  geom_point(aes(fill = UserName), color = "#5DD047", size = 3) +
+  geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+  theme_classic() + 
+  theme(legend.position = "none") +
+  geom_text(data = labels, aes(x=x, y=y,
+                               label = label),
+            parse = T, size = 3) +
+  labs(x = "Vegetable fiber alpha diversity\n(PD whole tree)", y= "Microbiome Stability")
+
+```

@@ -1,0 +1,144 @@
+---
+title: "Microbes v. food per person"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+library(vegan)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs_per_person_networks/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+```
+
+
+# Make a correlation network for each person in the study and look for conserved relationships across people.
+
+```{r networks, echo=F, fig.width=8.5, fig.height=10}
+
+load(file = "analysis/microbes_v_food/perperson.R")
+# Need to make the overall list! - TODO
+load(file = "analysis/microbes_v_food/average_sigs.R")
+
+# set significance level
+#alph <- 0.001
+
+#toss <- c("MCTs05", "MCTs07", "MCTs15", "MCTs28", "MCTs35")
+#sublist <- names(mylist)[!names(mylist) %in% toss]
+
+
+for (i in names(mylist)) {
+  tmp <- as.data.frame(mylist[i])
+  sigs <- tmp # subset to each person's data
+  colnames(sigs) <- c("from", "to", "corr", "pval", "fdr_pval", "sig")
+  #sigs <- sigs[!sigs$from==sigs$to,]    # remove correlations between same taxa (not an issue here)
+  #sigs <- sigs[sigs$fdr_pval <= alph,] # limit to significant correlations
+  
+  # clean up naming
+  sigs$from <- gsub("L1_", "", sigs$from)
+  #sigs$from <- gsub(".*;L2_", "", sigs$from)
+  sigs$from <- gsub("_", " ", sigs$from)
+  sigs$to <- gsub(".*;p__", "", sigs$to)
+  sigs$to <- gsub("_", " ", sigs$to)
+  
+  # make column for matching with pairs to keep
+  #sigs$map <- paste(sigs$from, sigs$to)
+  #sigs <- sigs[sigs$from %in% overall,]
+  #sigs <- sigs[sigs$to %in% overall,]
+  
+  # remove the duplicates
+  # df <- sigs[,1:2]
+  #   for (j in 1:nrow(df)) {
+  #     df[j, ] = sort(df[j,])
+  #   }
+  # df = df[!duplicated(df),]
+  # 
+  # df$map <- paste(df$from, df$to)
+  # sigs <- sigs[sigs$map %in% df$map,]
+  
+  # Make links table
+    mylinks <- droplevels(sigs[,1:5])
+    colnames(mylinks)[3] <- "weight"
+    mylinks$direction <- ifelse(mylinks$weight < 0, "neg", "pos")
+    mylinks$weight <- abs(mylinks$weight)
+    
+    # Make nodes table
+    #load("analysis/microbes_v_food/mynodes.R")
+    load("analysis/microbes_v_food/list.R")
+    
+    library(igraph)
+    
+    net <- graph_from_data_frame(d = mylinks, directed = F)
+    
+    # remove text labels
+    V(net)$label <- NA
+    
+    # set colors by L2
+    set.seed(40)
+    cols_n <- length(unique(mynodes$L2))
+    colrs <- sample(my_cols, 15)
+    names(colrs) <- as.character(unique(mynodes$L2)) # must give colors names to match properly
+    V(net)$color <- colrs[as.character(V(net)$L2)]
+
+    # set colors by phylum
+    # set.seed(42)
+    # cols_n <- length(unique(mynodes$Phylum))
+    # cols <- colorRampPalette(brewer.pal(8, "Dark2"))
+    # colrs <- sample(cols(cols_n))
+    # names(colrs) <- as.character(unique(mynodes$Phylum)) # must give colors names to match properly
+    # V(net)$color <- colrs[as.character(V(net)$Phylum)]
+    
+    
+    # Change node size
+    V(net)$size <- 7
+    
+    # Change Edge width
+    E(net)$width <- -log(E(net)$fdr_pval)
+    
+    
+     # Change Edge color
+    e.col <- adjustcolor(c("red", "blue"), alpha = 0.6)
+    names(e.col) <- c("pos", "neg")
+    
+    edge.col <- e.col[as.character(E(net)$direction)]
+    
+       # Set layout
+    #l <- layout_with_kk(net)
+    l <- layout_with_fr(net)
+    #l <- layout_on_sphere(net)
+    #l <- layout_in_circle(net)
+    #load("analysis/microbes_v_food/layout.R")
+    
+    # Only show significant relationsihps
+    cut.off <- 0.05 
+    net <- delete.edges(net, E(net)[fdr_pval>cut.off])
+    
+    par(bg = "white")
+    plot(net, layout = l, edge.color = edge.col, edge.curved=.3, main = i)
+    legend(x = -0.8, y = -1.1, names(colrs), pch = 21, col = "#000000", pt.bg = colrs, pt.cex = 2, cex = 0.8, ncol=2)
+
+}
+
+```

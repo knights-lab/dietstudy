@@ -1,0 +1,170 @@
+---
+title: "PCOA by L1 Food"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(RColorBrewer) 
+require(cowplot)
+require(tidyverse)
+require(stringr)
+require(dplyr)
+require(ape)
+require(vegan)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(11, "Spectral")
+cols2 <- colorRampPalette(cols)
+my_cols <- rev(cols2(10))
+
+```
+
+
+```{r import beta div, include =F, message = F}
+#food <- read.delim("data/processed_food/dhydrt.otu.txt", sep = "\t", row.names = "taxonomy")
+#food <- food[,!colnames(food) == "X.FoodID"]
+
+#split <- strsplit(rownames(food),";")             # Split and rejoin on lv6 to get genus level
+#taxaStrings <- sapply(split,function(x) paste(x[1:3],collapse=";"))
+#food <- rowsum(food,taxaStrings)   
+
+#food_beta <- vegdist(as.matrix(t(food)), method = "bray")
+
+#normalized taxonomy beta diversity (weighted unifrac)
+food_beta <- read.delim("data/processed_food/dhydrt_beta/weighted_unifrac_dhydrt.txt", sep = "\t", row.names = 1)
+
+
+# counts for coloring
+food_c <- read.delim("data/processed_food/dhydrt.txt", sep = "\t", row.names = "taxonomy")
+food_c <- food_c[,!colnames(food_c) == "X.FoodID"]
+
+# collapse normalized taxonomy at the level of genus
+split <- strsplit(rownames(food_c),";")             # Split and rejoin on lv6 to get genus level
+taxaStrings <- sapply(split,function(x) paste(x[1:1],collapse=";"))
+food_c <- rowsum(food_c,taxaStrings)              # Collapse by taxonomy name
+
+# normalized
+food_n <- sweep(food_c, 2, colSums(food_c), '/')
+
+# sort tax_n by relative abundance
+food_n <- food_n[order(rowMeans(food_n), decreasing = T),]
+
+# Get the top for for plotting
+L1 <- food_n[1:9,]
+L1 <- t(L1)
+L1 <- round(L1, 2)
+
+# apply cut to the genus relative abundances for plotting
+myrownames <- rownames(L1)
+L1 <- apply(L1, 2, function(x) cut(x, breaks = seq(0.00000, max(x), length.out = 10)))
+rownames(L1) <- myrownames
+
+# add genus ra to the map
+L1_map <- as.data.frame(L1)
+colnames(L1_map) <- gsub("L1_", "", colnames(L1_map))
+L1_map <- rownames_to_column(L1_map, "X.SampleID")
+L1_map <- inner_join(map, L1_map, by = "X.SampleID")
+
+
+```
+
+Make the pcoa plot
+
+```{r pcoa, echo = F, fig.width=15, fig.height = 15}
+
+#betad as matrix 
+plot <- data.frame(pcoa(food_beta)$vectors)
+
+# move rownames to a column
+plot <- rownames_to_column(plot, var = "X.SampleID")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot <- inner_join(plot, L1_map, by = 'X.SampleID')
+
+Grain <- ggplot(plot, aes(x = Axis.3, y = Axis.2)) +
+  geom_point(aes(fill = plot$Grain_Product), alpha=1, pch = 21, size = 5) +
+  scale_fill_manual(values = my_cols) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  stat_ellipse(aes(group = UserName), color = "dark grey", type = "norm", linetype = 2, level = 0.95) +
+  labs(title="Relative Abundance of Grains") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic(base_family = "Helvetica") +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "bottom",
+        legend.title = element_blank())
+
+
+Sugar <- ggplot(plot, aes(x = Axis.3, y = Axis.2)) +
+  geom_point(aes(fill = plot$Vegetables), alpha=1, pch = 21, size = 5) +
+  scale_fill_manual(values = my_cols) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  stat_ellipse(aes(group = UserName), color = "dark grey", type = "norm", linetype = 2, level = 0.95) +
+  labs(title="Relative Abundance of Sugars, sweets, vegetables") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic(base_family = "Helvetica") +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "bottom",
+        legend.title = element_blank())
+
+
+Meat <- ggplot(plot, aes(x = Axis.3, y = Axis.4)) +
+  geom_point(aes(fill = plot$Meat_Poultry_Fish_and_Mixtures), alpha=1, pch = 21, size = 5) +
+  scale_fill_manual(values = my_cols) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  stat_ellipse(aes(group = UserName), color = "dark grey", type = "norm", linetype = 2, level = 0.95) +
+  labs(title="Relative Abundance of Meat") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic(base_family = "Helvetica") +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "bottom",
+        legend.title = element_blank())
+
+
+Milk <- ggplot(plot, aes(x = Axis.3, y = Axis.4)) +
+  geom_point(aes(fill = plot$Milk_and_Milk_Products), alpha=1, pch = 21, size = 5) +
+  scale_fill_manual(values = my_cols) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  stat_ellipse(aes(group = UserName), color = "dark grey", type = "norm", linetype = 2, level = 0.95) +
+  labs(title="Relative Abundance of Milk") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic(base_family = "Helvetica") +                                                              
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "bottom",
+        legend.title = element_blank())
+
+
+
+
+plot_grid(Grain, Sugar, Meat, Milk) 
+          
+```
+
+
+## next up, overlay these colors, particularly the grain one on the pcoa from the microbiome.
+
+
+
+
+

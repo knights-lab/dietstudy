@@ -1,0 +1,706 @@
+---
+title: "Figure 5"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    dev: png
+---
+
+Figure 3: Will show diet vectors and heat map of correlations.
+
+TODO: fix coloring to show a gradient of microbe relative abundance of bacteroides or using a bacteroides/firmicutes ratio.
+fix naming of the different axis and vectors so that it says PC or PCoA where appropriate.
+
+```{r setup, include=FALSE, message = FALSE}
+# this chunk sets up the rmd document
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+require(ggdendro)
+require(vegan)
+require(ape)
+
+# set the path for root directory
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+
+# create a directory for the figure and set it's resolution/format
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+
+# set up colors
+pal <- c("#ff0000", "#ffd940", "#008c4b", "#00138c", "#8c235b", "#ffbfbf", "#8c7723", "#468c75", "#8091ff", "#ff80c4", "#8c3123", "#fff2bf", "#40fff2", "#69698c", "#ff0044", "#ff9180", "#e5ff80", "#bffbff", "#5940ff", "#8c696e", "#8c7369", "#858c69", "#40d9ff", "#c480ff", "#ff8c40", "#4b8c00", "#23698c", "#69238c", "#8c4b00", "#bfffbf", "#004b8c", "#eabfff", "#ffc480", "#40ff59", "#80c4ff", "#ff40f2")
+pal1 <- c("#ff0015", "#0073ff", "#adffcb", "#8c0000", "#ffadb4", "#add2ff", "#5f8c70", "#8c5f5f", "#bb00ff", "#5f748c", "#d0ff00", "#67008c", "#00ff5e", "#738c00", "#e9adff", "#008c33", "#f0ffad")
+pal2 <- c("#8c5f63", "#ff0015", "#e9adff", "#003f8c", "#0073ff", "#adffcb", "#738c00", "#d0ff00", "#8c000c", "#67008c", "#bb00ff", "#add2ff", "#008c33", "#00ff5e", "#f0ffad", "#ffadad")
+pal3 <- c("#ff4066", "#8091ff", "#c3ffbf", "#7a5c62", "#bfc8ff", "#7a771f", "#df40ff", "#40ffec", "#fffb80", "#703d7a", "#3d7a74", "#ff0000", "#f4bfff", "#bffff9", "#7a1f1f", "#00107a", "#11ff00", "#ffbfbf", "#4059ff", "#417a3d")
+
+set.seed(42)
+```
+
+```{r import tax, echo = F}
+
+tax <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_f.txt", sep = "\t", row.names = 1)
+
+# Drop soylent
+tax <- tax[,!colnames(tax) == "MCTs11"]
+tax <- tax[,!colnames(tax) == "MCTs12"]
+
+# make sure most prevalent taxa are ordered first
+tax <- tax[order(rowMeans(tax), decreasing = T),]
+
+# transpose
+tax_t <- as.data.frame(t(tax))
+
+```
+
+```{r import func, echo = F}
+
+func <- read.delim("data/processed_KEGG/ave_KEGG_modules_no_soy.txt", sep = "\t", row.names = 1)
+
+# limit to just the highly variable functions
+func_cv <- read.delim("data/processed_KEGG/preprocessed_KEGG_modules_filtered_clr.txt", sep = "\t", row.names= 1)
+
+func <- func[rownames(func_cv),]
+
+# make sure most prevalent taxa are ordered first
+func <- func[order(rowMeans(func), decreasing = T),]
+
+# transpose
+func_t <- as.data.frame(t(func))
+
+# loaded and tested for correlations with diet vectors, but didn't see any diet vector correlations.
+```
+
+```{r import beta div, include =F, message = F}
+
+#food beta diversity (unweighted unifrac)
+food_beta_un <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/unweighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+
+food_beta_w <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/weighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+#get PCOA vectors to compare with taxonomy
+food_vectors_un <- data.frame(pcoa(food_beta_un)$vectors)
+colnames(food_vectors_un) <- gsub("Axis\\.", "DP", colnames(food_vectors_un))
+food_vectors_w <- data.frame(pcoa(food_beta_w)$vectors)
+colnames(food_vectors_w) <- gsub("Axis\\.", "DP", colnames(food_vectors_w))
+
+# calculate the % variation in food intake explained by each vector
+eigen <- pcoa(food_beta_w)$values$Eigenvalues/sum(pcoa(food_beta_w)$values$Eigenvalues)*100
+eigen
+# skree plot
+plot(eigen)
+
+# limit to top 5 food vectors
+food_vectors_un<- food_vectors_un[,1:5]
+food_vectors_w <- food_vectors_w[,1:5]
+
+# mulitply by 1 or -1 to make vectors easier to interpret
+food_vectors_w$DP1 <- food_vectors_w$DP1
+food_vectors_w$DP2 <- food_vectors_w$DP2 
+food_vectors_w$DP3 <- food_vectors_w$DP3
+food_vectors_w$DP4 <- food_vectors_w$DP4 * -1
+food_vectors_w$DP5 <- food_vectors_w$DP5 * -1
+
+# give vectors interpretable names for plotting
+colnames(food_vectors_w) <- c("1. Mixed grain meals", 
+                              "2. Poultry, eggs, and vegetables", 
+                              "3. Alcohol, cheese, and meat",
+                              "4. Fats and snacks",
+                              "5. Cakes and oils")
+
+# import taxonomy matrix
+# this is the clr transformed matrix that can be used with euclidean distance
+tax_beta <- dist(tax_t)
+tax_vectors <- data.frame(pcoa(tax_beta)$vectors)
+
+
+
+```
+
+
+```{r heatmap, echo = F, fig.width = 5, fig.height = 6, include = F}
+# Test the first 5 food axis v. all taxa at the species level
+
+cors <- NULL
+
+#update based on which table you want to use, weighted or unweighted
+food_vectors <- food_vectors_w
+
+for (i in colnames(tax_t)) {
+  for (j in colnames(food_vectors)) {
+    a <- as.numeric(tax_t[,i])
+    b <- as.numeric(food_vectors[,j])
+    tmp <- c(i, j, cor(a, b, method = "spearman"), cor.test(a,b, method = "spearman", exact = F)$p.value)
+    cors <- rbind(cors,tmp)
+  }
+}
+
+cors<- data.frame(row.names = NULL, cors, stringsAsFactors = FALSE)
+
+colnames(cors) <- c("taxa", "food_vector", "correlation", "pvalue")
+cors$pvalue <- as.numeric(cors$pvalue) ### why were these factors??! Fixed, now things are better :)
+cors$qvalue <- p.adjust(cors$pvalue, method = "fdr")
+cors$Significance<-cut(cors$qvalue, breaks=c(-Inf, 0.05, 0.2, Inf), label=c("**","*", "")) #converts numeric p-values to factors based on significance level
+
+# nothing significant after correction for multiple tests
+# print top 10 most significant
+
+cors <- cors[order(cors$qvalue),]
+#cors$taxa <- gsub(".*s__", "", cors$taxa)
+
+tax_v_axis <- cors[cors$qvalue <=0.2,]
+tax_v_axis <- tax_v_axis[order(tax_v_axis$food_vector),]
+
+write.table(tax_v_axis, file = "analysis/diet_vectors_v_tax/tax_v_axis.txt", sep = "\t", quote = F, row.names = F)
+
+#tax_v_axis
+
+# prune for complete cases with significant correlations
+dat.c<-cors[complete.cases(cors),]
+taxkeep<-unique(dat.c$taxa[dat.c$qvalue<=0.2])
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$taxa %in% taxassign,] 
+keggkeep <- unique(dat.w$food_vector[dat.w$qvalue<=1])
+dat.m<-dat.w[dat.w$food_vector %in% keggkeep,]
+
+# fix naming of taxa to just text after the last ;
+dat.m$taxa <- gsub("?.*s__", "", dat.m$taxa)
+dat.m$taxa <- gsub("?.*g__", "Genus ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*o__", "Order ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*c__", "Class ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*f__", " ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*k__", "Kingdom ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*p__", "Phylum ", dat.m$taxa)
+dat.m$taxa <- gsub(";NA", "", dat.m$taxa)
+#dat.m$taxa <- gsub("\\[", "", dat.m$taxa)
+#dat.m$taxa <- gsub("\\]", "", dat.m$taxa)
+
+# fix character to numerica
+dat.m$correlation <- as.numeric(dat.m$correlation)
+#dat.m$food_vector <- as.factor(dat.m$correlation)
+
+#reorder taxa if more than one observation
+order_tax <- dat.m %>% select(taxa, food_vector, correlation) %>% na.omit()
+order_tax <- order_tax %>% spread(taxa, correlation)
+order_tax <- remove_rownames(order_tax)
+order_tax <- column_to_rownames(order_tax, "food_vector")
+taxaorder <- hclust((dist(1-cor(order_tax))/2))$order
+
+dat.m$taxa <- as.factor(dat.m$taxa)
+dat.m$taxa <- factor(dat.m$taxa, levels(dat.m$taxa)[taxaorder])
+
+# reorder the food_vectors
+# order_food <- dat.m %>% select(food_vector, taxa, correlation) %>% na.omit()
+# order_food <- order_food %>% spread(food_vector, correlation)
+# order_food <- remove_rownames(order_food)
+# order_food <- column_to_rownames(order_food, "taxa")
+# foodorder <- hclust((dist(1-cor(order_food))/2))$order
+# 
+# dat.m$food_vector <- as.factor(dat.m$food_vector)
+# dat.m$food_vector <- factor(dat.m$food_vector, levels(dat.m$food_vector)[foodorder])
+
+#plot the correlations for the collapsed levels
+
+diet_vec_heat <- ggplot(data = dat.m, aes(x=food_vector, y=taxa, fill=correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.9,0.9), space = "Lab", name = "Spearman") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=4) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 12, hjust = 1), 
+        axis.text.y = element_text(size = 12),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 7),
+        axis.title.x = element_text(size = 14),
+        axis.title.y = element_text(size = 14),
+        legend.key.size = unit(0.1, "inch")) +
+  labs(x = "Dietary Pattern", y = "Family") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed(ratio=1)
+
+
+diet_vec_heat
+
+```
+```{r food_heatmap, echo = F, fig.width=6, fig.height = 7 , include = F}
+
+food <- read.delim("data/processed_food/dhydrt.smry.no.soy.txt", sep = "\t", header = T, comment = "", row.names = "taxonomy")
+food <- food[,!colnames(food) == "X.FoodID"]
+
+# collapse food
+split <- strsplit(rownames(food),";")
+ 
+# 
+foodStrings <- sapply(split,function(x) paste(x[1:2],collapse=";"))
+food_L <- rowsum(food,foodStrings)            
+food_L_t <- as.data.frame(t(food_L))
+
+
+# quickly visually normality
+##check_norm <- melt(food_L_t)
+##ggplot(check_norm, aes(x = value)) + facet_wrap(~variable, scales = "free_x") + geom_histogram(bins = 40)
+
+
+cors <- NULL
+
+for (i in colnames(food_L_t)) {
+  for (j in colnames(food_vectors)) {
+    a <- as.numeric(food_L_t[,i])
+    b <- as.numeric(food_vectors[,j])
+    tmp <- c(i, j, cor(a, b, method = "spearman"), cor.test(a,b, method = "spearman", exact = F)$p.value)
+    cors <- rbind(cors,tmp)
+  }
+}
+
+cors<- data.frame(row.names = NULL, cors, stringsAsFactors = FALSE)
+colnames(cors) <- c("food", "food_vector", "correlation", "pvalue")
+cors$pvalue <- as.numeric(cors$pvalue)
+cors$qvalue <- p.adjust(cors$pvalue, method = "fdr")
+cors$Significance<-cut(cors$qvalue, breaks=c(-Inf,0.05, 0.2, Inf), label=c("**","*", "")) #converts numeric p-values to factors based on significance level
+
+# nothing significant after correction for multiple tests
+# print top 10 most significant
+
+food_v_axis <- cors[cors$qvalue <=0.2,]
+food_v_axis <- food_v_axis[order(food_v_axis$food_vector),]
+
+write.table(food_v_axis, file = "analysis/diet_vectors_v_tax/food_v_axis.txt", sep = "\t", quote = F, row.names = F)
+
+#food_v_axis
+
+# prune for complete cases with significant correlations
+dat.c<-cors[complete.cases(cors),]
+taxkeep<-unique(dat.c$food[dat.c$qvalue<=0.2])
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$food%in% taxassign,] 
+keggkeep <- unique(dat.w$food_vector[dat.w$qvalue<=0.2])
+dat.m<-dat.w[dat.w$food_vector %in% keggkeep,]
+
+# make a column to display each food by food group
+dat.m$L1 <- dat.m$food
+
+# fix naming of food to just text after the last level (l2)
+dat.m$food <- gsub("?.*L2_", "", dat.m$food)
+dat.m$food <- gsub("_", " ", dat.m$food)
+dat.m$food <- gsub("Formulated nutrition beverages energy drinks sports drinks function", "Formulated nutrition beverages", dat.m$food)
+dat.m$food <- gsub("Frozen and shelfstable plate meals soups and gravies", "Frozen meals", dat.m$food)
+dat.m$food <- gsub("Puerto Rican ", "", dat.m$food)
+
+# fix naming of the L1 column to use for faceting
+dat.m$L1 <- gsub(";L2_.*", "", dat.m$L1)
+dat.m$L1 <- gsub("L1_", "", dat.m$L1)
+dat.m$L1 <- gsub("_", " ", dat.m$L1)
+dat.m$L1 <- gsub("Dry Beans Peas Other Legumes Nuts and Seeds", "Legumes", dat.m$L1)
+dat.m$L1 <- gsub("Fats Oils and Salad Dressings", "Fats", dat.m$L1)
+dat.m$L1 <- gsub("Milk and Milk Products", "Milks", dat.m$L1)
+dat.m$L1 <- gsub("Sugars Sweets and Beverages", "Sugars/Bev.", dat.m$L1)
+dat.m$L1 <- gsub("Meat Poultry Fish and Mixtures", "Meats", dat.m$L1)
+dat.m$L1 <- gsub("Grain Product", "Grain Products", dat.m$L1)
+
+
+# fix character to numerica
+dat.m$correlation <- as.numeric(dat.m$correlation)
+dat.m$food_vector <- as.factor(dat.m$food_vector)
+dat.m$food <- as.factor(dat.m$food)
+
+#reorder taxa if more than one observation
+order_tax <- dat.m %>% select(food, food_vector, correlation) %>% na.omit()
+order_tax <- order_tax %>% spread(food, correlation)
+order_tax <- remove_rownames(order_tax)
+order_tax <- column_to_rownames(order_tax, "food_vector")
+taxaorder <- hclust((dist(1-cor(order_tax))/2))$order
+
+dat.m$food <- as.factor(dat.m$food)
+dat.m$food <- factor(dat.m$food, levels(dat.m$food)[taxaorder])
+
+# reorder the food_vectors
+# order_food <- dat.m %>% select(food_vector, food, correlation) %>% na.omit()
+# order_food <- order_food %>% spread(food_vector, correlation)
+# order_food <- remove_rownames(order_food)
+# order_food <- column_to_rownames(order_food, "food")
+# foodorder <- hclust((dist(1-cor(order_food))/2))$order
+# 
+# dat.m$food_vector <- as.factor(dat.m$food_vector)
+# dat.m$food_vector <- factor(dat.m$food_vector, levels(dat.m$food_vector)[foodorder])
+
+#plot the correlations for the collapsed levels
+
+food_vec_heat <- ggplot(data = dat.m, aes(y=food, x=food_vector, fill=correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.9,0.9), space = "Lab", name = "Spearman") +
+  facet_grid(L1~., scales = "free", space = "free")+
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=3) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 9, hjust = 1), 
+        axis.text.y = element_text(size = 9),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 7),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        legend.key.size = unit(0.1, "inch"),
+        legend.position = "right",
+        strip.text.y = element_text(angle = 0, face = "italic", size = 9),
+        strip.background = element_rect(color="grey", fill = "white")) +
+  labs(x = "Dietary Pattern", y = "Food Group") +
+  coord_fixed(ratio = 1)
+
+
+food_vec_heat
+
+
+
+```
+
+
+
+```{r constrained ordination, echo = F, fig.width=4, fig.height=4, include = F}
+require(vegan)
+
+colpal<- colorRampPalette(brewer.pal(11,"Spectral"))(11) #spectral progression
+colpal <- rev(colpal)
+
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+#### function for plotting ####
+
+pal <- pal[1:32]
+
+# make nice plot of constrained ordination
+plot.constrained.ordination<- function(rrda){
+  rrda <- rrda
+  pc <- scores(rrda)$sites
+  d <- data.frame(x=pc[,1], y=pc[,2], group = map_ord$`k__Bacteria;p__Bacteroidetes`)
+  #d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
+  percent_var <- signif(eigenvals(rrda)/sum(eigenvals(rrda)), 4)*100
+  
+  plot.rrda <- plot(rrda)
+  vector.multiplier <- attributes(plot.rrda$biplot)$arrow.mul
+  fit_env_df <- as.data.frame(plot.rrda$biplot*vector.multiplier)
+  fit_env_df <- cbind(fit_env_df, Variable = rownames(plot.rrda$biplot))
+  colnames(fit_env_df)[1:2] <- c("Dim1","Dim2")
+  
+  text_fit_env_df <- fit_env_df
+  text_fit_env_df[,1:2] <- text_fit_env_df[,1:2]*1.2 # let's shift the text out a little
+  
+  p <- ggplot(data = d, aes(x,y)) + 
+          geom_point(aes(fill = group), size = 4, pch = 21, alpha = 1) + 
+          #geom_point(fill="grey", size = 4, pch = 21, alpha = 1) +
+          xlab(paste0("PC 1 [",percent_var[1],"%]")) +
+          ylab(paste0("PC 2 [",percent_var[2],"%]")) +
+          scale_fill_gradientn(colors = colpal, guide = "colorbar", name = "Grain Product") +
+          xlim(-8,8) +
+          ylim(-8,8) +
+          theme(legend.position = "none",
+                axis.title = element_text(size = 10),
+                axis.text = element_text(size = 9),
+                legend.title = element_text(size = 7),
+                legend.text = element_blank(), 
+                legend.key.size = unit(0.25, "cm"))
+  
+  p <- p + coord_fixed() +
+    geom_segment(data = fit_env_df, 
+                 aes(x = 0, xend = Dim1, y =0, yend = Dim2),
+                 arrow = arrow(length = unit(0.25, "cm")),
+                 color = alpha("black", .5)) +
+    geom_text(data = text_fit_env_df, 
+              aes(x = Dim1, y = Dim2, label = Variable), 
+              size = 5)
+  
+  print(p)
+}
+
+
+### load data ####
+
+# set food vectors to weighted or unweighted
+food_vectors <- food_vectors_w # unweighted diet vectors perform slightly better, but weighted used in previous figures
+
+# rename for easy plotting
+colnames(food_vectors) <- c("Grains", "Poultry", "Alcohol", "Fats", "Cakes")
+
+## for each person's average:
+tax <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_s.txt", sep = "\t", row.names = 1)
+tax <- tax[, !colnames(tax) %in% c("MCTs11", "MCTs12")]
+tax_t <- t(tax)
+
+## Update colors to show grains
+# mynames <- rownames(food_L_t)
+# food_cols <- food_L_t
+# food_cols <- apply(food_cols, 2, function(x) cut(x, breaks = 10, right= F, labels = F))
+# food_cols <- as.data.frame(food_cols)
+# food_cols <- food_cols * 10
+# food_cols$UserName <- mynames
+
+
+## Update colors to show bacteroides
+bact <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_p.txt", sep = "\t", row.names = 1)
+bact <- as.data.frame(t(bact))
+bact <- bact[,1:3]
+mynames <- rownames(bact)
+bact_cols <- bact
+bact_cols <- apply(bact_cols, 2, function(x) cut(x, breaks = 10, right = F, labels =F))
+bact_cols <- as.data.frame(bact_cols)
+bact_cols <- bact_cols *10
+bact_cols$UserName <- mynames
+
+
+map_ord <- map_username[map_username$UserName %in% rownames(tax_t),]
+#map_ord <- inner_join(map_ord, food_cols)
+map_ord <- inner_join(map_ord, bact_cols )
+rownames(map_ord) <- map_ord$UserName
+#map_ord <- map_ord[, c("Gender", "Age", "BMI", "L1_Grain_Product")]
+#map_ord <- map_ord[, c("Gender", "Age", "BMI", "L1_Grain_Product;L2_Grain_mixtures_frozen_plate_meals_soups")]
+map_ord <- map_ord[, c("Gender", "Age", "BMI", "k__Bacteria;p__Bacteroidetes")]
+
+env <- merge(food_vectors, map_ord, by = 0)
+rownames(env) <- env$Row.names
+env <- env[,!colnames(env) == "Row.names"]
+#env <- subset(env, select = -c(L1_Grain_Product))
+#env <- subset(env, select = -c(`L1_Grain_Product;L2_Grain_mixtures_frozen_plate_meals_soups`))
+env <- subset(env, select = -c(`k__Bacteria;p__Bacteroidetes`))
+
+# quick look at env variables
+#str(env)
+#summary(env)
+
+# quick look at the environmental variables
+plot(env, gap=0, panel=panel.smooth)
+
+# unconstrained
+un_rda <- rda(tax_t)
+#un_rda <- dbrda(tax_beta ~ 1) # use with tree-based
+eig <- eigenvals(un_rda)/sum(eigenvals(un_rda))
+pct_ex <- sum(eig[1:2])*100
+un_rda.plot <- plot(un_rda)
+
+# make nice plot of unconstrained ordination
+pc <- scores(un_rda)$sites
+d <- data.frame(x=pc[,1], y=pc[,2], group = map_ord$`k__Bacteria;p__Bacteroidetes`)
+#d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
+percent_var <- signif(eigenvals(un_rda)/sum(eigenvals(un_rda)), 4)*100
+
+p <- ggplot(data = d, aes(x,y)) +
+  geom_point(aes(fill = group), size = 4, pch = 21, alpha = 1) + 
+  #geom_point(fill = "grey", size = 4, pch = 21, alpha = 1) +
+          xlab(paste0("PC 1 [",percent_var[1],"%]")) +
+          ylab(paste0("PC 2 [",percent_var[2],"%]")) +
+          scale_fill_gradientn(colors = colpal, guide = "colorbar", name = "Bacteroidetes") +
+          #scale_y_continuous(breaks = c(6 , 4 , 2, 0, -2, -4, -6)) +
+          xlim(-8,8) +
+          ylim(-8,8) +
+          theme(legend.position = "bottom",
+                legend.direction = "horizontal",
+                axis.title = element_text(size = 10),
+                axis.text = element_text(size = 9),
+                legend.title = element_text(size = 7),
+                legend.text = element_blank(), 
+                legend.key.size = unit(0.4, "cm")) #+
+  guides(fill = guide_colourbar(title.position="top", title.hjust = 0.5))
+
+p <- p + coord_fixed()
+
+unconstrained <- p
+
+unconstrained
+
+# constrained
+# note use formula notation to include factors (i.e. gender)
+# just diet
+rrda_d <- rda(tax_t~ Grains + Poultry + Alcohol + Fats + Cakes , data = env)
+#rrda_d <- dbrda(tax_beta~Axis.3 + Axis.5 + Axis.1 + Axis.2 + Axis.4, data = env) # for tree-based
+eig_d <- eigenvals(rrda_d)/sum(eigenvals(rrda_d))
+pct_ex_d <- sum(eig_d[1:2])*100
+
+
+# diet + metadata
+rrda_a <- rda(tax_t~ Age + Gender + BMI + Grains + Poultry + Alcohol + Fats + Cakes , data = env)
+#rrda_a <- dbrda(tax_beta~ Axis.3 + Axis.5 + Age + Gender + Axis.1 + Axis.2 + Axis.4 + BMI, data = env)
+eig_a <- eigenvals(rrda_a)/sum(eigenvals(rrda_a))
+pct_ex_a <- sum(eig_a[1:2])*100
+
+# just metadata
+rrda_m <- rda(tax_t~Age+Gender+BMI, data = env)
+#rrda_m <- dbrda(tax_beta~Age+Gender+BMI, data = env)
+eig_m <- eigenvals(rrda_m)/sum(eigenvals(rrda_m))
+pct_ex_m <- sum(eig_m[1:2]*100)
+
+
+diet_rda <- plot.constrained.ordination(rrda_d)
+diet_rda <- diet_rda$plot 
+all_rda <- plot.constrained.ordination(rrda_a)
+all_rda <- all_rda$plot
+meta_rda <- plot.constrained.ordination(rrda_m)
+meta_rda <- meta_rda$plot
+
+my_diet <- print(diet_rda$plot)
+
+# amount of the variation explained by metadata
+pct_ex_m/pct_ex * 100
+
+# amount of variation explained by diet + metatdata
+pct_ex_a/pct_ex *100
+
+# amount of variation explained by diet alone
+pct_ex_d/pct_ex *100
+
+signif((pct_ex_a - pct_ex_d)/pct_ex, 4)*100
+
+```
+
+```{r fig_cols, fig.width = 4, fig.height=7, include= F}
+#top <- plot_grid(unconstrained, NULL, ncol=2, rel_widths = c(1, 0.3))
+#right <- plot_grid(top, diet_rda_plot, ncol = 1, labels = "AUTO", align = "h")
+
+# for this one want width = 2, height = 7
+# right <- plot_grid(diet_rda, all_rda, unconstrained, ncol = 1, labels = "AUTO", align = "h", axis = "l",  rel_heights = c(1,1,1.2))
+# 
+# right
+
+right <- plot_grid(diet_vec_heat, unconstrained, diet_rda, ncol = 1, labels = "AUTO", align = "h", axis = "l",  rel_heights = c(1,1,1))
+
+#right
+```
+
+```{r fig_cols_1, fig.width = 5, fig.height=6, include= F}
+
+left <- plot_grid(food_vec_heat, labels = c("D","E"), rel_heights = c(1.4, 1.07), rel_widths = c(5.4, 5), ncol=1, align = "v")
+
+#left
+```
+
+
+
+```{r figure_3, fig.width= 7, fig.height=7, echo = F}
+
+
+
+together <- plot_grid(right,left, rel_widths =c(2, 5), ncol=2)
+
+#together
+
+#TODO: make it easier to read the labels in the constrained ordination plots.
+# color the ordination plots by grain or one of the other food variables if it looks better.
+
+
+```
+
+
+```{r diet_vec_v_network_correlations, fig.width=4, fig.height=4, echo=F}
+load("analysis/microbe_v_microbe/correlation_counts.R") # called counts
+
+counts <- column_to_rownames(counts, var="Row.names")
+
+test <- food_vectors
+test <- merge(test, counts, by = 0)
+
+# The ratio of positive to total correlations is correlated with stability (p = 0.001, rho = 0.41) 
+mytest <- cor.test(test$Grains, test$pos, method = "spearman", exact = F)
+
+
+corr_plot <- ggplot(data = test, aes(y = Grains, x = pos)) +
+  geom_smooth(method = "lm", color = "black") +
+  geom_point(color ="red", size = 3) +
+  geom_point(shape = 1, size =3, color = "black") +
+  ylab("Diet Vector 2") +
+  xlab("Positive Correlations") +
+  annotate("text", x = 500, y = -2.5, label = paste("r =",signif(mytest$estimate, 1), ",", "pval =", signif(mytest$p.value, 1)), size = 3)
+
+#corr_plot
+
+
+```
+
+
+```{r diet_vec_v_biomarkers_correlations, fig.width=4, fig.height=4, echo=F}
+
+map_username <- read.delim("data/maps/UserName_map.txt")
+map_username <- map_username[map_username$UserName %in% rownames(food_vectors),]
+rownames(map_username) <- map_username$UserName
+
+biomarkers <- map_username[,colnames(map_username) %in% c("BMI", "Cholesterol.Baseline", "Trigs.Baseline", "HDL.Baseline", "LDL.Baseline", "NonHDL.Chol.Baseline", "Glu.Baseline", "Ins.Baseline", "Homa.IR.Baseline")]
+
+# test correlation between biomarkers and food_vectors
+
+cors <- NULL
+
+for (i in colnames(biomarkers)) {
+  for (j in colnames(food_vectors)) {
+    a <- as.numeric(biomarkers[,i])
+    b <- as.numeric(food_vectors[,j])
+    tmp <- c(i, j, cor(a, b, method = "spearman", use = "complete.obs"), cor.test(a,b, method = "spearman", exact = F)$p.value)
+    cors <- rbind(cors,tmp)
+  }
+}
+
+cors<- data.frame(row.names = NULL, cors, stringsAsFactors = FALSE)
+colnames(cors) <- c("food", "food_vector", "correlation", "pvalue")
+cors$pvalue <- as.numeric(cors$pvalue)
+cors$qvalue <- p.adjust(cors$pvalue, method = "fdr")
+cors$Significance<-cut(cors$qvalue, breaks=c(-Inf,0.05, 0.25, Inf), label=c("**","*", "")) #converts
+
+
+# prune for complete cases with significant correlations
+dat.c<-cors[complete.cases(cors),]
+taxkeep<-unique(dat.c$food[dat.c$qvalue<=1])
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$food%in% taxassign,] 
+keggkeep <- unique(dat.w$food_vector[dat.w$qvalue<=1])
+dat.m<-dat.w[dat.w$food_vector %in% keggkeep,]
+
+# fix character to numerica
+dat.m$correlation <- as.numeric(dat.m$correlation)
+dat.m$food_vector <- as.factor(dat.m$food_vector)
+dat.m$food <- as.factor(dat.m$food)
+
+#reorder taxa if more than one observation
+order_tax <- dat.m %>% select(food, food_vector, correlation) %>% na.omit()
+order_tax <- order_tax %>% spread(food, correlation)
+order_tax <- remove_rownames(order_tax)
+order_tax <- column_to_rownames(order_tax, "food_vector")
+taxaorder <- hclust((dist(1-cor(order_tax))/2))$order
+
+dat.m$food <- as.factor(dat.m$food)
+dat.m$food <- factor(dat.m$food, levels(dat.m$food)[taxaorder])
+
+# reorder the food_vectors
+# order_food <- dat.m %>% select(food_vector, food, correlation) %>% na.omit()
+# order_food <- order_food %>% spread(food_vector, correlation)
+# order_food <- remove_rownames(order_food)
+# order_food <- column_to_rownames(order_food, "food")
+# foodorder <- hclust((dist(1-cor(order_food))/2))$order
+# 
+# dat.m$food_vector <- as.factor(dat.m$food_vector)
+# dat.m$food_vector <- factor(dat.m$food_vector, levels(dat.m$food_vector)[foodorder])
+
+#plot the correlations for the collapsed levels
+
+food_vec_heat <- ggplot(data = dat.m, aes(y=food, x=food_vector, fill=correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.9,0.9), space = "Lab", name = "Spearman") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 9, hjust = 1), 
+        axis.text.y = element_text(size = 9),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 7),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        legend.key.size = unit(0.1, "inch"),
+        legend.position = "right") +
+  labs(x = "Dietary Pattern", y = "Food Group") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed(ratio = 1)
+
+
+food_vec_heat
+
+
+
+```

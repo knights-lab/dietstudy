@@ -1,0 +1,332 @@
+---
+title: "Microbes v. microbes per person"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+library(vegan)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs_per_person/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+```
+
+
+# Make a correlation network for each person in the study and look for conserved relationships across people.
+
+```{r withinperson, echo=F, fig.width=15, fig.height=15}
+
+# # TODO: run this one more time to make sure it's perfect! - Will take ~6 hours
+# 
+# tax <- read.delim("data/processed_tax/taxonomy_clr_s.txt", row=1) # species or higher
+# 
+# # # only keep the species level designations
+# # tax <- tax[grep(";s_", rownames(tax)),]
+# # 
+# # #test
+# # tax <- tax[4:10,]
+# 
+# 
+# mylist <- NULL
+# 
+# for (k in unique(tax_map$UserName)) {
+#   submap <- tax_map[tax_map$UserName == k,]
+#   subtax <- tax[,colnames(tax) %in% submap$X.SampleID]
+# 
+# 
+#   x <- subtax
+# 
+#   x <- as.data.frame(t(x))
+# 
+#   dat <- NULL
+# 
+# for(i in colnames(x)){ 
+#   for(j in colnames(x)){ 
+#     a<-as.numeric(x[,i]) 
+#     b<-as.numeric(x[,j])
+#     c<-submap[,"StudyDayNo"]
+#     tmp <- c(i,j,cor(a,b, method = "pearson", use = "everything"), 
+#              cor.test(a,b,method = "pearson")$p.value, lm(a~c)$coefficients[[2]], lm(b~c)$coefficients[[2]])#, lm(a~submap$StudyDayNo)$coefficients[2], lm(b~submap$StudyDayNo)$coefficients[2])
+#     if(is.null(dat)){
+#       dat <- tmp
+#     }
+#     else{
+#       dat<-rbind(dat,tmp)
+#     }
+#   }
+# }
+# 
+# dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+# 
+# colnames(dat)<-c("Taxa1","Taxa2","Correlation","Pvalue", "Taxa1_slope", "Taxa2_slope")
+# dat$Correlation <- as.numeric(dat$Correlation)
+# dat$Pvalue <- as.numeric(dat$Pvalue)
+# dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+# 
+# dat$fdr_pval <- ifelse(dat$Correlation == 1, 1, dat$fdr_pval)
+# 
+# dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.001, 0.01, 0.05, Inf), label=c("***", "**", "*", ""))
+# 
+# 
+# mylist[[k]] <- dat
+# 
+# 
+# }
+# 
+# save(mylist, file = "analysis/microbe_v_microbe/perperson.R")
+```
+
+```{r, network_v_stability, echo =F}
+load("analysis/microbe_v_microbe/perperson.R")
+
+
+# calculate number of significant positive correlations
+
+alpha = 0.01
+
+competition <- NULL
+cooperation <- NULL
+pos <- NULL
+neg <- NULL
+
+for (i in names(mylist)) {
+  tmp <- as.data.frame(mylist[i])
+  sigs <- tmp # subset to each person's data
+  colnames(sigs) <- c("from", "to", "corr", "pval", "from_slope", "to_slope", "fdr_pval", "sig")
+  
+  sigs <- sigs[!sigs$from==sigs$to,]    # remove correlations between same taxa
+  sigs <- sigs[sigs$fdr_pval <= alpha,] # limit to significant correlations
+  
+  if(dim(sigs)[1] == 0) {
+    pos[[i]] <- 0
+    neg[[i]] <- 0
+  } 
+  else 
+    {
+  
+  # clean up naming
+  sigs$from <- gsub("?.*s__", "", sigs$from)
+  sigs$from <- gsub("?.*g__", "Genus ", sigs$from)
+  sigs$from <- gsub("?.*o__", "Order ", sigs$from)
+  sigs$from <- gsub("?.*c__", "Class ", sigs$from)
+  sigs$from <- gsub("?.*f__", "Family ", sigs$from)
+  sigs$from <- gsub("?.*k__", "Kingdom ", sigs$from)
+  sigs$from <- gsub("?.*p__", "Phylum ", sigs$from)
+  sigs$from <- gsub(";NA", "", sigs$from)
+  sigs$from <- gsub("\\[", "", sigs$from)
+  sigs$from <- gsub("\\]", "", sigs$from)
+
+  sigs$to <- gsub("?.*s__", "", sigs$to)
+  sigs$to <- gsub("?.*g__", "Genus ", sigs$to)
+  sigs$to <- gsub("?.*o__", "Order ", sigs$to)
+  sigs$to <- gsub("?.*c__", "Class ", sigs$to)
+  sigs$to <- gsub("?.*f__", "Family ", sigs$to)
+  sigs$to <- gsub("?.*k__", "Kingdom ", sigs$to)
+  sigs$to <- gsub("?.*p__", "Phylum ", sigs$to)
+  sigs$to <- gsub(";NA", "", sigs$to)
+  sigs$to <- gsub("\\[", "", sigs$to)
+  sigs$to <- gsub("\\]", "", sigs$to)
+
+  sigs$map <- paste(sigs$from, sigs$to)
+  
+  # remove the duplicates
+  df <- sigs[,1:2]
+    for (j in 1:nrow(df)) {
+      df[j, ] = sort(df[j,])
+    }
+  df = df[!duplicated(df),]
+  
+  df$map <- paste(df$from, df$to)
+  sigs <- sigs[sigs$map %in% df$map,]
+  
+  
+  positives <- sigs[sigs$corr > 0,]
+  negatives <- sigs[sigs$corr < 0,] # exploitative
+  
+  compeditive <- sigs[sigs$corr > 0 & sigs$from_slope <0 & sigs$to_slope <0,]
+  cooperative <- sigs[sigs$corr > 0 & sigs$from_slope >0 & sigs$from_slope >0,]
+  
+  
+  competition[[i]] <- dim(compeditive)[1]
+  cooperation[[i]] <- dim(cooperative)[1]
+  pos[[i]] <- dim(positives)[1]
+  neg[[i]] <- dim(negatives)[1]
+  
+  }
+  }
+
+
+competition_count <- as.data.frame(competition)
+cooperation_count <- as.data.frame(cooperation)
+pos <- as.data.frame(pos)
+neg <- as.data.frame(neg)
+
+counts_pn <- merge(pos, neg, by = 0)
+counts_cc <- merge(competition_count, cooperation_count, by = 0)
+counts <- merge(counts_cc, counts_pn, by = "Row.names")
+
+save(counts, file = "analysis/microbe_v_microbe/correlation_counts.R")
+
+```
+
+
+```{r stability, echo = F}
+
+#### load the maps for downstream use ####
+map_sample <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+rownames(map_sample) <- map_sample$X.SampleID
+
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+map_sample$StudyDate <- as.Date.factor(map_sample$StudyDate, format = "%m/%d/%y")
+
+#load other maps
+food_map <- read.table("data/maps/food_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+
+# load the food distance matrix, unweighted unifrac
+food_un <- read.delim("data/processed_food/dhydrt_beta/unweighted_unifrac_dhydrt.txt", row = 1) # weighted in not significant
+food_dist <- as.dist(food_un)
+
+
+# load food alpha diversity, pd whole tree
+food_alpha <- read.delim("data/processed_food/dhydrt_alpha.txt", row = 1)
+
+# load microbiome alpha diversity
+tax_alpha <- read.delim("data/processed_tax/taxa_alpha.txt", sep = "\t", row.names = 1) #from the taxonomy counts values
+
+# load taxonomy collapsed for each person
+tax <- read.delim("data/processed_tax/taxonomy_clr_s.txt", row = 1)
+# make taxonomy distance matrix
+tax_dist <- dist(t(tax))
+# convert to data frame to use below
+tax_beta <- as.data.frame(as.matrix(tax_dist))
+
+
+# calculate mean of the mean distance to self for each sample, for each UserName 
+# Food
+mydist <- NULL
+
+for (i in unique(food_map$UserName)) {
+  name <- food_map[food_map$UserName == i,1]
+  name <- as.vector(name)
+  tmp <- food_un[rownames(food_un) %in% name, colnames(food_un) %in% name]
+  num <- rowMeans(tmp, na.rm = T)
+  num <- cbind(i,num)
+  mydist <- rbind(num, mydist)
+  colnames(mydist) <- c("UserName", "food_mean_beta_div")
+}
+
+food_dist <- as.data.frame(mydist)
+food_dist$food_mean_beta_div <- as.character(food_dist$food_mean_beta_div)
+food_dist$food_mean_beta_div <- as.numeric(food_dist$food_mean_beta_div)
+
+
+# Taxa
+
+mydist <- NULL
+
+for (i in unique(tax_map$UserName)) {
+  name <- tax_map[tax_map$UserName == i,1]
+  name <- as.vector(name)
+  tmp <- tax_beta[rownames(tax_beta) %in% name, colnames(tax_beta) %in% name]
+  num <- rowMeans(tmp, na.rm = T)
+  num <- cbind(i,num)
+  mydist <- rbind(num, mydist)
+  colnames(mydist) <- c("UserName", "mean_beta_div")
+}
+
+tax_dist <- as.data.frame(mydist)
+tax_dist <- droplevels(tax_dist)
+tax_dist$mean_beta_div <- as.character(tax_dist$mean_beta_div)
+tax_dist$mean_beta_div <- as.numeric(tax_dist$mean_beta_div)
+tax_dist$mean_beta_div <- 1/tax_dist$mean_beta_div
+
+# Get average microbiome distance to self 
+# This will also be used to order the plot
+micro_order <- tax_dist %>% 
+  group_by(UserName) %>% 
+  dplyr::summarise(ave_cloud = median(mean_beta_div, na.rm=T)) # ave_cloud is inverse variability = stability
+
+food_order <- food_dist %>% 
+  group_by(UserName) %>%
+  dplyr::summarise(med_food_dist = median(food_mean_beta_div, na.rm = T))
+
+
+# food diversity
+
+
+# load food alpha diversity, pd whole tree
+food_alpha <- read.delim("data/processed_food/dhydrt_alpha.txt", row = 1)
+
+plot_food_alpha <- merge(food_alpha, map_sample, by = 0)
+mean_food_alpha <- plot_food_alpha %>% group_by(UserName) %>% dplyr::summarise(median(PD_whole_tree))
+
+```
+
+
+```{r, positives_v_stability, echo = F, fig.height = 4, fig.width=4}
+
+test <- micro_order
+test <- merge(test, counts, by = 1)
+
+# The ratio of positive to total correlations is correlated with stability (p = 0.001, rho = 0.41) 
+mytest <- cor.test(test$ave_cloud, test$pos/(test$pos+test$neg), method = "spearman", exact = F)
+
+
+corr_plot <- ggplot(data = test, aes(y = ave_cloud, x = (pos/(pos+neg)))) +
+  geom_smooth(method = "lm", color = "black") +
+  geom_point(color ="#E71D36", size = 3) +
+  geom_point(shape = 1, size =3, color = "black") +
+  ylab("Microbiome Stability") +
+  xlab("Positive Correlation Proportion") +
+  annotate("text", x = 0.8, y = 0.06, label = paste("r =",signif(mytest$estimate, 1), ",", "pval =", signif(mytest$p.value, 1)), size = 3)
+
+corr_plot
+
+```
+
+```{r, positives_v_dietary diversity, echo = F, fig.height = 4, fig.width=4}
+
+test1 <- mean_food_alpha
+test1 <- merge(test1, counts, by = 1)
+
+# The ratio of positive to total correlations is correlated with stability (p = 0.001, rho = 0.41) 
+#mytest <- 
+  
+mytest <- cor.test(test1$`median(PD_whole_tree)`, test1$pos/(test1$pos+test1$neg), method = "spearman", exact = F)
+
+
+corr_plot <- ggplot(data = test1, aes(y = `median(PD_whole_tree)`, x = (pos/(pos+neg)))) +
+  geom_smooth(method = "lm", color = "black") +
+  geom_point(color ="red", size = 3) +
+  geom_point(shape = 1, size =3, color = "black") +
+  ylab("Dietary Diversity") +
+  xlab("Positive/Total Correlations") +
+  annotate("text", x = 0.8, y = 0.06, label = paste("r =",signif(mytest$estimate, 1), ",", "pval =", signif(mytest$p.value, 1)), size = 3)
+
+corr_plot
+
+```

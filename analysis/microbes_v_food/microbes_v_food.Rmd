@@ -1,0 +1,469 @@
+---
+title: "Microbes v. food"
+author: "Abby"
+date: "May 9, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map <- map[grep("Blank", map$X.SampleID, invert = T),] # Drop blanks
+
+
+# add cols for later
+my_cols <- c("#990000", "#4c0000", "#ff8080", "#8c6969", "#ff7340", "#bf7960", "#592400","#ccad99", "#f28100", "#996326", "#f2ba79", "#332200", "#e6d2ac", "#ffcc00", "#66611a", "#7d8060", "#daf279", "#0c5900", "#3eb32d", "#00ff22", "#2d5939", "#86b392", "#0d3321", "#80ffc3", "#299da6", "#004759", "#b6def2", "#6ca6d9", "#003d99", "#1a3866", "#0000b3", "#120d33", "#9180ff", "#6600ff")
+
+```
+
+
+```{r load microbiome species taxa table, echo = FALSE}
+# load summarized clr table at desired level
+microbes <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_p.txt", row=1) 
+
+# drop soylent
+microbes <- microbes[,!(colnames(microbes) %in% c("MCTs11", "MCTs12"))]
+
+
+# # fix naming (with genus level)
+# microbes$newnames <- gsub(".*;g__", "", rownames(microbes))
+# 
+# microbes$newnames <- ifelse(microbes$newnames == "", 
+#                             paste0("family ",gsub(".*;f__", "", rownames(microbes))), 
+#                             microbes$newnames)
+# 
+# microbes$newnames <- ifelse(microbes$newnames == "family ;g__",
+#                             paste0("order ", gsub(".*;o__", "", rownames(microbes))),
+#                             microbes$newnames)
+# 
+# microbes <- remove_rownames(microbes)
+# 
+# microbes <- column_to_rownames(microbes, var = "newnames")
+# 
+# # still need to fix some of the naming
+
+```
+
+```{r load food otus, echo = FALSE}
+# load foods that appear in most people
+food <- read.table("data/processed_food/food.smry.otu.txt", sep = "\t", header = T, comment = "", row.names = "taxonomy")
+food <- food[!colnames(food) == "X.FoodID"]
+
+
+#summarize
+split = strsplit(rownames(food),";")
+foodStrings = sapply(split,function(x) paste(x[1:1],collapse=";"));
+food_L = rowsum(food,foodStrings);
+
+# foodStrings = sapply(split,function(x) paste(x[1:1], collapse = ";"))
+# food_L1 = rowsum(food,foodStrings)
+
+# drop soylent
+food <- food_L[,!(colnames(food_L) %in% c("MCTs11", "MCTs12"))]
+
+```
+
+
+
+
+```{r correlate microbes by username with foods by username, echo = FALSE, warning=FALSE, fig.width=15, fig.height=15}
+
+
+# set x and y to indivudal samples that overlap
+x <- food[colnames(food) %in% colnames(microbes)]
+y <- microbes[colnames(microbes) %in% colnames(x)]
+
+x <- as.data.frame(t(x))
+y <- as.data.frame(t(y))
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # plants
+    a<-as.numeric(x[,i]) # this was the step where moving from serina's code wasn't working
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, method = "spearman", use = "everything"), 
+             cor.test(a,b,method = "spearman")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.25, Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<=1])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<=1])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# Fix labeling
+dat.m$Food <- gsub(".*L1_", "", dat.m$Food)
+dat.m$Food <- gsub("_", " ", dat.m$Food)
+dat.m$Taxa <- gsub(".*;p__", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("_", " ", dat.m$Taxa)
+
+
+# # order the taxa
+# # make wide kegg v. taxa (as columns) filled with correlation
+# order <- dat.m %>% select(Taxa, Food, Correlation)
+# order <- order %>% spread(Taxa, Correlation)
+# order <- remove_rownames(order)
+# order <- column_to_rownames(order, "Food")
+# tax_order <- hclust((dist(1-cor(order))/2))$order
+# 
+# #can't reorder unless it's a factor first
+# dat.m$Taxa <- as.factor(dat.m$Taxa)
+# 
+# # reorder the factors in the dataframe to be in the taxaorder
+# dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+# 
+# # get the order pathways
+# order <- dat.m %>% select(Taxa, Food, Correlation)
+# order <- order %>% spread(Food, Correlation)
+# order <- remove_rownames(order)
+# order <- column_to_rownames(order, "Taxa")
+# food_order <- hclust((dist(1-cor(order))/2))$order
+# 
+# # set foods as factor
+# dat.m$Food <- as.factor(dat.m$Food)
+# 
+# # reorder the factors in the dataframe to be in the taxaorder
+# dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(x=Food, y=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="purple", mid="white", high="green", midpoint = 0, limit = c(-0.999,0.9999), space = "Lab", name = "Spearman") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=3) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  #labs(x = "Food Category", y = "Class") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+```
+
+
+# Repeat this but with the averages from the individual people comparisons
+
+```{r average_individual, echo = F}
+
+# load the list of correlations
+# need to repeat this for each person with the correct table
+load(file = "analysis/microbes_v_food/perperson.R")
+
+# Process for averaging
+# 1. Set non-sig correlations to 0
+# If pvalue is significant, new = sparcc as is, else new = 0
+allnew <- lapply(mylist, function(x) {transform (x, new = ifelse(x[,"fdr_pval"] <=0.5, x[,"Correlation"], 0))})
+allnew <- lapply(allnew, function(x) {x[,colnames(x) != "Significance"]})
+
+
+# 2. Average correlations and pvals
+allnew <- lapply(allnew, function(xi) {xi[,5:6]}) 
+
+require(abind)
+allnew <- abind(allnew, along = 3)
+allnew <- apply(allnew, c(1,2), function(x) mean(x, na.rm = TRUE))
+allnew <- as.data.frame(allnew)
+allnew$from <- mylist[[1]]$Food # we haven't removed anything, so names are the same
+allnew$to <- mylist[[2]]$Taxa # we haven't removed anything, so names are the same
+
+# 3. limit to ave pvals <=0.25, all correlations are tiny!
+allnew <- allnew[allnew$fdr_pval <= 1,]
+
+```
+
+# Repeat previous steps
+
+```{r write.table_ind_ave, echo = F}
+
+sigs <- allnew
+
+colnames(sigs) <- c("fdr_pval", "Correlation", "from", "to")
+
+  # clean up naming
+  sigs$from <- gsub("L1_", "", sigs$from)
+  #sigs$from <- gsub(".*;L1_", "", sigs$from)
+  sigs$from <- gsub("_", " ", sigs$from)
+  sigs$to <- gsub(".*;p__", "", sigs$to)
+  sigs$to <- gsub("_", " ", sigs$to)
+
+
+# order by correlation
+sigs <- sigs[order(sigs$Correlation, decreasing = F),]
+
+ # make column for matching with pairs to keep
+  #sigs$map <- paste(sigs$from, sigs$to)
+  
+  # This only works when you have same-same correlations, becuase this is food/taxa not taxa/taxa skip
+  # # remove the duplicates
+  # df <- sigs[,3:4]
+  #   for (j in 1:nrow(df)) {
+  #     df[j, ] = sort(df[j,])
+  #   }
+  # df = df[!duplicated(df),]
+  # 
+  # df$map <- paste(df$from, df$to)
+  # sigs <- sigs[sigs$map %in% df$map,]
+
+# print most significant values
+colnames(sigs)[3:4] <- c("Food", "Taxa")
+
+sigs <- remove_rownames(sigs)
+sigs[!colnames(sigs) %in% c("Pvalue", "map")]
+
+overall <- c(as.character(sigs$Food), as.character(sigs$Taxa))
+
+save(overall, file = "analysis/microbes_v_food/average_sigs.R")
+
+
+```
+
+```{r network_ind_ave, echo = F}
+# Make links table
+mylinks <- droplevels(sigs)
+colnames(mylinks)[3:4] <- c("from", "to")
+colnames(mylinks)[2] <- c("weight")
+mylinks$direction <- ifelse(mylinks$weight < 0, "neg", "pos")
+mylinks$weight <- abs(mylinks$weight)
+mylinks <- mylinks %>% select(from, to, weight, fdr_pval, direction)
+
+# Make nodes table
+myfood <- as.data.frame(mylist[[1]]$Food)
+myfood <- as.data.frame(myfood[!duplicated(myfood),])
+colnames(myfood) <- "node"
+mytaxa <- as.data.frame(mylist[[1]]$Taxa)
+mytaxa <- as.data.frame(mytaxa[!duplicated(mytaxa),])
+colnames(mytaxa) <- "node"
+
+mynodes <- rbind(myfood,mytaxa)
+mynodes <- as.data.frame(mynodes[!duplicated(mynodes),])
+colnames(mynodes) <- "id"
+mynodes$taxonomy <- mynodes$id
+mynodes$id <- gsub("L1_", "", mynodes$id)
+#mynodes$id <- gsub(".*;L1_", "", mynodes$id)
+mynodes$id <- gsub(".*;p__", "", mynodes$id)
+mynodes$id <- gsub("_", " ", mynodes$id)
+
+mynodes$taxonomy <- gsub(".__", "", mynodes$taxonomy)
+mynodes$taxonomy <- gsub("L._", "", mynodes$taxonomy)
+mynodes$taxonomy <- gsub("_", " ", mynodes$taxonomy)
+mynodes <- separate(mynodes, taxonomy, c("L1", "L2", "L3", "L4", "L5", "L6", "L7"), sep = ";", fill = "right")
+mynodes$L2 <- ifelse(is.na(mynodes$L2), mynodes$L1, mynodes$L2)
+ 
+list1 <- as.character(unique(mylinks$from))
+list2 <- as.character(unique(mylinks$to))
+list <- unique(c(list1, list2))
+
+mynodes <- mynodes[mynodes$id %in% list,]
+
+save(list, file ="analysis/microbes_v_food/list.R")
+save(mynodes, file="analysis/microbes_v_food/mynodes.R")
+
+library(igraph)
+
+net <- graph_from_data_frame(d = mylinks, vertices = mynodes, directed = F)
+
+# remove text labels
+V(net)$label <- NA
+
+# set colors by L2
+set.seed(40)
+cols_n <- length(unique(mynodes$L2))
+colrs <- sample(my_cols, 15)
+names(colrs) <- as.character(unique(mynodes$L2)) # must give colors names to match properly
+V(net)$color <- colrs[as.character(V(net)$L2)]
+
+
+# # set colors by genus
+# set.seed(42)
+# cols_n <- length(unique(mynodes$Genus))
+# cols <- colorRampPalette(brewer.pal(8, "Dark2"))
+# colrs <- sample(cols(cols_n))
+# names(colrs) <- as.character(unique(mynodes$Genus)) # must give colors names to match properly
+# V(net)$color <- colrs[as.character(V(net)$Genus)]
+
+
+# Change node size
+V(net)$size <- 7
+
+# Change Edge width
+E(net)$width <- -log(E(net)$fdr_pval)
+
+# Change Edge color
+e.col <- adjustcolor(c("red", "blue"), alpha = 0.6)
+names(e.col) <- c("pos", "neg")
+edge.col <- e.col[as.character(E(net)$direction)]
+
+# Set layout
+#l <- layout_with_kk(net)
+l <- layout_with_fr(net)
+#l <- layout_on_sphere(net)
+#l <- layout_in_circle(net)
+
+save(l, file = "analysis/microbes_v_food/layout.R")
+
+```
+
+```{r networkplot_ind_ave, echo = F, fig.width=8.5, fig.height = 10}
+# Plot network
+par(bg = "white")
+plot(net, layout = l, edge.color = edge.col, edge.curved=0, main = "Average of inidvidual correlations")
+legend(x = -.8, y = -1.1, names(colrs), pch = 21, col = "#000000", pt.bg = colrs, pt.cex = 2, cex = 0.8, ncol=2)
+
+
+```
+
+
+
+
+
+### NUTR variables:
+```{r correlate with nutr, echo = FALSE, warning=FALSE, fig.width=7.5}
+
+nutr <- read.table("analysis/procrustes/data/nutr_smry.txt", header = T, comment = "", row.names = 1)
+
+# drop soylent
+nutr <- nutr[,!(colnames(nutr) %in% c("MCTs11", "MCTs12"))]
+
+# limit to main macro/micro nutrients
+nutr <- nutr[1:65,]
+
+# set x and y to indivudal samples that overlap
+x <- nutr[colnames(nutr) %in% colnames(microbes)]
+y <- microbes[colnames(microbes) %in% colnames(x)]
+
+x <- as.data.frame(t(x))
+x <- x[order(rownames(x)),]
+y <- as.data.frame(t(y))
+
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # plants
+    a<-as.numeric(x[,i]) # this was the step where moving from serina's code wasn't working
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, use = "everything", method = "pearson"), 
+             cor.test(a,b,method = "pearson")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.25,Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<0.9])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<0.9])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# order the taxa
+# make wide kegg v. taxa (as columns) filled with correlation
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Taxa, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Taxa <- as.factor(dat.m$Taxa)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Taxa")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+# Fix labeling
+#dat.m$Taxa <- gsub(".*;g__", "", dat.m$Taxa)
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(x=Food, y=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.8,0.8), space = "Lab", name = "Spearman") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 4, hjust = 1), 
+        axis.text.y = element_text(size = 4),
+        axis.title = element_text(size = 6),
+        legend.title = element_text(size = 4), 
+        legend.key.size = unit(.07, "in"),
+        legend.text = element_text(size = 4)) +
+  labs(x = "Nutritional Variable", y = "Phyla") +
+  coord_fixed()
+
+```
+
+
+
+

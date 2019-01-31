@@ -1,0 +1,95 @@
+---
+title: "Meal timing"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+Is meal timing, specifically the average time between meals correalted with microbial features?
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+require(zoo)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# make the variables we want to test
+timing <- read.delim("raw/Uncleaned_diet/Items_to_use.txt")
+vars_keep <- c("X.SampleID", "UserName", "Occ_No", "Occ_Time", "Location", "FoodNum")
+occ_dat <- timing[,colnames(timing) %in% vars_keep]
+
+# eating occasions per day
+occ_per_day <- occ_dat %>% select(X.SampleID, Occ_No)
+occ_per_day <- occ_per_day[duplicated(occ_per_day) == FALSE,]
+occ_per_day <- occ_per_day %>% 
+  group_by(X.SampleID) %>% 
+  mutate(max = max(Occ_No)) %>%
+  select(X.SampleID, max)
+occ_per_day <- occ_per_day[duplicated(occ_per_day) == FALSE,]
+
+# ave eating occasions per person
+mean_occ <- occ_dat %>% 
+  select(X.SampleID, UserName, Occ_No) %>% 
+  group_by(UserName, X.SampleID) %>%
+  mutate(max = (max(Occ_No))) %>%
+  select(X.SampleID, UserName, max)
+ 
+mean_occ <- mean_occ[duplicated(mean_occ) == F,]
+
+mean_occ <- mean_occ %>%
+  group_by(UserName) %>% 
+  mutate(average = mean(max)) %>% 
+  select(UserName, average)
+  
+mean_occ <- mean_occ[!duplicated(mean_occ),]
+
+
+# average time between eating occassions?
+time <- occ_dat %>% select(X.SampleID, UserName, Occ_Time, Occ_No)
+time$Occ_Time <- as.character(time$Occ_Time)
+time <- time[!duplicated(time),]
+# format time for R
+time$new <- strptime(time$Occ_Time, "%m/%d/%Y %I:%M %p")
+
+test <- NULL
+
+for (i in unique(time$UserName)) {
+  tmp <- time[time$UserName == i,]
+  mean_diff <- (mean(diff(tmp$new)))
+  test <- rbind(mean_diff, test)
+}
+
+test <- time$new[1:6]
+test
+
+mean(diff(test))
+
+```
+
+```{r corr_mean_occ, echo = F}
+beta_div_cloud <- read.table("../beta_diversity/beta_div_cloud.txt", sep = "\t", header = T)
+
+mean_occ <- mean_occ[mean_occ$UserName %in% beta_div_cloud$UserName,]
+
+dat <- merge(beta_div_cloud, mean_occ)
+
+cor.test(dat$ave_cloud, dat$average)
+
+# average beta-dersity is not associated with average number of eating occassions 
+
+```
+

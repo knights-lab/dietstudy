@@ -1,0 +1,111 @@
+---
+title: "Targeted analysis of milk intake"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+This is an R markdown document. Use the Knit button at the top of Rstudio to create figures and pdf reports of this document's contents. 
+
+The goal of this document is to address the following hypothesis.
+
+Hypothesis: Intake of milk is correlated with microbime beta diversity.
+
+Plan to follow to test hypothesis:
+1. Start with all the food weight data summarized for each person alreadly limited to just milks
+2. Take this data and the food map and put it into qiime to get beta-diversity distance matrix
+3. Plot pcoa
+
+
+
+```{r setup, include=FALSE, message = FALSE}
+
+# Add packages used in knitting this document here:
+require(rmarkdown)
+require(knitr)
+require(ggplot2)
+require(dplyr)
+require(vegan)
+require(ape)
+require(tibble)
+
+
+# Update this first path to be the root directory for this project on your computer
+opts_knit$set(root.dir = "/Users/Abby/Documents/Projects/dietstudy/")
+
+# This creates a figure directory in the same directory where this .Rmd document is located
+# No need to change this code unless you want figures in different formats
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+
+```{r load data, echo = FALSE}
+
+# load the map example:
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# load the fiber data
+food <- read.table("data/processed_food/food.smry.otu.txt", sep = "\t", header = T, comment = "", stringsAsFactors = F)
+#fiber <- fiber %>% select(-X.FoodID)
+
+# remove soylents
+food <- food %>% select(-c(MCTs11, MCTs12))
+# remove bad data person
+food <- food %>% select(-c(MCTs05))
+
+# Do a little normalization
+# Find and get median colsums
+median_col <- median(colSums(food[,2:32]))
+# Normalize and multiply by median_col
+food[,2:32] <- sweep(food[,2:32], 2, colSums(food[,2:32]), "/")
+food[,2:32] <- ceiling(food[,2:32] * median_col)
+
+# Subset food to milk
+milk <- food %>% slice(grep("L1_Milk", fiber$taxonomy))
+
+# remove any milks with rowsums = 0
+keep <- rowSums(milk[,2:32])>0
+milk <- milk %>% filter(keep)
+
+# export for use with QIIME
+# Need X.FoodID column to be first column
+# Need taxonomy to be last column
+# Need X.FoodID to be "#FoodID" needs a # to work with QIIME
+colnames(milk)[1] <- "#FoodID" 
+write.table(milk, "data/processed_food/milk_weight.txt", sep = "\t", row.names = F, quote = F)
+
+```
+
+
+
+```{r sub, echo = F, fig.height=7.5, fig.width=7.5}
+# Import the beta diversity table from grains_beta (weighted or unweighted)
+food_beta <- read.table(file="data/grains_data/grains_beta/weighted_unifrac_grains_fiber.txt")
+
+# refer this code to make a pcoa you will have to fix naming and play with the data structure of the dataframe called plot to get this to work.
+
+#betad as matrix 
+plot <- data.frame(pcoa(food_beta)$vectors)
+
+# move rownames to a column
+plot <- rownames_to_column(plot, var = "UserName")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot <- inner_join(plot, map, by = 'UserName')
+
+Grain <- ggplot(plot, aes(x = Axis.1, y = Axis.2)) +
+  geom_point(aes(fill = plot$UserName), alpha=1, pch = 21, size = 5) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  labs(title="Uweighted Unifrac blah grains") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic() +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "bottom",
+        legend.title = element_blank())
+
+Grain
+
+```
+

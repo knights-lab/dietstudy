@@ -1,0 +1,407 @@
+---
+title: "Alpha diversity variability"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+Alpha diversity analyses in our healthy population.
+Alpha diversity of food and microbiome have been calculated in QIIME.
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(12, "Set3")
+cols2 <- colorRampPalette(cols)
+```
+
+
+```{r import alpha div, include =F, message = F}
+# import matching maps
+food_map <- read.table("data/maps/food_map.txt", header = T, sep = "\t", comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", header = T, sep = "\t", comment = "")
+
+# import tables from qiime
+food_alpha <- read.delim("data/processed_food/dhydrt_alpha.txt", sep = "\t", row.names = 1)
+tax_alpha <- read.delim("data/processed_tax/taxa_alpha.txt", sep = "\t", row.names = 1)
+
+# move sample IDs to a column
+food_alpha <- rownames_to_column(food_alpha, "X.SampleID")
+tax_alpha <- rownames_to_column(tax_alpha, "X.SampleID")
+
+# merge with map to make future tasks easier
+colnames(food_map)[1] <- "X.SampleID"
+food_alpha <- inner_join(food_alpha, food_map)
+tax_alpha <- inner_join(tax_alpha, tax_map)
+
+```
+
+
+```{r food div per subject, echo = F}
+# get order for plotting(from chao1 alpha)
+micro_order <- tax_alpha %>% group_by(UserName) %>% dplyr::summarize(ave = mean(chao1, na.rm=T))
+# sort by mean
+micro_order <- micro_order[order(micro_order$ave),]
+# get factor names for ordering
+ord_factor <- as.character(micro_order$UserName)
+
+# set colors
+set.seed(4)
+subject_cols <- (sample(cols2(34)))
+
+plot_food_per_subject <- food_alpha
+
+# reorder by ordered factor
+plot_food_per_subject$UserName <- factor(plot_food_per_subject$UserName, levels = ord_factor)
+
+
+diet <- ggplot(data = plot_food_per_subject, aes(x = UserName, y = PD_whole_tree, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Diet alpha diversity (PD whole tree)", x = " ") +
+  coord_flip()
+
+```
+
+
+```{r microbiome div per subject, echo = F}
+
+plot_tax_per_subject <- tax_alpha 
+
+ord_factor <- gsub("MCTs", "", ord_factor)
+plot_tax_per_subject$UserName <- gsub("MCTs", "", plot_tax_per_subject$UserName)
+# reorder by ordered factor
+plot_tax_per_subject$UserName <- factor(plot_tax_per_subject$UserName, levels = ord_factor)
+
+
+# plot chao1
+micro_chao <- ggplot(data = plot_tax_per_subject, aes(x = UserName, y = chao1, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7),
+        axis.title.y = element_text(size = 7),
+        axis.text.y = element_text(size = 4),
+        legend.position = "none") +
+  labs(y = "Microbiome alpha diversity (chao1)\nRichness", x = "") +
+   coord_flip()
+  
+# plot shannon
+micro_shan <- ggplot(data = plot_tax_per_subject, aes(x = UserName, y = shannon, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Microbiome alpha diversity (Shannon)\nEvenness", x = " ") +
+  coord_flip()
+
+```
+
+1. Is there a relationship between mean alpha diveristy of the microbiome and mean alpha diveristy of the diet?
+
+```{r plotdietmicrobiome, echo = F, message = F, fig.height=3, fig.width=11}
+plot_grid( micro_chao,micro_shan, diet, #labels = c("A", "B", "C"), 
+           ncol = 3, align = "h", rel_widths = c(1,.89, .89))
+
+```
+
+
+```{r calculate change in alpha div for each subject, include = F}
+
+# double check everything is in the order i.e order by UserName
+food_alpha <- food_alpha[order(food_alpha$X.SampleID),]
+tax_alpha<- tax_alpha[order(tax_alpha$X.SampleID),]
+
+
+myfoodalpha <- food_alpha %>% 
+  group_by(UserName) %>%
+  dplyr::summarize(mean(PD_whole_tree))
+  #summarize(mean(abs(diff(PD_whole_tree))))
+  
+
+mytaxalpha <- tax_alpha %>%
+  group_by(UserName) %>%
+  dplyr::summarise(mean(chao1))
+  #summarize(mean(abs(diff(chao1))))
+
+mytaxalphashan <- tax_alpha %>% 
+  group_by(UserName) %>% 
+  dplyr::summarise(mean(shannon))
+  #summarize(mean(abs(diff(shannon))))
+
+```
+
+
+```{r diet v microbiome, echo = F, fig.width=8, fig.height=4, message = F}
+
+myplot <- inner_join(myfoodalpha, mytaxalpha)
+myplot <- inner_join(myplot, mytaxalphashan)
+
+myplot <- myplot %>% 
+  filter(#UserName != "MCTs11", #Soylent
+         #UserName != "MCTs12", #Soylent
+         UserName != "MCTs02", #Dropped
+         UserName != "MCTs17", #Dropped
+         UserName != "MCTs30") #Dropped
+
+
+colnames(myplot) <- c("UserName", "Food_alpha", "Tax_chao1", "Tax_shan")
+
+corr_eqn <- function(x,y, digits = 2) {
+  corr_coef <- round(cor(x, y), digits = digits)
+  corr_pval <- round(cor.test(x, y)$p.value, 3)
+  rho <- paste("italic(r) == ", corr_coef) 
+  pval <- paste("italic(pvalue) ==", corr_pval)
+  paste(rho, pval, sep = " ~ ")
+}
+
+
+labels = data.frame(x =150, y =30, label = corr_eqn(myplot$Food_alpha, myplot$Tax_chao1))
+
+chao1 <- ggplot(myplot, aes(x = Tax_chao1, y = Food_alpha)) +
+  geom_smooth(method = "lm", color = "black", fill = "grey") + 
+  geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+  geom_point(shape = 1,size = 3,colour = "black") +
+  labs(x = "Mean microbiome alpha diversity (Chao1)", y = "Mean dietary alpha diversity (PD whole tree)") +
+  geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+
+labels = data.frame(x = 3.5, y =30, label = corr_eqn(myplot$Food_alpha, myplot$Tax_shan))
+
+shan <- ggplot(myplot, aes(x = Tax_shan, y = Food_alpha)) +
+  geom_smooth(method = "lm", color = "black", fill = "grey") + 
+  geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+  geom_point(shape = 1,size = 3,colour = "black") +
+  labs(x = "Mean microbiome alpha diversity (Shannon)", y = " ") +
+  geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+
+plot_grid(chao1, shan, labels = c("A", "B"), ncol = 2, align = "h")
+```
+
+2. Are any taxa associated with microbiome alpha diversity?
+
+```{r taxa alpha div, echo = F}
+
+# load taxa relative abundances
+tax_ra <- read.table("data/processed_tax/taxonomy_norm.txt", header = T, row.names = 1, sep= "\t", comment = "")
+
+# get average relative abunance for each individual
+#initiate the dataframe with the correct information
+tax_subject <- data.frame(matrix(nrow=nrow(tax_ra), ncol=0))
+rownames(tax_subject) <- rownames(tax_ra)
+
+#loop through and summarize by username
+for (i in unique(tax_map$UserName)){
+  subgroup <- tax_map[tax_map$UserName == i,]
+  sub <- tax_ra[(colnames(tax_ra) %in% subgroup[,"X.SampleID"])]
+  tmp <- as.data.frame(rowMeans(sub))
+  colnames(tmp) <- i
+  tax_subject <- cbind(tax_subject,tmp)
+  } 
+
+
+pvals <- apply(tax_subject, 1, function(x) {cor.test(x, mytaxalpha$`mean(chao1)`, method = "spearman", exact = F)$p.value})
+cors <- apply(tax_subject, 1, function(x) {cor(x, mytaxalpha$`mean(chao1)`, method = "spearman")})
+qvals <- p.adjust(pvals, method = "fdr")
+sigs <- as.data.frame(t(rbind(qvals,cors)))
+sigs <- sigs[sigs$qvals <0.05,]
+sigs <- sigs[order(sigs$qvals),]
+
+#sigs
+```
+
+Plots of significantly correlated taxa:
+
+```{r sig plots, echo=F, fig.width=4, fig.height = 4}
+
+plot <- as.data.frame(t(tax_subject))
+plot <- plot[,colnames(plot) %in% rownames(sigs)]
+plot <- rownames_to_column(plot, var = "UserName")
+plot <- merge(mytaxalpha, plot)
+
+colnames(plot) <- gsub("?.*s__", "", colnames(plot))
+colnames(plot) <- gsub("\\/", "_", colnames(plot))
+colnames(plot) <- gsub("\\-", "_", colnames(plot))
+colnames(plot) <- gsub("\\]", "", colnames(plot))
+colnames(plot) <- gsub("\\[", "", colnames(plot))
+
+rownames(sigs) <- gsub("?.*s__", "", rownames(sigs))
+rownames(sigs) <- gsub("\\/", "_", rownames(sigs))
+rownames(sigs) <- gsub("\\-", "_", rownames(sigs))
+rownames(sigs) <- gsub("\\]", "", rownames(sigs))
+rownames(sigs) <- gsub("\\[", "", rownames(sigs))
+
+colnames(plot)[2] <- "mean_chao1"
+
+
+for (i in rownames(sigs)) {
+  rho <- paste("italic(r) == ", round(sigs[i,"cors"], 3))
+  q <- paste("italic(qval) ==", round(sigs[i,"qvals"], 3))
+  labels = data.frame(x = quantile(plot[,i])[4], y =quantile(plot[,"mean_chao1"])[1], 
+                      label = paste(rho, q, sep = " ~ "))
+   
+   print(ggplot(data = plot, aes_string(x = i, y = "mean_chao1")) + 
+           geom_smooth(method = "lm", color = "black", fill = "grey") +
+           geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+           geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+           theme(legend.position = "none") +
+           geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+           labs(y = "Alpha diversity (Chao1)")) 
+}
+
+sigs
+```
+
+3. Are any foods correlated with alpha diveristy of diet?
+
+```{r food v alpha div, echo = F}
+# load taxa relative abundances
+food <- read.table("data/processed_food/dhydrt.otu.txt", header = T, row.names = "taxonomy", sep= "\t", comment = "")
+food <- food[,!(colnames(food) == "X.FoodID")]
+
+# drop singletons
+food <- food[rowSums(food > 0) > 1,]
+
+# collapse at l3
+# Summarizing at species
+split <- strsplit(rownames(food),";")             # Split and rejoin on lv7 to get species level
+foodStrings <- sapply(split,function(x) paste(x[1:3],collapse=";"))
+food <- rowsum(food,foodStrings)              # Collapse by taxonomy name
+
+# normalize
+food <- sweep(food, 2, colSums(food), "/") #note, people who reported no fruits and vegetables get NaN
+
+# get average relative abunance for each individual
+#initiate the dataframe with the correct information
+food_subject <- data.frame(matrix(nrow=nrow(food), ncol=0))
+rownames(food_subject) <- rownames(food)
+
+#loop through and summarize by username
+for (i in unique(food_map$UserName)){
+  subgroup <- food_map[food_map$UserName == i,]
+  sub <- food[(colnames(food) %in% subgroup[,"X.SampleID"])]
+  tmp <- as.data.frame(rowMeans(sub, na.rm = T))
+  colnames(tmp) <- i
+  food_subject <- cbind(food_subject,tmp)
+}
+
+# Drop soylents (no vegetables)
+#soylent <- c("MCTs11", "MCTs12")
+#food_subject <- food_subject[, !(colnames(food_subject) %in% soylent)]
+#mytaxalpha <- mytaxalpha[!mytaxalpha$UserName %in% soylent,]
+
+pvals <- apply(food_subject, 1, function(x) {cor.test(x, myfoodalpha$`mean(PD_whole_tree)`, method = "spearman", exact = F, na.rm = T)$p.value})
+cors <- apply(food_subject, 1, function(x) {cor(x, myfoodalpha$`mean(PD_whole_tree)`, method = "spearman")})
+qvals <- p.adjust(pvals, method = "fdr")
+sigs <- as.data.frame(t(rbind(qvals,cors)))
+sigs <- sigs[order(sigs$qvals),]
+sigs <- sigs[sigs$qvals < 0.05,]
+
+
+```
+
+```{r food sig plots, echo=F, fig.width=4, fig.height = 4}
+
+plot <- as.data.frame(t(food_subject))
+plot <- plot[,colnames(plot) %in% rownames(sigs)]
+plot <- rownames_to_column(plot, var = "UserName")
+plot <- merge(myfoodalpha, plot)
+
+colnames(plot) <- gsub("?.*L3_", "", colnames(plot))
+colnames(plot) <- gsub("\\/", "_", colnames(plot))
+colnames(plot) <- gsub("\\-", "_", colnames(plot))
+
+rownames(sigs) <- gsub("?.*L3_", "", rownames(sigs))
+rownames(sigs) <- gsub("\\/", "_", rownames(sigs))
+rownames(sigs) <- gsub("\\-", "_", rownames(sigs))
+
+colnames(plot)[2] <- "mean_PD_whole_tree"
+
+
+for (i in rownames(sigs)) {
+  rho <- paste("italic(r) == ", round(sigs[i,"cors"], 3))
+  q <- paste("italic(qval) ==", round(sigs[i,"qvals"], 3))
+  labels = data.frame(x = quantile(plot[,i])[4], y =quantile(plot[,"mean_PD_whole_tree"])[1], 
+                      label = paste(rho, q, sep = " ~ "))
+   
+   print(ggplot(data = plot, aes_string(x = i, y = "mean_PD_whole_tree")) + 
+           geom_smooth(method = "lm", color = "black", fill = "grey") +
+           geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+           geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+           theme(legend.position = "none") +
+           geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+           labs(y = "Diet alpha diversity (PD whole tree)")) 
+}
+
+sigs
+```
+
+
+2. Is dietary alpha diveristy is associated with the ability to successfully match diet with microbiome using procrustes?
+
+```{r diet alpha v procrutes sig, echo = F}
+procrustes <- map_username[map_username$UserName %in% myfoodalpha$UserName,]
+procrustes <- merge(procrustes, myfoodalpha)
+                  
+# drop soylents
+soylent <- c("MCTs11", "MCTs12")
+procrustes <- procrustes[!(procrustes$UserName %in% soylent),]
+
+# Dietary alpha diversity doesn't affect ability to achieve significant procrustes
+t.test(procrustes$`mean(PD_whole_tree)`~as.factor(procrustes$Procrustes))
+cor.test(procrustes$`mean(PD_whole_tree)`, procrustes$Monte.Carlo.p.value)
+
+# Microbiome alpha diveristy does not affect ability to predict microbiome from diet
+procrustes <- inner_join(procrustes, mytaxalpha)
+t.test(procrustes$`mean(chao1)` ~as.factor(procrustes$Procrustes))
+cor.test(procrustes$`mean(chao1)`, procrustes$Monte.Carlo.p.value)
+
+ggplot(data = procrustes,aes(x = Procrustes, y = `mean(PD_whole_tree)`)) +
+  geom_boxplot(aes(fill = Procrustes), outlier.shape = NA, lwd = .25) +
+  geom_jitter(aes(fill = UserName), shape = 21, size = 3, width = 0.25, alpha = 1) +
+  scale_fill_manual(values = c(subject_cols[1:32], "lightgrey", "darkgrey")) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  labs(x = "Procrustes result", y = "Dietary alpha diversity\n(PD whole tree)")
+
+```
+
+Also did a check for foods correalted with alpha diversity (both chao1 and shannon) but didn't find any foods assocaited.

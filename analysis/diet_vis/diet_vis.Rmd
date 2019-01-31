@@ -1,0 +1,189 @@
+---
+title: "Diet visualization"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+  toc: true
+  dev: png
+---
+
+Visualizing diet for all subjects.
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+require(ggdendro)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(8, "Set3")
+cols2 <- colorRampPalette(cols)
+
+# get the order of usernames for plotting
+# order <- read.table("data/processed_tax/taxa_alpha.txt", header = T, sep ="\t", comment = "")
+# colnames(order)[1] <- "X.SampleID"
+# order <- inner_join(order, map, by = "X.SampleID")
+# order <- order %>% group_by(UserName) %>% summarize(mean(chao1))
+# order <- order[order(order$`mean(chao1)`, decreasing = T),]
+# ord_factor <- as.character(order$UserName)
+ord_factor <- load(file = "data/order_by_similaritiy.rdata")
+ord_factor <- sim.order
+
+```
+
+```{r food dist, echo = F, fig.width=13, fig.height=4}
+
+food_dist <- read.delim("data/processed_food/dhydrt_smry_beta/weighted_unifrac_dhydrt.smry.otu.txt", sep = "\t", row = 1)
+food_dist <- as.dist(food_dist)
+myclust <- hclust(food_dist, method = "average")
+
+order <- myclust$order
+
+food_dist <- as.matrix(food_dist)
+food_dist <- food_dist[,order]
+ord_factor <- colnames(food_dist)
+
+#ord_factor <- c(ord_factor, "MCTs11", "MCTs12")
+
+
+dend <- as.dendrogram(myclust)
+ddata <- dendro_data(dend, type = "rectangle")
+
+labs <- label(ddata)
+labs <- inner_join(labs, map_username, by = c("label"="UserName" ))
+labs$label <- gsub("MCTs", "", labs$label)
+
+dend_plot <- ggplot(segment(ddata)) + 
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_text(data=labs, aes(label=label, x =x, y =0, color = labs$Race.Ethnicity, angle = 0, hjust = 0.5, vjust = 1)) +
+  theme_dendro() +
+  theme(legend.position = "top", 
+        legend.title = element_blank())
+  
+dend_plot  
+
+```
+There are three dietary clusters when we consider all the foods consumed by participants in our study (4 if you count the Soylent outliers).
+
+```{r import food and reshape for plotting, include =F, message = F}
+# import diet data
+food <- read.table("data/processed_food/dhydrt.txt", header = T, sep = "\t", comment = "", row.names = "taxonomy")
+food <- food[, !(colnames(food) == "X.FoodID")]
+
+
+# collapse at level 3
+# Summarizing at different levels - makes changes to everything downstream
+split <- strsplit(rownames(food),";")             # Split and rejoin on lv7 to get species level
+foodStrings <- sapply(split,function(x) paste(x[1:2],collapse=";"))
+food<- rowsum(food,foodStrings)              # Collapse by taxonomy name
+
+# how many unique foods?
+length(unique(rownames(food)))
+
+# drop to top 20 ish foods
+food <- food[rowMeans(food) > 0.01,]
+
+#food <- log(food+1)
+food <- sweep(sqrt(food),2,colSums(sqrt(food)),'/')
+
+# convert to relative abundance
+#food <- sweep(food, 2, colSums(food), "/")
+
+# sort by highest average relative abundance
+food <- food[order(rowMeans(food), decreasing = T),]
+
+# make food ordering factor
+food_ord_factor <- as.character(rownames(food))
+
+plot <- as.data.frame(t(food))
+plot <- rownames_to_column(plot, var = "X.SampleID")
+plot <- melt(plot, id = "X.SampleID", variable.name = "Food")
+
+# label low abundance foods as "<x% abundance"
+#plot$Food <- as.character(plot$Food) #convert to character
+#plot$Food[plot$value < 0.10] <- "< 10% abund." #rename genera with < 2.5% abundance
+
+# combine all "<x% abundance" foods into one for plotting
+plot <- plot %>% group_by(X.SampleID, Food) %>% dplyr::summarise(newvalue = sum(value))
+
+# fix labeling for plotting
+plot$Food <- gsub("L1_", " ", plot$Food)
+plot$Food <- gsub("L2_", " ", plot$Food)
+plot$Food <- gsub("_", " ", plot$Food)
+
+# merge with map to get day variable
+plot <- merge(plot, map, by = "X.SampleID")
+
+```
+
+
+```{r food_subject_day_wide, echo = F, fig.height=6, fig.width=15.5}
+# set seed to get nice colors
+set.seed(3)
+
+# get right number of colors for plotting
+no_cols <- length(unique(plot$Food))
+colors <- sample(cols2(no_cols))
+
+# order participants by their microbiome diversity
+# reorder by ordered factor and rename
+plot$UserName <- gsub("MCTs", "", plot$UserName)
+ord_factor <- gsub("MCTs", "", ord_factor)
+plot$UserName <- factor(plot$UserName, levels = ord_factor)
+
+# reorder food levels
+food_ord_factor <- gsub("L1_", " ", food_ord_factor)
+food_ord_factor <- gsub("L2_", " ", food_ord_factor)
+food_ord_factor <- gsub("_", " ", food_ord_factor)
+plot$Food <- as.factor(plot$Food)
+plot$Food <-factor(plot$Food, levels = food_ord_factor)
+
+# make the plot
+myplot<-ggplot(plot, aes(x = StudyDayNo, y = newvalue, fill = Food)) +
+  #facet_grid(UserName~.) +
+  facet_grid(.~UserName) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors) +
+  scale_x_discrete(drop = FALSE) +
+  theme_classic() +
+  theme(strip.text.x = element_text(angle = 0, size = 7, face = "italic"),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.text.y = element_text(size = 3),
+        axis.title = element_text(size = 7),
+        plot.title = element_text(hjust = 0.5),
+        axis.title.x = element_blank(),
+        strip.background = element_rect(color = "grey"), 
+        legend.position = "bottom",
+        legend.title = element_blank()) +
+  guides(fill = guide_legend(reverse = FALSE, 
+                             keywidth = 0.5, 
+                             keyheight = 0.5, 
+                             ncol = 3)) +
+  ylab("Relative Abundance\n sqrt(Dehydrated food weight)") 
+ # xlab("Study Day") +
+ #ggtitle("Dietary Intake of Subjects by Day - ordered by average dietary similarity")
+
+myplot
+```
+
+```{r cowplot, echo = F, fig.width=16, fig.height = 7}
+#plot_grid(dend_plot, plot, ncol = 1, scale = c(1,.95), rel_heights = c(1, 1))
+
+```
+

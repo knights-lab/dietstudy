@@ -1,0 +1,513 @@
+---
+title: "Microbes v. microbes"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+library(vegan)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs/', dev = c("png"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+```
+
+
+```{r load microbiome species Taxa table, echo = FALSE}
+
+microbes <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_s.txt", row=1) 
+#microbes <- read.delim("raw/hoho.otu_norm.txt", row = 1)
+```
+
+
+
+```{r correlate microbes with microbes, echo = FALSE, warning=FALSE, fig.width=15, fig.height=15}
+
+
+# set x and y to indivudal samples that overlap
+x <- microbes
+y <- microbes
+
+x <- as.data.frame(t(x))
+y <- as.data.frame(t(y))
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # plants
+    a<-as.numeric(x[,i]) # this was the step where moving from serina's code wasn't working
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, method = "pearson", use = "everything"), 
+             cor.test(a,b,method = "pearson")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$fdr_pval <- ifelse(dat$Correlation == 1, 1, dat$fdr_pval)
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.001, 0.01, 0.05, Inf), label=c("***", "**", "*", "")) #converts numeric p-values to factors based on significance level
+
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<0.25])
+
+Taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% Taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<0.25])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# drop duplicates (so we only get one half of the matrix when we plot)
+# dat.m <- dat.m[order(dat.m$Food),]
+# dat.m <- dat.m[order(dat.m$Taxa),]
+# dat.m <- dat.m[order(dat.m$Correlation),]
+# dat.m <- dat.m[order(dat.m$Pvalue),]
+# dat.m <- dat.m[order(dat.m$fdr_pval),]
+# 
+# even_indexes<-seq(2,nrow(dat.m),2)
+# dat.m <- dat.m[even_indexes,]
+
+
+# Fix labeling
+dat.m$Food <- gsub("?.*s__", "", dat.m$Food)
+dat.m$Food <- gsub("?.*g__", "Genus ", dat.m$Food)
+dat.m$Food <- gsub("?.*o__", "Order ", dat.m$Food)
+dat.m$Food <- gsub("?.*c__", "Class ", dat.m$Food)
+dat.m$Food <- gsub("?.*f__", "Family ", dat.m$Food)
+dat.m$Food <- gsub("?.*k__", "Kingdom ", dat.m$Food)
+dat.m$Food <- gsub("?.*p__", "Phylum ", dat.m$Food)
+dat.m$Food <- gsub(";NA", "", dat.m$Food)
+dat.m$Food <- gsub("\\[", "", dat.m$Food)
+dat.m$Food <- gsub("\\]", "", dat.m$Food)
+
+
+dat.m$Taxa <- gsub("?.*s__", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*g__", "Genus ", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*o__", "Order ", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*c__", "Class ", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*f__", "Family ", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*k__", "Kingdom ", dat.m$Taxa)
+dat.m$Taxa <- gsub("?.*p__", "Phylum ", dat.m$Taxa)
+dat.m$Taxa <- gsub(";NA", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("\\[", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("\\]", "", dat.m$Taxa)
+
+
+# order the Taxa
+# make wide kegg v. Taxa (as columns) filled with correlation
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Taxa, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Taxa <- as.factor(dat.m$Taxa)
+
+# reorder the factors in the dataframe to be in the Taxaorder
+dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Taxa")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the Taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(x=Food, y=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  # scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.95,0.95), space = "Lab", name = "Spearman") +
+  scale_fill_gradient2(low="purple", mid="white", high="green", midpoint = 0, limit = c(-.99,.99), space = "Lab", name = "Pearson") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 7, hjust = 1), 
+        axis.text.y = element_text(size = 7),
+        axis.title = element_blank()) +
+  #labs(x = "Species", y = "Species") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+
+
+
+# make a network with ggnet or one of the other r packages?
+
+```
+
+```{r write.table, echo = F}
+
+sigs <- dat.m[dat.m$fdr_pval <= 0.05,]
+
+colnames(sigs) <- c("from", "to", "Correlation", "Pvalue", "fdr_pval", "Significance")
+
+# order by correlation
+sigs <- sigs[order(sigs$Correlation, decreasing = T),]
+
+ # make column for matching with pairs to keep
+  sigs$map <- paste(sigs$from, sigs$to)
+  
+  # remove the duplicates
+  df <- sigs[,1:2]
+    for (j in 1:nrow(df)) {
+      df[j, ] = sort(df[j,])
+    }
+  df = df[!duplicated(df),]
+  
+  df$map <- paste(df$from, df$to)
+  sigs <- sigs[sigs$map %in% df$map,]
+
+# print most significant values
+colnames(sigs)[1:2] <- c("Taxa1", "Taxa2")
+
+sigs <- remove_rownames(sigs)
+sigs[!colnames(sigs) %in% c("Pvalue", "map")]
+
+overall <- as.character(unique(sigs$Taxa1, sigs$Taxa2))
+
+save(overall, file = "analysis/microbe_v_microbe/average_sigs.R")
+
+
+```
+
+# View as a network
+```{r network, echo = F}
+# Make links table
+mylinks <- droplevels(sigs)
+colnames(mylinks)[1:3] <- c("from", "to", "weight")
+mylinks$direction <- ifelse(mylinks$weight < 0, "neg", "pos")
+mylinks$weight <- abs(mylinks$weight)
+
+# Make nodes table
+mynodes <- as.data.frame(rownames(microbes))
+colnames(mynodes) <- "id"
+mynodes$taxonomy <- mynodes$id
+
+# fix naming
+mynodes$id <- gsub("?.*s__", "", mynodes$id)
+mynodes$id <- gsub("?.*g__", "Genus ", mynodes$id)
+mynodes$id <- gsub("?.*o__", "Order ", mynodes$id)
+mynodes$id <- gsub("?.*c__", "Class ", mynodes$id)
+mynodes$id <- gsub("?.*f__", "Family ", mynodes$id)
+mynodes$id <- gsub("?.*k__", "Kingdom ", mynodes$id)
+mynodes$id <- gsub("?.*p__", "Phylum ", mynodes$id)
+mynodes$id <- gsub(";NA", "", mynodes$id)
+mynodes$id <- gsub("\\[", "", mynodes$id)
+mynodes$id <- gsub("\\]", "", mynodes$id)
+
+
+mynodes$taxonomy <- gsub(".__", "", mynodes$taxonomy)
+mynodes <- separate(mynodes, taxonomy, c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";")
+
+mynodes$Class <- ifelse(mynodes$Class == "NA", paste0("Uncl. ",mynodes$Phylum), mynodes$Class)
+mynodes$Class <- ifelse(mynodes$Class == "Uncl. NA", paste0("Uncl. ", mynodes$Kingdom), mynodes$Class)
+
+list1 <- as.character(unique(mylinks$from))
+list2 <- as.character(unique(mylinks$to))
+list <- unique(c(list1, list2))
+
+mynodes <- mynodes[mynodes$id %in% list,]
+
+save(list, file ="analysis/microbe_v_microbe/list.R")
+save(mynodes, file="analysis/microbe_v_microbe/mynodes.R")
+
+library(igraph)
+
+net <- graph_from_data_frame(d = mylinks, vertices = mynodes, directed = F)
+
+# remove text labels
+V(net)$label <- NA
+
+# set colors by class
+set.seed(42)
+cols_n <- length(unique(mynodes$Class))
+colrs <-  c("#ffd940", "#008c4b", "#00138c", "#8c235b", "#ffbfbf", "#8c7723", "#468c75", "#8091ff", "#ff80c4", "#8c3123", "#fff2bf", "#40fff2", "#69698c", "#ff0044", "#ff9180", "#e5ff80", "#bffbff", "#5940ff", "#8c696e", "#8c7369", "#858c69", "#40d9ff", "#c480ff", "#ff8c40", "#4b8c00", "#23698c", "#69238c", "#8c4b00", "#bfffbf", "#004b8c", "#eabfff", "#ffc480", "#40ff59", "#80c4ff", "#ff40f2")
+colrs <- colrs[1:length(unique(mynodes$Class))]
+names(colrs) <- as.character(unique(mynodes$Class)) # must give colors names to match properly
+V(net)$color <- colrs[as.character(V(net)$Class)]
+
+
+# # set colors by genus
+# set.seed(42)
+# cols_n <- length(unique(mynodes$Genus))
+# cols <- colorRampPalette(brewer.pal(8, "Dark2"))
+# colrs <- sample(cols(cols_n))
+# names(colrs) <- as.character(unique(mynodes$Genus)) # must give colors names to match properly
+# V(net)$color <- colrs[as.character(V(net)$Genus)]
+
+
+# Change node size
+V(net)$size <- 6
+
+# Change Edge width
+#E(net)$width <- -log(E(net)$fdr_pval)
+E(net)$width <- 3
+
+# Change Edge color
+e.col <- adjustcolor(c("green", "purple"), alpha = 0.6)
+names(e.col) <- c("pos", "neg")
+edge.col <- e.col[as.character(E(net)$direction)]
+
+# Set layout
+#l <- layout_with_kk(net)
+l <- layout_with_fr(net)
+#l <- layout_on_sphere(net)
+#l <- layout_in_circle(net)
+```
+
+```{r networkplot, echo = F, fig.width=8.5, fig.height = 10}
+# Plot network
+par(bg = "white")
+plot(net, layout = l, edge.color = edge.col, edge.curved=0, main = "Overall study average significant correlations")
+legend(x = 0.1, y = -1.1, names(colrs), pch = 21, col = "#000000", pt.bg = colrs, pt.cex = 2, cex = 0.8, ncol=2)
+
+
+```
+
+# Repeat this but with the averages from the individual people comparisons
+
+```{r average_individual, echo = F}
+
+# load the list of correlations
+# need to repeat this for each person with the correct table
+load(file = "analysis/microbe_v_microbe/perperson.R") # called allnew
+
+# Process for averaging
+# 1. Set non-sig correlations to 0
+# If pvalue is significant, new = correlation as is, else new = 0
+allnew <- lapply(mylist, function(x) {transform (x, sum_corr = ifelse(x[,"fdr_pval"] <= 0.25, x[,"Correlation"], 0))})
+allnew <- lapply(allnew, function(x) {x[,colnames(x) != "Significance"]})
+allnew <- lapply(allnew, function(x) {transform (x, sig = ifelse(x[, "fdr_pval"] <=0.25, 1, 0))})
+
+
+# 2. Average correlations and count pvalues
+allcorrs <- lapply(allnew, function(xi) {xi[,c("sum_corr", "sig")]}) 
+
+require(abind)
+allcorrs <- abind(allcorrs, along = 3)
+allcorrs <- apply(allcorrs, c(1,2), function(x) sum(x))
+allcorrs <- as.data.frame(allcorrs)
+allcorrs$from <- mylist[[1]]$Taxa1 # we haven't removed anything, so names are the same
+allcorrs$to <- mylist[[2]]$Taxa2 # we haven't removed anything, so names are the same
+
+# 3. limit to fdr_pvalue <0.25 in at least 1/2 of subjects
+sig_in_ppl <- 17 # half of the subjects
+allcorrs <- allcorrs[allcorrs$sig > sig_in_ppl,]
+allcorrs$ave_corr <- allcorrs$sum_corr/allcorrs$sig
+# drop any average correlations under 0.7
+allcorrs <- allcorrs[allcorrs$ave_corr > 0.7,]
+
+```
+
+# Repeat previous steps
+
+```{r write.table_ind_ave, echo = F}
+
+sigs <- allcorrs[,-1]
+
+colnames(sigs) <- c("Count_sig_fdr", "from", "to", "ave_corr")
+
+  # clean up naming
+
+sigs$from <- gsub("?.*s__", "", sigs$from)
+sigs$from <- gsub("?.*g__", "Genus ", sigs$from)
+sigs$from <- gsub("?.*o__", "Order ", sigs$from)
+sigs$from <- gsub("?.*c__", "Class ", sigs$from)
+sigs$from <- gsub("?.*f__", "Family ", sigs$from)
+sigs$from <- gsub("?.*k__", "Kingdom ", sigs$from)
+sigs$from <- gsub("?.*p__", "Phylum ", sigs$from)
+sigs$from <- gsub(";NA", "", sigs$from)
+sigs$from <- gsub("\\[", "", sigs$from)
+sigs$from <- gsub("\\]", "", sigs$from)
+
+sigs$to <- gsub("?.*s__", "", sigs$to)
+sigs$to <- gsub("?.*g__", "Genus ", sigs$to)
+sigs$to <- gsub("?.*o__", "Order ", sigs$to)
+sigs$to <- gsub("?.*c__", "Class ", sigs$to)
+sigs$to <- gsub("?.*f__", "Family ", sigs$to)
+sigs$to <- gsub("?.*k__", "Kingdom ", sigs$to)
+sigs$to <- gsub("?.*p__", "Phylum ", sigs$to)
+sigs$to <- gsub(";NA", "", sigs$to)
+sigs$to <- gsub("\\[", "", sigs$to)
+sigs$to <- gsub("\\]", "", sigs$to)
+
+
+
+# order by correlation
+sigs <- sigs[order(sigs$ave_corr, decreasing = T),]
+
+
+
+ # make column for matching with pairs to keep
+  sigs$map <- paste(sigs$from, sigs$to)
+  
+  # remove the duplicates
+  df <- sigs[,2:3]
+    for (j in 1:nrow(df)) {
+      df[j, ] = sort(df[j,])
+    }
+  df = df[!duplicated(df),]
+  
+  df$map <- paste(df$from, df$to)
+  sigs <- sigs[sigs$map %in% df$map,]
+
+# print most significant values
+colnames(sigs)[2:3] <- c("Taxa1", "Taxa2")
+
+sigs <- remove_rownames(sigs)
+sigs[!colnames(sigs) %in% c("map")]
+
+overall <- as.character(unique(sigs$Taxa1, sigs$Taxa2))
+
+save(overall, file = "analysis/microbe_v_microbe/average_sigs.R")
+
+
+```
+
+
+```{r network_ind_ave, echo = F}
+# Make links table
+mylinks <- droplevels(sigs)
+colnames(mylinks)[2:3] <- c("from", "to")
+colnames(mylinks)[4] <- c("weight")
+mylinks$direction <- ifelse(mylinks$weight < 0, "neg", "pos")
+mylinks$weight <- abs(mylinks$weight)
+mylinks <- mylinks %>% select(from, to, weight, Count_sig_fdr, direction)
+
+# Make nodes table
+mynodes <- as.data.frame(mylist[[1]]$Taxa1)
+mynodes <- as.data.frame(mynodes[!duplicated(mynodes),])
+colnames(mynodes) <- "id"
+mynodes$taxonomy <- mynodes$id
+
+# fix naming
+mynodes$id <- gsub("?.*s__", "", mynodes$id)
+mynodes$id <- gsub("?.*g__", "Genus ", mynodes$id)
+mynodes$id <- gsub("?.*o__", "Order ", mynodes$id)
+mynodes$id <- gsub("?.*c__", "Class ", mynodes$id)
+mynodes$id <- gsub("?.*f__", "Family ", mynodes$id)
+mynodes$id <- gsub("?.*k__", "Kingdom ", mynodes$id)
+mynodes$id <- gsub("?.*p__", "Phylum ", mynodes$id)
+mynodes$id <- gsub(";NA", "", mynodes$id)
+mynodes$id <- gsub("\\[", "", mynodes$id)
+mynodes$id <- gsub("\\]", "", mynodes$id)
+
+
+mynodes$taxonomy <- gsub(".__", "", mynodes$taxonomy)
+mynodes <- separate(mynodes, taxonomy, c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";")
+
+mynodes$Class <- ifelse(mynodes$Class == "NA", paste0("Uncl. ",mynodes$Phylum), mynodes$Class)
+mynodes$Class <- ifelse(mynodes$Class == "Uncl. NA", paste0("Uncl. ", mynodes$Kingdom), mynodes$Class)
+
+list1 <- as.character(unique(mylinks$from))
+list2 <- as.character(unique(mylinks$to))
+list <- unique(c(list1, list2))
+
+mynodes <- mynodes[mynodes$id %in% list,]
+
+save(list, file ="analysis/microbe_v_microbe/list.R")
+save(mynodes, file="analysis/microbe_v_microbe/mynodes.R")
+
+library(igraph)
+
+net <- graph_from_data_frame(d = mylinks, vertices = mynodes, directed = F)
+
+# remove text labels
+V(net)$label <- NA
+
+# set colors by class
+set.seed(42)
+cols_n <- length(unique(mynodes$Class))
+#colrs <- brewer.pal(cols_n, "Dark2")
+colrs <-  c("#f28100", "#005fb3", "#f2e200", "#000a4d", "#e6f2b6", "#0000ff", "#0f7300", "#da79f2", "#00ff44", "#8c4662", "#66b8cc", "#d9003a")
+colrs <- colrs[1:cols_n]
+names(colrs) <- as.character(unique(mynodes$Class)) # must give colors names to match properly
+V(net)$color <- colrs[as.character(V(net)$Class)]
+
+
+# # set colors by genus
+# set.seed(42)
+# cols_n <- length(unique(mynodes$Genus))
+# cols <- colorRampPalette(brewer.pal(8, "Dark2"))
+# colrs <- sample(cols(cols_n))
+# names(colrs) <- as.character(unique(mynodes$Genus)) # must give colors names to match properly
+# V(net)$color <- colrs[as.character(V(net)$Genus)]
+
+
+# Change node size
+V(net)$size <- 6
+
+# Change Edge width
+#E(net)$width <- (E(net)$Count_sig_fdr)/10
+E(net)$width <- 2
+
+# Change Edge color
+e.col <- adjustcolor(c("green", "red"), alpha = 1)
+names(e.col) <- c("pos", "neg")
+edge.col <- e.col[as.character(E(net)$direction)]
+
+# Set layout
+#l <- layout_with_kk(net)
+l <- layout_with_fr(net)
+#l <- layout_on_sphere(net)
+#l <- layout_in_circle(net)
+
+# show only strong correlations
+cut.off <- 0.7
+net <- delete.edges(net, E(net)[weight<cut.off])
+
+save(l, file = "analysis/microbe_v_microbe/layout.R")
+```
+
+```{r networkplot_ind_ave, echo = F, fig.width=8.5, fig.height = 9.5}
+# Plot network
+par(bg = "white")
+plot(net, layout = l, edge.color = edge.col, edge.curved=0)
+title(main = "Average Network", cex.main = 3, line = -0.5)
+legend(x = 0.2, y = -1.1, names(colrs), pch = 21, col = "#000000", pt.bg = colrs, pt.cex = 2, cex = 0.8, ncol=2)
+
+
+```

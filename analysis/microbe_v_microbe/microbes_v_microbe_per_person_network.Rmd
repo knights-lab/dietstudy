@@ -1,0 +1,170 @@
+---
+title: "Microbes v. microbes per person"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+library(vegan)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs_per_person_networks/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+```
+
+
+# Make a correlation network for each person in the study and look for conserved relationships across people.
+
+```{r networks, echo=F, fig.width=8.5, fig.height=11}
+
+load(file = "figures/figure 2/perperson.R")
+load(file = "figures/figure 2/average_sigs.R")
+
+# set significance level
+alph <- 0.25
+
+
+for (i in names(mylist)) {
+  tmp <- as.data.frame(mylist[i])
+  sigs <- tmp # subset to each person's data
+  colnames(sigs) <- c("from", "to", "corr", "pval", "from_slope", "to_slope", "fdr_pval", "sig")
+  sigs <- sigs[!sigs$from==sigs$to,]    # remove correlations between same taxa
+  sigs <- sigs[sigs$fdr_pval <= alph,] # limit to significant correlations
+  
+  # clean up naming
+  sigs$from <- gsub("?.*s__", "", sigs$from)
+sigs$from <- gsub("?.*g__", "Genus ", sigs$from)
+sigs$from <- gsub("?.*o__", "Order ", sigs$from)
+sigs$from <- gsub("?.*c__", "Class ", sigs$from)
+sigs$from <- gsub("?.*f__", "Family ", sigs$from)
+sigs$from <- gsub("?.*k__", "Kingdom ", sigs$from)
+sigs$from <- gsub("?.*p__", "Phylum ", sigs$from)
+sigs$from <- gsub(";NA", "", sigs$from)
+sigs$from <- gsub("\\[", "", sigs$from)
+sigs$from <- gsub("\\]", "", sigs$from)
+
+sigs$to <- gsub("?.*s__", "", sigs$to)
+sigs$to <- gsub("?.*g__", "Genus ", sigs$to)
+sigs$to <- gsub("?.*o__", "Order ", sigs$to)
+sigs$to <- gsub("?.*c__", "Class ", sigs$to)
+sigs$to <- gsub("?.*f__", "Family ", sigs$to)
+sigs$to <- gsub("?.*k__", "Kingdom ", sigs$to)
+sigs$to <- gsub("?.*p__", "Phylum ", sigs$to)
+sigs$to <- gsub(";NA", "", sigs$to)
+sigs$to <- gsub("\\[", "", sigs$to)
+sigs$to <- gsub("\\]", "", sigs$to)
+
+  
+  # make column for matching with pairs to keep
+  sigs$map <- paste(sigs$from, sigs$to)
+  sigs <- sigs[sigs$from %in% overall,]
+  sigs <- sigs[sigs$to %in% overall,]
+  
+  # remove the duplicates
+  df <- sigs[,1:2]
+    for (j in 1:nrow(df)) {
+      df[j, ] = sort(df[j,])
+    }
+  df = df[!duplicated(df),]
+  
+  df$map <- paste(df$from, df$to)
+  sigs <- sigs[sigs$map %in% df$map,]
+  
+  # Make links table
+    mylinks <- droplevels(sigs[,1:7])
+    colnames(mylinks)[3] <- "weight"
+    mylinks$direction <- ifelse(mylinks$weight < 0, "neg", "pos")
+    mylinks$weight <- abs(mylinks$weight)
+    
+    # Make nodes table
+    load("figures/figure 2/mynodes.R")
+    
+    library(igraph)
+    
+    net <- graph_from_data_frame(d = mylinks, vertices = mynodes, directed = F)
+    
+    # remove text labels
+    V(net)$label <- NA
+    
+    # set colors by class
+#     set.seed(42)
+#     cols_n <- length(unique(mynodes$Class))
+#     #colrs <- brewer.pal(cols_n, "Dark2")
+#     colrs <-  c("#f28100", "#005fb3", "#f2e200", "#000a4d", "#e6f2b6", "#0000ff", "#0f7300", "#da79f2", "#00ff44", "#8c4662", "#66b8cc", "#d9003a")
+# colrs <- colrs[1:length(unique(mynodes$Class))]
+#     names(colrs) <- as.character(unique(mynodes$Class)) # must give colors names to match properly
+#     V(net)$color <- colrs[as.character(V(net)$Class)]
+
+
+    # set colors by phylum
+    # set.seed(42)
+    # cols_n <- length(unique(mynodes$Phylum))
+    # cols <- colorRampPalette(brewer.pal(8, "Dark2"))
+    # colrs <- sample(cols(cols_n))
+    # names(colrs) <- as.character(unique(mynodes$Phylum)) # must give colors names to match properly
+    # V(net)$color <- colrs[as.character(V(net)$Phylum)]
+    
+    # # set colors by genus
+set.seed(42)
+cols_n <- length(unique(mynodes$Genus))
+colrs <- c("#bf0000", "#f29d3d", "#a3d9b1", "#bfd9ff", "#f780ff", "#ff0000", "#ffe1bf", "#00d957", "#0020f2", "#e60099", "#730f00", "#7f6600", "#336655", "#293aa6", "#a6538a", "#8c4f46", "#e5c339", "#00ffcc", "#333a66", "#40202d", "#f29979", "#fbffbf", "#00b3a7", "#8091ff", "#cc335c", "#594943", "#a3d936", "#003033", "#300059", "#400009", "#cc5200", "#354020", "#39c3e6", "#cbace6", "#d9a3aa", "#7f5940", "#6a8040", "#006fa6", "#cc00ff", "#402910", "#0a4d00", "#566573", "#83008c")
+colrs <- colrs[1:cols_n]
+names(colrs) <- as.character(unique(mynodes$Genus)) # must give colors names to match properly
+V(net)$color <- colrs[as.character(V(net)$Genus)]
+
+    
+    
+    # Change node size
+    V(net)$size <- 7
+    
+    # Change Edge width
+    E(net)$width <- -log(E(net)$fdr_pval)/5
+    #E(net)$width <- 2
+    
+     # Change Edge color
+    e.col <- adjustcolor(c("green", "red"), alpha = 0.3)
+    names(e.col) <- c("pos", "neg")
+    
+    edge.col <- e.col[as.character(E(net)$direction)]
+    
+       # Set layout
+    #l <- layout_with_kk(net)
+    #l <- layout_with_fr(net)
+    #l <- layout_on_sphere(net)
+    #l <- layout_in_circle(net)
+    load("figures/figure 2/layout.R")
+    
+    # Only show significant relationsihps
+    cut.off <- 0.25 
+    net <- delete.edges(net, E(net)[fdr_pval>cut.off])
+    
+    j = gsub("MCTs", "", i)
+    par(bg = "white")
+   
+    plot(net, layout = l, edge.color = edge.col, edge.curved=0.2); title(main = j, cex.main = 5, line = -1) 
+    # legend(x = 0.3, y = -1.3, names(colrs), pch = 21, col = "#000000", pt.bg = colrs, pt.cex = 2, cex = 0.8, ncol=2)
+
+}
+
+```

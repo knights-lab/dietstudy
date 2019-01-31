@@ -1,0 +1,181 @@
+---
+title: "Test MCTs with CLR-adjusted taxonomy"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(RColorBrewer) 
+require(cowplot)
+require(tidyverse)
+require(stringr)
+require(dplyr)
+require(ape)
+require(vegan)
+require(reshape2)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(8, "Set3")
+cols2 <- colorRampPalette(cols)
+
+# set colors
+subject_cols <- (sample(cols2(34)))
+```
+
+```{r basic stats, include = F}
+
+# How many grams oil consumed in each arm?
+aggregate(map_username_drop$oilGrams.assigned, list(map_username_drop$Supplement), mean)
+
+aggregate(map_username_drop$oilGrams.assigned, list(map_username_drop$Supplement), sd)
+
+```
+
+
+
+```{r import taxonomy, include =F, message = F}
+# clr taxonomy
+tax <- read.delim("data/processed_tax/taxonomy_clr_g.txt", sep ="\t", row.names = 1)
+
+# import matching map
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", header = T, sep = "\t", comment = "")
+
+# Average microbiome for first days (pre supplementation)
+baseline <- data.frame(matrix(nrow=nrow(tax), ncol=0))
+rownames(baseline) <- rownames(tax)
+
+#loop through and average first 3 days
+for (i in unique(tax_map$UserName)){
+  subgroup <- tax_map[tax_map$UserName == i,]
+  subgroup <- subgroup[subgroup$StudyDayNo <=7,]
+  subgroup <- subgroup[1:3,]
+  taxsub <- tax[,colnames(tax) %in% subgroup$X.SampleID]
+  tmp <- as.data.frame(rowMeans(taxsub))            
+  colnames(tmp) <- i
+  baseline <- cbind(baseline,tmp)
+}
+
+
+# Microboime for last day we have 
+final <- data.frame(matrix(nrow=nrow(tax), ncol=0))
+rownames(final) <- rownames(tax)
+
+#loop through and take the last day we have for each person
+for (i in unique(tax_map$UserName)){
+  subgroup <- tax_map[tax_map$UserName == i,]
+  subgroup <- subgroup[subgroup$StudyDayNo >= 10,]
+  subgroup <- subgroup[order(subgroup$StudyDayNo, decreasing = TRUE),]
+  subgroup <- subgroup[1,]
+  taxsub <- tax[,colnames(tax) %in% subgroup$X.SampleID]
+  # if (dim(subgroup)[1] == 1) {
+  #   tmp <- as.data.frame(taxsub)
+  # } else
+  #tmp <- as.data.frame(rowMeans(taxsub))      
+  tmp <- as.data.frame(taxsub)
+  colnames(tmp) <- i
+  final <- cbind(final,tmp)
+}
+
+# create map that containes just these subjects, in this order
+tax_smry_map <- map_username[map_username$UserName %in% colnames(baseline),]
+
+# drop people of non-white ethnicity
+tax_smry_map <- tax_smry_map[tax_smry_map$Race.Ethnicity == "White",]
+baseline <- baseline[,colnames(baseline) %in% tax_smry_map$UserName]
+final <- final[,colnames(final) %in% tax_smry_map$UserName]
+
+# calculate the difference between baseline and final - should really do this seperately as counts, then convert to clr.
+change <- (final-baseline)
+
+# or do each seperately
+base.final <- cbind(baseline,final)
+base.final.mct <- base.final[,colnames(base.final) %in% tax_smry_map$UserName[tax_smry_map$Supplement == "MCT"]]
+basel.final.evoo <- base.final[,colnames(base.final) %in% tax_smry_map$UserName[tax_smry_map$Supplement == "EVOO"]]
+
+```
+
+```{r tax associated with mct, echo = F}
+
+# Change by supplement group?
+# in the mct group are there any species differences between pre and post?
+pvals.mct <- apply(base.final.mct, 1, function(x) {t.test(x[1:14], x[15:28], paired = TRUE)$p.value})
+qvals.mct <- p.adjust(pvals.mct, method = "fdr")
+qvals.mct[qvals.mct <=0.25] # yes
+
+# in the evoo group are there any species differences between pre and post?
+pvals.evoo <- apply(basel.final.evoo, 1, function(x) {t.test(x[1:14], x[15:28], paired = TRUE)$p.value})
+qvals.evoo <- p.adjust(pvals.evoo, method = "fdr")
+qvals.evoo[qvals.evoo <=0.25] # no
+
+sigs <- qvals.evoo[qvals.evoo <=0.15]
+
+sigs <- sigs[order(sigs)]
+
+sigs
+
+# regardless of method used, we get the same outcome
+# nothing changes when we reduce to just people of white ethnicity
+# So it really looks like there was no microbiome effect of the oils any benefit from EVOO is not microbiome mediated
+
+```
+
+
+```{r plot bacteria}
+
+plot.baseline <- baseline[rownames(baseline) %in% names(sigs),]
+plot.baseline.t <- as.data.frame(t(plot.baseline))
+plot.baseline.t$timepoint <- "baseline"
+plot.baseline.t <- rownames_to_column(plot.baseline.t, var = "UserName")
+
+plot.final <- final[rownames(final) %in% names(sigs),]
+plot.final.t <- as.data.frame(t(plot.final))
+plot.final.t$timepoint <- "final"
+plot.final.t <- rownames_to_column(plot.final.t, var = "UserName")
+
+plot <- rbind(plot.final.t, plot.baseline.t)
+plot <- inner_join(plot, tax_smry_map)
+
+names(sigs) <- gsub(".*s__", "", names(sigs))
+colnames(plot) <- gsub(".*s__", "", colnames(plot))
+names(sigs) <- gsub("]", "", names(sigs))
+colnames(plot) <- gsub("]", "", colnames(plot))
+names(sigs) <- gsub("\\[", "", names(sigs))
+colnames(plot) <- gsub("\\[", "", colnames(plot))
+
+
+for (i in names(sigs)) {
+  print(ggplot(plot, aes_string(x = "timepoint", y = i, color = "Supplement")) +
+          geom_point() +
+          geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE) 
+  )
+}
+
+
+
+```
+
+```{r corr_with_LDL, echo = F}
+
+cor.test(plot$Bacteroides_fragilis[plot$Supplement == "EVOO"], plot$LDL.Final[plot$Supplement == "EVOO"], method ="spearman", exact = F)
+
+cor.test(plot$Parabacteroides_johnsonii[plot$Supplement == "EVOO"], plot$LDL.Final[plot$Supplement == "EVOO"], method ="spearman", exact = F)
+
+cor.test(plot$Roseburia_hominis[plot$Supplement == "EVOO"], plot$LDL.Final[plot$Supplement == "EVOO"], method ="spearman", exact = F)
+
+
+ggplot(plot, aes(plot$Bacteroides_fragilis, plot$LDL.Final, color = plot$Supplement)) + geom_smooth(method = "lm") + geom_point()
+
+```

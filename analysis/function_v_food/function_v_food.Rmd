@@ -1,0 +1,316 @@
+---
+title: "Function v. food"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs/', dev = c("png"), dpi = 300)
+
+```
+
+
+```{r load module table, echo = FALSE}
+# load KEGG table (per person) This is just the highly variable ones
+func <- read.delim("data/processed_KEGG/preprocessed_KEGG_modules.txt_filtered", row=1) 
+
+# limit to top 3 most variable
+highvar <- c("M00450", "M00529", "M00347")
+matches <- unique(grep(paste(highvar, collapse = "|"),rownames(func), value = TRUE))
+func <- func[matches,]
+
+# load KEGG table avereaged per person without soylent
+func_ave <- read.delim("data/processed_KEGG/ave_KEGG_modules_no_soy.txt", row = 1)
+
+
+# load the module map
+modules_map <- read.table("raw/functional/Kegg_ID_Map_plus.txt", header = T, sep = "\t", comment = "", stringsAsFactors = F)
+# clean KEGG_Label, drop the stuff in []
+modules_map$KEGG_Label <- gsub(" \\[[^\\]]*\\]", "",modules_map$KEGG_Label, perl = T)
+# limit map to the relevant modules
+modules_map <- modules_map[modules_map$KEGG_Label %in% rownames(func),]
+
+rownames(modules_map) <- modules_map$KEGG_Label
+
+# add module map to the average function table
+func_ave <- merge(modules_map, func_ave, by = 0)
+
+# remove unnneded columns
+rownames(func_ave) <- func_ave$Row.names
+func_ave <- func_ave %>% select(-c(Row.names,Shogun_ID,BugBase_ID,KEGG_Label))
+
+#make the rownames
+rownames(func_ave) <- paste0(func_ave$Reference_hierarchy, sep = "; ", rownames(func_ave))
+
+#remove more unneeded columns
+func_ave <- func_ave %>% select(-Reference_hierarchy)
+
+# optional: limit to just metabolic function pathways
+func_ave_met <- func_ave[grep("Pathway module", rownames(func_ave)),]
+
+# #optional - collapse by type of function
+# split <- strsplit(rownames(func), ";")
+# funcStrings <- sapply(split, function(x) paste(x[1:2], collapse = "; "))
+# func <- rowsum(func,funcStrings)
+
+```
+
+```{r load food otus, echo = FALSE}
+# load foods per person
+food <- read.table("data/processed_food/dhydrt.smry.no.soy.txt", sep = "\t", header = T, comment = "", row.names = "taxonomy")
+# drop X.FoodID
+food <- food[,!colnames(food) == "X.FoodID"]
+
+#summarize
+split = strsplit(rownames(food),";")
+foodStrings = sapply(split,function(x) paste(x[1:1],collapse=";"));
+food_L = rowsum(food,foodStrings);
+
+```
+
+
+
+
+```{r correlate microbes by username with foods by username, echo = FALSE, warning=FALSE}
+# set x and y to indivudal samples that overlap
+x <- food_L[colnames(food_L) %in% colnames(func_ave)]
+y <- func_ave[colnames(func_ave) %in% colnames(x)]
+
+x <- as.data.frame(t(x))
+y <- as.data.frame(t(y))
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # func
+    a<-as.numeric(x[,i]) 
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, method = "spearman", use = "everything"), 
+             cor.test(a,b,method = "spearman")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Module","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.25, Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# export L2 correlation
+# write.table(dat, "analysis/function_v_food/Correlation_L2Food_Function.txt", sep = "\t", row.names = F, col.names = T, quote = F)
+
+# export L3 correlation
+#write.table(dat, "analysis/function_v_food/Correlation_L3Food_Function.txt", sep = "\t", row.names = F, col.names = T, quote = F)
+
+
+```
+
+```{r plot correlations, fig.height=6, fig.width=12, echo = F}
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Module[dat.c$fdr_pval<=1])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Module %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<=1])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# Fix labeling
+# Fix labeling
+dat.m$Reference_hierarchy <- dat.m$Module
+
+dat.m$Food <- gsub(".*L1_", "", dat.m$Food)
+dat.m$Food <- gsub("_", " ", dat.m$Food)
+
+dat.m$Module <- gsub("^[^;]*;", "", dat.m$Module)
+dat.m$Module <- gsub("^[^;]*;", "", dat.m$Module) 
+
+
+
+# order the taxa
+# make wide kegg v. taxa (as columns) filled with correlation
+order <- dat.m %>% select(Module, Food, Correlation)
+order <- order %>% spread(Module, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Module <- as.factor(dat.m$Module)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Module <- factor(dat.m$Module, levels(dat.m$Module)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Module, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Module")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+plot <- dat.m
+plot$Reference_hierarchy <- gsub("^[^;]*;", "", plot$Reference_hierarchy) # drop everything before the first ;
+plot$Reference_hierarchy <- gsub(";.*$", "", plot$Reference_hierarchy) # drop everything before the last ;
+
+#plot the correlations for the collapsed levels
+ggplot(data = plot, aes(x=Food, y=Module, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  coord_fixed(ratio = 1) + 
+  facet_grid(plot$Reference_hierarchy~., scales = "free", space = "free")+
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.8,0.8), space = "Lab", name = "Spearman") +
+  geom_text(data = plot, aes(label=Significance), color="black", size=2) +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  labs(y = "KEGG Module", x = "Level 3 food category") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic", size = 9), 
+        strip.background = element_rect(color="grey", fill = "white"),
+        plot.title = element_text(hjust = 0.5, size = 15))
+```
+
+
+```{r correlate with nutr, echo = FALSE, warning=FALSE, fig.height = 11, fig.width=25}
+# 
+nutr <- as.data.frame(t(read.table("data/processed_nutr/nutr_65_smry_no_soy.txt", header = T, comment = "", row.names = 1)))
+
+# drop fat sub categories (only do with nutr_65 table)
+#nutr_minimal <- nutr[,-c(41:48, 50:53,55:61)]
+#nutr <- nutr_minimal
+
+# set x and y to indivudal samples that overlap with function
+x <- nutr[rownames(nutr) %in% colnames(func_ave)]
+y <- func_ave[colnames(func_ave) %in% rownames(x)]
+ 
+x <- as.data.frame(x)
+x <- x[order(rownames(x)),]
+y <- as.data.frame(t(y))
+
+
+dat <- NULL
+
+for(i in colnames(x)){ 
+  for(j in colnames(y)){ 
+    a<-as.numeric(x[,i])
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, use = "everything", method = "pearson"),
+             cor.test(a,b,method = "pearson")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.25,Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<=1])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,]
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<=1])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+
+# Fix labeling
+dat.m$Reference_hierarchy <- dat.m$Taxa
+
+dat.m$Taxa <- gsub("^[^;]*; ", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("^[^;]*; ", "", dat.m$Taxa)
+
+# order the taxa
+# make wide kegg v. taxa (as columns) filled with correlation
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Taxa, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Taxa <- as.factor(dat.m$Taxa)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Taxa")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+plot <- dat.m
+plot$Reference_hierarchy <- gsub("^[^;]*;", "", plot$Reference_hierarchy) # drop everything before the first ;
+plot$Reference_hierarchy <- gsub(";.*$", "", plot$Reference_hierarchy) # drop everything before the last ;
+
+
+#plot the correlations for the collapsed levels
+ggplot(data = plot, aes(x=Food, y=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  coord_fixed(ratio = 1) + 
+  facet_grid(plot$Reference_hierarchy~., scales = "free", space = "free")+
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.8,0.8), space = "Lab", name = "Spearman") +
+  geom_text(data = plot, aes(label=Significance), color="black", size=2) +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  labs(y = "KEGG Module", x = "Average Nutrient Intake") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic", size = 9), 
+        strip.background = element_rect(color="grey", fill = "white"),
+        plot.title = element_text(hjust = 0.5, size = 15))
+
+```
+

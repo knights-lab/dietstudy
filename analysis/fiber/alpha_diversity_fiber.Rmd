@@ -1,0 +1,257 @@
+---
+title: "Alpha diversity variability fiber"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+  toc: true
+  dev: png
+---
+
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(12, "Set3")
+cols2 <- colorRampPalette(cols)
+```
+
+
+```{r import alpha div, include =F, message = F}
+# import matching maps
+food_map <- read.table("data/maps/food_map.txt", header = T, sep = "\t", comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", header = T, sep = "\t", comment = "")
+
+# import tables from qiime
+food_alpha <- read.delim("data/processed_food/fiber_alpha.txt", sep = "\t", row.names = 1)
+tax_alpha <- read.delim("data/processed_tax/taxa_alpha.txt", sep = "\t", row.names = 1) #from the taxonomy counts values
+
+# move sample IDs to a column
+food_alpha <- rownames_to_column(food_alpha, "X.SampleID")
+tax_alpha <- rownames_to_column(tax_alpha, "X.SampleID")
+
+# merge with map to make future tasks easier
+colnames(food_map)[1] <- "X.SampleID"
+food_alpha <- inner_join(food_alpha, food_map)
+tax_alpha <- inner_join(tax_alpha, tax_map)
+
+# for now, limit all to just the pre samples
+# food_alpha <- food_alpha %>% filter(Timing == "Pre")
+# tax_alpha <- tax_alpha %>% filter(Timing == "Pre")
+
+
+```
+
+
+
+
+```{r food div per subject, echo = F}
+# Limit analysis to just pre-supp.
+
+# get order for plotting(from chao1 alpha)
+micro_order <- tax_alpha %>% group_by(UserName) %>% dplyr::summarize(ave = median(chao1, na.rm=T))
+
+# sort by mean
+micro_order <- micro_order[order(micro_order$ave),]
+# get factor names for ordering
+ord_factor <- as.character(micro_order$UserName)
+
+# set colors
+set.seed(4)
+subject_cols <- (sample(cols2(34)))
+
+plot_food_per_subject <- food_alpha
+
+# reorder by ordered factor
+plot_food_per_subject$UserName <- factor(plot_food_per_subject$UserName, levels = ord_factor)
+
+
+diet <- ggplot(data = plot_food_per_subject, aes(x = UserName, y = PD_whole_tree, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Fiber alpha diversity (PD whole tree)", x = " ") +
+  coord_flip()
+
+
+```
+
+
+```{r microbiome div per subject, echo = F}
+
+plot_tax_per_subject <- tax_alpha 
+
+ord_factor <- gsub("MCTs", "", ord_factor)
+plot_tax_per_subject$UserName <- gsub("MCTs", "", plot_tax_per_subject$UserName)
+# reorder by ordered factor
+plot_tax_per_subject$UserName <- factor(plot_tax_per_subject$UserName, levels = ord_factor)
+
+
+# plot chao1
+micro_chao <- ggplot(data = plot_tax_per_subject, aes(x = UserName, y = chao1, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7),
+        axis.title.y = element_text(size = 7),
+        axis.text.y = element_text(size = 4),
+        legend.position = "none") +
+  labs(y = "Microbiome alpha diversity (chao1)\nRichness", x = "") +
+   coord_flip()
+  
+# plot shannon
+micro_shan <- ggplot(data = plot_tax_per_subject, aes(x = UserName, y = shannon, fill = UserName)) +
+  geom_boxplot(fill = subject_cols, outlier.shape = NA, lwd = .25) +
+  geom_jitter(shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 7), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Microbiome alpha diversity (Shannon)\nEvenness", x = " ") +
+  coord_flip()
+
+```
+
+1. Is there a relationship between mean alpha diveristy of the microbiome and mean alpha diveristy of fiber intake?
+
+```{r plotdietmicrobiome, echo = F, message = F, fig.height=5, fig.width=10}
+plot_grid( micro_chao,micro_shan, diet, #labels = c("A", "B", "C"), 
+           ncol = 3, align = "h", rel_widths = c(1,.89, .89))
+
+```
+TODO: Also need to consider what happens if we look at the alpha diversity of diet at a higher level. Can't use PD-whole tree for this, but if we collapse at level 3 first, then look at overall diversity metrics, like shannon or chao1 do we see relationships?
+
+```{r calculate change in alpha div for each subject, include = F}
+
+# double check everything is in the order i.e order by UserName
+food_alpha <- food_alpha[order(food_alpha$X.SampleID),]
+tax_alpha<- tax_alpha[order(tax_alpha$X.SampleID),]
+
+
+myfoodalpha <- food_alpha %>% 
+  group_by(UserName) %>%
+  dplyr::summarize(mean(PD_whole_tree))
+  #summarize(mean(abs(diff(PD_whole_tree))))
+  
+
+mytaxalpha <- tax_alpha %>%
+  group_by(UserName) %>%
+  dplyr::summarise(mean(chao1))
+  #summarize(mean(abs(diff(chao1))))
+
+mytaxalphashan <- tax_alpha %>% 
+  group_by(UserName) %>% 
+  dplyr::summarise(mean(shannon))
+  #summarize(mean(abs(diff(shannon))))
+
+```
+
+
+```{r diet v microbiome, echo = F, fig.width=8, fig.height=4, message = F}
+
+myplot <- inner_join(myfoodalpha, mytaxalpha)
+myplot <- inner_join(myplot, mytaxalphashan)
+
+myplot <- myplot %>% 
+  filter(#UserName != "MCTs11", #Soylent
+         #UserName != "MCTs12", #Soylent
+         UserName != "MCTs02", #Dropped
+         UserName != "MCTs17", #Dropped
+         UserName != "MCTs30") #Dropped
+
+
+colnames(myplot) <- c("UserName", "Food_alpha", "Tax_chao1", "Tax_shan")
+
+corr_eqn <- function(x,y, digits = 2) {
+  corr_coef <- round(cor(x, y), digits = digits)
+  corr_pval <- round(cor.test(x, y)$p.value, 3)
+  rho <- paste("italic(r) == ", corr_coef) 
+  pval <- paste("italic(pvalue) ==", corr_pval)
+  paste(rho, pval, sep = " ~ ")
+}
+
+
+labels = data.frame(x =190, y =30, label = corr_eqn(myplot$Food_alpha, myplot$Tax_chao1))
+
+chao1 <- ggplot(myplot, aes(x = Tax_chao1, y = Food_alpha)) +
+  geom_smooth(method = "lm", color = "black", fill = "grey") + 
+  geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+  geom_point(shape = 1,size = 3,colour = "black") +
+  labs(x = "Mean microbiome alpha diversity (Chao1)", y = "Mean dietary alpha diversity (PD whole tree)") +
+  geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+
+labels = data.frame(x = 3.5, y =30, label = corr_eqn(myplot$Food_alpha, myplot$Tax_shan))
+
+shan <- ggplot(myplot, aes(x = Tax_shan, y = Food_alpha)) +
+  geom_smooth(method = "lm", color = "black", fill = "grey") + 
+  geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+  geom_point(shape = 1,size = 3,colour = "black") +
+  labs(x = "Mean microbiome alpha diversity (Shannon)", y = " ") +
+  geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+
+plot_grid(chao1, shan, labels = c("A", "B"), ncol = 2, align = "h")
+```
+
+
+
+
+```{r diet alpha v. stability, echo = F}
+beta_cloud <- read.delim(file = "analysis/beta_diversity/beta_div_cloud.txt", sep = "\t")
+
+# food alpha v. beta cloud?
+test <- merge(beta_cloud, myfoodalpha)
+test <- test[!test$UserName %in% c("MCTs11", "MCTs12"),] # drop soylents
+cor <- cor((1/test$ave_cloud), test$`mean(PD_whole_tree)`, method = "spearman")
+pval <- cor.test((1/test$ave_cloud), test$`mean(PD_whole_tree)`, method = "spearman", exact = F)$p.value
+ggplot(test, aes(1/ave_cloud, `mean(PD_whole_tree)`)) + geom_point() + geom_smooth(method = "lm")
+
+  rho <- paste("italic(r) == ", round(cor, 3))
+  p <- paste("italic(pval) ==", round(pval, 3))
+  labels = data.frame(y = quantile((1/test$ave_cloud))[1], 
+                      x =40, 
+                      label = paste(rho, p, sep = " ~ "))
+
+ggplot(test, aes(y = (1/ave_cloud), x = `mean(PD_whole_tree)`)) + 
+           geom_smooth(method = "lm", color = "black", fill = "grey") +
+           geom_point(aes(fill = UserName), color = subject_cols[1:32], size = 3) +
+           geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+           theme(legend.position = "none") +
+           geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+           labs(x = "Fiber alpha diversity (PD whole tree)", y= "Microbiome Stability")
+
+
+```

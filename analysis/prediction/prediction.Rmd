@@ -1,0 +1,85 @@
+---
+title: "Predict microbiome from diet"
+author: "Dan's Code adapted by Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(RColorBrewer) 
+require(reshape2)
+require(tibble)
+require(ggplot2)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r Dan code, echo = F, fig.height = 4, fig.width = 6}
+# from Dan's email 4/18/2017
+# Using food unifrac distances to predict species or genus taxa (especially when dropping taxa with average relative abundance < 0.001) does seem to be highly significant
+
+# Not a huge biological effect -- adds 5% or so of spearman correlation
+
+# need to create a beta-diversity table at the subject level
+# load subject level beta-diversity for food (update paths once these are on the github page)
+foodbeta <- read.table('analysis/procrustes/data/beta_food_smry/unweighted_unifrac_food_smry.txt', sep='\t', row=1,head=T,check=F,comment='')
+
+taxa7 <- read.table("analysis/procrustes/data/tax_smry.txt", sep = "\t", head= T,row = 1, comment = "");
+taxa7 <- t(taxa7)
+
+foodbeta <- foodbeta[rownames(foodbeta) %in% rownames(taxa7),colnames(foodbeta) %in% rownames(taxa7)]
+taxa7 <- taxa7[rownames(taxa7) %in% rownames(foodbeta),]
+
+# iterate through k = 1:31 (number of neighbors)
+# for each k, predict taxa and get correlation
+cors.mb <- sapply(1:31, function(k) {
+  taxa7hat <- taxa7
+  for(i in 1:nrow(taxa7hat)) taxa7hat[i,] <- colMeans(taxa7[order(foodbeta[i,])[-1][1:k],,drop=F]);
+  mean(sapply(1:nrow(taxa7hat), function(ixx) cor(taxa7hat[ixx,], taxa7[ixx,],method='spear')))
+})
+
+# as above but with random sets of neighbors
+set.seed(7)
+mc.cors.mb <- t(sapply(1:31,function(k) {
+  replicate(20,{
+    taxa7hat.mc <- taxa7;
+    for(i in 1:nrow(taxa7hat.mc)) taxa7hat.mc[i,] <- colMeans(taxa7[sample((1:nrow(taxa7hat.mc))[-i])[1:k],,drop=F]);
+    mean(sapply(1:nrow(taxa7hat.mc), function(ixx) cor(taxa7hat.mc[ixx,], taxa7[ixx,],method='spear')))
+    })
+}))
+
+# 
+# plot(1:31, cors.mb,type='l',lwd=2)
+# for(i in 1:ncol(mc.cors.mb)) lines(1:31, mc.cors.mb[,i],col='#0000bb11',type='l'); lines(1:31,rowMeans(mc.cors.mb),col='blue',type='l',lwd=2); legend('bottomright',legend=c('Model','Random'),pch=c(NA,NA),col=c('black','blue'),lty=c(1,1),lwd=c(2,2))
+# 
+
+#remake Dan's plot in ggpolt with 10x the lines, but at least i know how to change it :P
+plot <- as.data.frame(cbind(cors.mb,mc.cors.mb))
+plot <- rownames_to_column(plot, var = "k")
+plot$mean_mc.cors.mb <- rowMeans(plot[3:ncol(plot)])
+plot1 <- plot[,c("k", "cors.mb", "mean_mc.cors.mb")]
+plot1 <- melt(plot1, id = "k")
+plot2 <- plot[,!colnames(plot) %in% c("cors.mb", "mean_mc.cors.mb")]
+plot2 <- melt(plot2, id = "k")
+
+
+ggplot(data = plot1, aes(x=as.numeric(k), y = value, group=variable, color = variable)) + 
+  geom_line(data = plot2, aes(x = as.numeric(k), y = value, group = variable), color = "#a6dba0", size = .2) +
+  geom_line(size =.8) +
+  scale_color_manual(values = c("#7b3294", "#008837"), labels = c("Model", "Random")) +
+  labs(x = "Number of neighbors", y="Correlation") +
+  theme_classic() +
+  theme(legend.position = c(0.75,0.1), 
+        legend.title = element_blank(),
+        legend.direction = "horizontal") 
+  
+
+diff <- sum(plot1$value - plot2$value)
+
+
+```

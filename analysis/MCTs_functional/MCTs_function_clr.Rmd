@@ -1,0 +1,151 @@
+---
+title: "Test MCTs v. function"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(RColorBrewer) 
+require(cowplot)
+require(tidyverse)
+require(stringr)
+require(dplyr)
+require(ape)
+require(vegan)
+require(reshape2)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(8, "Set3")
+cols2 <- colorRampPalette(cols)
+
+# set colors
+subject_cols <- (sample(cols2(34)))
+```
+
+
+```{r import taxonomy, include =F, message = F}
+
+# import matching map and drop dropouts
+map <- read.table("data/maps/SampleID_map.txt", header = T, sep = "\t", comment = "")
+map <- map[map$Study.Status != "Dropped",]
+
+# import function
+func <- read.delim("data/shogun_results_cleaned/shogun_function/filtered_functions/embalmer_taxatable_clean.species.kegg.modules.txt", sep = "\t", row.names = 1)
+# remove the space in module names
+rownames(func) <- gsub(" ", "", rownames(func))
+
+# import kegg module map
+modules <- read.table("raw/functional/Kegg_ID_Map_plus.txt", header = T, sep = "\t", comment = "")
+path_modules <- modules[grep("Pathway module", modules$Reference_hierarchy),]
+lipid_modules <- path_modules[grep("lipid", path_modules$Reference_hierarchy),]
+
+
+# drop rare kegg ID/modules
+# func <- func[rowSums(func) > 2,]
+
+# limit to lipid modules
+func <- func[rownames(func) %in% lipid_modules$Shogun_ID,]
+
+# normalize within samples
+func <- sweep(func, 2, colSums(func), "/")
+
+# Match with map
+func_map <- map[map$X.SampleID %in% colnames(func),]
+func <- func[,colnames(func) %in% func_map$X.SampleID]
+
+
+
+# Average microbiome for first days (pre supplementation)
+baseline <- data.frame(matrix(nrow=nrow(func), ncol=0))
+rownames(baseline) <- rownames(func)
+
+#loop through and average
+for (i in unique(func_map$UserName)){
+  subgroup <- func_map[func_map$UserName == i,]
+  subgroup <- subgroup[subgroup$StudyDayNo <=7,]
+  #subgroup <- subgroup[1:3,]
+  funcsub <- func[,colnames(func) %in% subgroup$X.SampleID]
+  tmp <- as.data.frame(rowMeans(funcsub))            
+  colnames(tmp) <- i
+  baseline <- cbind(baseline,tmp)
+}
+
+
+# Microboime for last day we have 
+final <- data.frame(matrix(nrow=nrow(func), ncol=0))
+rownames(final) <- rownames(func)
+
+#loop through and take the mean of the last day we have for each person
+for (i in unique(func_map$UserName)){
+  subgroup <- func_map[func_map$UserName == i,]
+  subgroup <- subgroup[subgroup$StudyDayNo >= 11,]
+  subgroup <- subgroup[order(subgroup$StudyDayNo, decreasing = TRUE),]
+  subgroup <- subgroup[1,]
+  funcsub <- func[,colnames(func) %in% subgroup$X.SampleID]
+  # if (dim(subgroup)[1] == 1) {
+     tmp <- as.data.frame(funcsub)
+  # } else
+  #tmp <- as.data.frame(rowMeans(funcsub, na.rm = T))              
+  colnames(tmp) <- i
+  final <- cbind(final,tmp)
+}
+
+# create map that containes just these subjects, in this order
+func_smry_map <- map_username[map_username$UserName %in% colnames(baseline),]
+
+change <- abs(final-baseline)
+base.final <- cbind(baseline,final)
+base.final.mct <- base.final[,colnames(base.final) %in% func_smry_map$UserName[func_smry_map$Supplement == "MCT"]]
+basel.final.evoo <- base.final[,colnames(base.final) %in% func_smry_map$UserName[func_smry_map$Supplement == "EVOO"]]
+
+# drop 0's from each table
+base.final.mct <- base.final.mct[rowSums(base.final.mct) > 0,]
+basel.final.evoo <- basel.final.evoo[rowSums(basel.final.evoo) > 0,]
+
+```
+
+```{r tax associated with mct, echo = F}
+# Is the change in modules different between the groups?
+pvals <- apply(change, 1, function(x) {wilcox.test(x ~ func_smry_map$Supplement)$p.value}) 
+qvals <- p.adjust(pvals, method = "fdr")
+qvals[qvals <= 0.25]
+
+# Are baseline modules different between the groups?
+pvals <- apply(baseline, 1, function(x) {wilcox.test(x ~ func_smry_map$Supplement)$p.value}) 
+qvals <- p.adjust(pvals, method = "fdr")
+qvals[qvals <= 0.25]
+
+# Are final modules different between groups?
+pvals <- apply(final, 1, function(x) {wilcox.test(x ~ func_smry_map$Supplement)$p.value}) 
+qvals <- p.adjust(pvals, method = "fdr")
+qvals[qvals <= 0.25]
+
+# in the mct group are there any species differences between pre and post?
+pvals.mct <- apply(base.final.mct, 1, function(x) {wilcox.test(x[1:17], x[18:34], paired =FALSE, exact = F)$p.value})
+qvals.mct <- p.adjust(pvals.mct, method = "fdr")
+qvals.mct[qvals.mct <=0.25] # no
+
+# in the evoo group are there any species differences between pre and post?
+pvals.evoo <- apply(basel.final.evoo, 1, function(x) {wilcox.test(x[1:17], x[18:34], paired = FALSE, exact = F)$p.value})
+qvals.evoo <- p.adjust(pvals.evoo, method = "fdr")
+qvals.evoo[qvals.evoo <=0.25] # no
+
+# There are no significant function differneces between baseline and final for either group. This might be because we have SO many Kegg ids - what if we look at modules?
+
+# There are no modules with significant differences between baseline and final in either group. This is true if we limit to pathway modules and if we limit to lipid metabolism modules.
+```
+
+

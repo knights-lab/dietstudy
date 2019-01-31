@@ -1,0 +1,485 @@
+---
+title: "Diet Vectors v. Taxonomy"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(RColorBrewer) 
+require(cowplot)
+require(tidyverse)
+require(stringr)
+require(dplyr)
+require(ape)
+require(vegan)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(11, "Spectral")
+cols2 <- colorRampPalette(cols)
+my_cols <- (cols2(10))
+
+```
+
+# Are diet vectors associated with microbiome taxa?
+Tried with taxonomy clr - Yes at the family level.
+
+
+```{r import tax, echo = F}
+
+tax <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_f.txt", sep = "\t", row.names = 1)
+
+# Drop soylent
+tax <- tax[,!colnames(tax) == "MCTs11"]
+tax <- tax[,!colnames(tax) == "MCTs12"]
+
+# make sure most prevalent taxa are ordered first
+tax <- tax[order(rowMeans(tax), decreasing = T),]
+
+# transpose
+tax_t <- as.data.frame(t(tax))
+
+
+```
+
+```{r import beta div, include =F, message = F}
+
+#food beta diversity (unweighted unifrac)
+food_beta_un <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/unweighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+
+food_beta_w <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/weighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+#get PCOA vectors to compare with taxonomy
+food_vectors_un <- data.frame(pcoa(food_beta_un)$vectors)
+food_vectors_w <- data.frame(pcoa(food_beta_w)$vectors)
+
+# limit to top 5 food vectors
+food_vectors_un<- food_vectors_un[,1:5]
+food_vectors_w <- food_vectors_w[,1:5]
+
+# import taxonomy matrix
+# this is the clr transformed matrix that can be used with euclidean distance
+tax_beta <- dist(tax_t)
+tax_vectors <- data.frame(pcoa(tax_beta)$vectors)
+
+
+```
+
+
+
+```{r test1, echo = F}
+# Test the first 5 food axis v. all taxa at the species level
+
+cors <- NULL
+
+#update based on which table you want to use, weighted or unweighted
+food_vectors <- food_vectors_w
+
+for (i in colnames(tax_t)) {
+  for (j in colnames(food_vectors)) {
+    a <- as.numeric(tax_t[,i])
+    b <- as.numeric(food_vectors[,j])
+    tmp <- c(i, j, cor(a, b, method = "spearman"), cor.test(a,b, method = "pearson", exact = F)$p.value)
+    cors <- rbind(cors,tmp)
+  }
+}
+
+cors<- data.frame(row.names = NULL, cors, stringsAsFactors = FALSE)
+
+colnames(cors) <- c("taxa", "food_vector", "correlation", "pvalue")
+cors$pvalue <- as.numeric(cors$pvalue) ### why were these factors??! Fixed, now things are better :)
+cors$qvalue <- p.adjust(cors$pvalue, method = "fdr")
+cors$Significance<-cut(cors$qvalue, breaks=c(-Inf, 0.25, Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# nothing significant after correction for multiple tests
+# print top 10 most significant
+
+cors <- cors[order(cors$qvalue),]
+#cors$taxa <- gsub(".*s__", "", cors$taxa)
+
+tax_v_axis <- cors[cors$qvalue <=0.25,]
+tax_v_axis <- tax_v_axis[order(tax_v_axis$food_vector),]
+
+write.table(tax_v_axis, file = "analysis/diet_vectors_v_tax/tax_v_axis.txt", sep = "\t", quote = F, row.names = F)
+
+tax_v_axis
+
+# prune for complete cases with significant correlations
+dat.c<-cors[complete.cases(cors),]
+taxkeep<-unique(dat.c$taxa[dat.c$qvalue<=.5])
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$taxa %in% taxassign,] 
+keggkeep <- unique(dat.w$food_vector[dat.w$qvalue<=.5])
+dat.m<-dat.w[dat.w$food_vector %in% keggkeep,]
+
+# fix naming of taxa to just text after the last ;
+dat.m$taxa <- gsub("?.*s__", "", dat.m$taxa)
+dat.m$taxa <- gsub("?.*g__", "Genus ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*o__", "Order ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*c__", "Class ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*f__", "Family ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*k__", "Kingdom ", dat.m$taxa)
+dat.m$taxa <- gsub("?.*p__", "Phylum ", dat.m$taxa)
+dat.m$taxa <- gsub(";NA", "", dat.m$taxa)
+dat.m$taxa <- gsub("\\[", "", dat.m$taxa)
+dat.m$taxa <- gsub("\\]", "", dat.m$taxa)
+
+# fix character to numerica
+dat.m$correlation <- as.numeric(dat.m$correlation)
+#dat.m$food_vector <- as.factor(dat.m$correlation)
+
+#reorder taxa if more than one observation
+order_tax <- dat.m %>% select(taxa, food_vector, correlation) %>% na.omit()
+order_tax <- order_tax %>% spread(taxa, correlation)
+order_tax <- remove_rownames(order_tax)
+order_tax <- column_to_rownames(order_tax, "food_vector")
+taxaorder <- hclust((dist(1-cor(order_tax))/2))$order
+
+dat.m$taxa <- as.factor(dat.m$taxa)
+dat.m$taxa <- factor(dat.m$taxa, levels(dat.m$taxa)[taxaorder])
+
+# reorder the food_vectors
+order_food <- dat.m %>% select(food_vector, taxa, correlation) %>% na.omit()
+order_food <- order_food %>% spread(food_vector, correlation)
+order_food <- remove_rownames(order_food)
+order_food <- column_to_rownames(order_food, "taxa")
+foodorder <- hclust((dist(1-cor(order_food))/2))$order
+
+dat.m$food_vector <- as.factor(dat.m$food_vector)
+dat.m$food_vector <- factor(dat.m$food_vector, levels(dat.m$food_vector)[foodorder])
+
+#plot the correlations for the collapsed levels
+
+ggplot(data = dat.m, aes(x=food_vector, y=taxa, fill=correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-0.95,0.95), space = "Lab", name = "Spearman") +
+  #scale_fill_gradient2(low="purple", mid="white", high="green", midpoint = 0, limit = c(-.99,.99), space = "Lab", name = "Pearson") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 7, hjust = 1), 
+        axis.text.y = element_text(size = 7),
+        axis.title = element_blank()) +
+  labs(x = "Weighted", y = "Species") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+
+
+```
+
+# which foods are associated with food vectors?
+
+```{r load foods, echo =F}
+
+food <- read.delim("data/processed_food/dhydrt.smry.no.soy.txt", sep = "\t", header = T, comment = "", row.names = "taxonomy")
+food <- food[,!colnames(food) == "X.FoodID"]
+
+# collapse food
+split <- strsplit(rownames(food),";")
+ 
+# 
+foodStrings <- sapply(split,function(x) paste(x[1:3],collapse=";"))
+food_L <- rowsum(food,foodStrings)            
+food_L_t <- as.data.frame(t(food_L))
+
+```
+
+
+
+```{r run correlations, echo = F}
+cors <- NULL
+
+for (i in colnames(food_L_t)) {
+  for (j in colnames(food_vectors)) {
+    a <- as.numeric(food_L_t[,i])
+    b <- as.numeric(food_vectors[,j])
+    tmp <- c(i, j, cor(a, b, method = "spearman"), cor.test(a,b, method = "spearman", exact = F)$p.value)
+    cors <- rbind(cors,tmp)
+  }
+}
+
+cors <- as.data.frame(cors, stingsAsFactors = F)
+colnames(cors) <- c("food", "food_vector", "correlation", "pvalue")
+cors$pvalue <- as.character(cors$pvalue)
+cors$pvalue <- as.numeric(cors$pvalue)
+cors$qvalue <- p.adjust(cors$pvalue, method = "fdr")
+
+# nothing significant after correction for multiple tests
+# print top 10 most significant
+
+cors <- cors[order(cors$qvalue),]
+cors <- cors[cors$qvalue <= 0.5,]
+#cors$food <- gsub(".*L2_", "", cors$food)
+
+food_v_axis <- cors[cors$qvalue <=0.25,]
+food_v_axis <- food_v_axis[order(food_v_axis$food_vector),]
+
+write.table(food_v_axis, file = "analysis/diet_vectors_v_tax/food_v_axis.txt", sep = "\t", quote = F, row.names = F)
+
+food_v_axis
+```
+
+We need to look at RDA using Food Vectors to explain the variation in the taxa
+
+```{r constrained ordination, echo = F, fig.width=3.5, fig.height=3.5}
+require(vegan)
+
+#### function for plotting ####
+my_cols <- c("#7f0000", "#ff8080", "#594343", "#f26d3d", "#7f5140", "#331b00", "#f29d3d", "#b28959", "#d9ad00", "#735c00", "#adb359", "#4a4d26", "#ccff00", "#24661a", "#40ff59", "#60bf86", "#134d39", "#40807b", "#80f7ff", "#103640", "#006699", "#3db6f2", "#0074d9", "#002966", "#0030b3", "#000040", "#bfbfff", "#323040", "#a200f2", "#cf73e6", "#45264d", "#9d7ca6", "#5f0066", "#f200c2", "#73002e", "#bf3069", "#e6acbb", "#d9001d", "#401016")
+
+cols <- sample(my_cols, 32)
+
+# make nice plot of constrained ordination
+plot.constrained.ordination<- function(rrda){
+  rrda <- rrda
+  pc <- scores(rrda)$sites
+  d <- data.frame(x=pc[,1], y=pc[,2])#, group = map_ord$UserName)
+  #d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
+  percent_var <- signif(eigenvals(rrda)/sum(eigenvals(rrda)), 4)*100
+  
+  plot.rrda <- plot(rrda)
+  vector.multiplier <- attributes(plot.rrda$biplot)$arrow.mul
+  fit_env_df <- as.data.frame(plot.rrda$biplot*vector.multiplier)
+  fit_env_df <- cbind(fit_env_df, Variable = rownames(plot.rrda$biplot))
+  colnames(fit_env_df)[1:2] <- c("Dim1","Dim2")
+  
+  text_fit_env_df <- fit_env_df
+  text_fit_env_df[,2] <- text_fit_env_df[,2]*1.2 # let's shift the text out a little
+  
+  p <- ggplot(data = d, aes(x,y)) + 
+          geom_point(aes(color = cols), size = 3) + 
+          xlab(paste0("Axis 1 [",percent_var[1],"%]")) +
+          ylab(paste0("Axis 2 [",percent_var[2],"%]")) +
+          scale_color_manual(values = cols) + 
+          theme(legend.position = "none")
+  
+  p <- p + coord_fixed() +
+    geom_segment(data = fit_env_df, 
+                 aes(x = 0, xend = Dim1, y =0, yend = Dim2),
+                 arrow = arrow(length = unit(0.25, "cm")),
+                 color = alpha("black", .5)) +
+    geom_text(data = text_fit_env_df, 
+              aes(x = Dim1, y = Dim2, label = Variable), 
+              size = 3)
+  
+  print(p)
+}
+
+
+### load data ####
+# for all samples:
+# tax <- read.delim("data/processed_tax/taxonomy_clr_s.txt", sep = "\t", row.names = 1)
+# soylent <- map[map$UserName %in% c("MCTs11", "MCTs12"),]
+# tax <- tax[, !colnames(tax) %in% soylent$X.SampleID]
+# tax_t <- t(tax)
+# 
+# # try with the tree based metrics - result is no beter than using CLR
+# #tax_beta <- read.delim("data/processed_tax/strain_beta_norm/unweighted_unifrac_strain_norm.txt", row.names = 1)
+# #tax_beta <- tax_beta[!rownames(tax_beta) %in% soylent$X.SampleID, !colnames(tax_beta) %in% soylent$X.SampleID]
+# 
+# #food beta diversity (unweighted unifrac)
+# food_beta_un <- read.delim("data/processed_food/dhydrt_beta/unweighted_unifrac_dhydrt.txt", sep = "\t", row.names = 1)
+# # match with microbiome samples
+# food_beta_un <- food_beta_un[rownames(food_beta_un) %in% rownames(tax_t), colnames(food_beta_un) %in% rownames(tax_t)]
+# 
+# # food beta diveristy (weighted unifrac)
+# food_beta_w <- read.delim("data/processed_food/dhydrt_beta/weighted_unifrac_dhydrt.txt", sep = "\t", row.names = 1)
+# # drop soylent
+# food_beta_w <- food_beta_w[rownames(food_beta_w) %in% rownames(tax_t), colnames(food_beta_w) %in% rownames(tax_t)]
+# 
+# tax_t <- tax_t[rownames(tax_t) %in% rownames(food_beta_un),]
+# #tax_beta <- tax_beta[rownames(tax_beta) %in% rownames(food_beta_un), colnames(tax_beta) %in% rownames(food_beta_un)]
+# 
+# #get PCOA vectors to compare with taxonomy
+# food_vectors_un <- data.frame(pcoa(food_beta_un)$vectors)
+# food_vectors_w <- data.frame(pcoa(food_beta_w)$vectors)
+# 
+# # limit to top 5 food vectors
+# food_vectors_un<- food_vectors_un[,1:5]
+# food_vectors_w <- food_vectors_w[,1:5]
+# 
+# set food vectors to weighted or unweighted
+food_vectors <- food_vectors_un # unweighted diet vectors perform better, but don't correspond to taxa
+
+## for each person's average:
+tax <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_s.txt", sep = "\t", row.names = 1)
+tax <- tax[, !colnames(tax) %in% c("MCTs11", "MCTs12")]
+tax_t <- t(tax)
+
+map_ord <- map_username[map_username$UserName %in% rownames(tax_t),]
+rownames(map_ord) <- map_ord$UserName
+map_ord <- map_ord[, c("Gender", "Age", "BMI")]
+
+
+#map_ord <- map[map$X.SampleID %in% rownames(tax_t),]
+#rownames(map_ord) <- map_ord$X.SampleID
+#map_ord <- map_ord[, c("Gender", "Age", "BMI", "UserName")]
+
+env <- merge(food_vectors, map_ord, by = 0)
+rownames(env) <- env$Row.names
+env <- env[,!colnames(env) == "Row.names"]
+#env <- subset(env, select = -UserName)
+
+# quick look at env variables
+#str(env)
+#summary(env)
+
+# quick look at the environmental variables
+#plot(env, gap=0, panel=panel.smooth)
+
+# unconstrained
+un_rda <- rda(tax_t)
+#un_rda <- dbrda(tax_beta ~ 1) # use with tree-based
+eig <- eigenvals(un_rda)/sum(eigenvals(un_rda))
+pct_ex <- sum(eig[1:2])*100
+un_rda.plot <- plot(un_rda)
+
+# make nice plot of unconstrained ordination
+pc <- scores(un_rda)$sites
+d <- data.frame(x=pc[,1], y=pc[,2])#, group = map_ord$UserName)
+#d$group <- factor(d$group, levels=sort(as.character(unique(d$group))))
+percent_var <- signif(eigenvals(un_rda)/sum(eigenvals(un_rda)), 4)*100
+
+p <- ggplot(data = d, aes(x,y)) +
+   geom_point(aes(color = cols), size = 3) + 
+          xlab(paste0("Axis 1 [",percent_var[1],"%]")) +
+          ylab(paste0("Axis 2 [",percent_var[2],"%]")) +
+          scale_color_manual(values = cols) +
+          theme(legend.position = "none")
+
+p
+
+unconstrained <- p
+
+# constrained
+# note use formula notation to include factors (i.e. gender)
+# just diet
+rrda_d <- rda(tax_t~ Axis.3 + Axis.5 + Axis.1 + Axis.2 + Axis.4, data = env)
+#rrda_d <- dbrda(tax_beta~Axis.3 + Axis.5 + Axis.1 + Axis.2 + Axis.4, data = env) # for tree-based
+eig_d <- eigenvals(rrda_d)/sum(eigenvals(rrda_d))
+pct_ex_d <- sum(eig_d[1:2])*100
+
+
+# diet + metadata
+rrda_a <- rda(tax_t~ Axis.3 + Axis.5 + Age + Gender + Axis.1 + Axis.2 + Axis.4 + BMI, data = env)
+#rrda_a <- dbrda(tax_beta~ Axis.3 + Axis.5 + Age + Gender + Axis.1 + Axis.2 + Axis.4 + BMI, data = env)
+eig_a <- eigenvals(rrda_a)/sum(eigenvals(rrda_a))
+pct_ex_a <- sum(eig_a[1:2])*100
+
+# just metadata
+rrda_m <- rda(tax_t~Age+Gender+BMI, data = env)
+#rrda_m <- dbrda(tax_beta~Age+Gender+BMI, data = env)
+eig_m <- eigenvals(rrda_m)/sum(eigenvals(rrda_m))
+pct_ex_m <- sum(eig_m[1:2]*100)
+
+
+diet_rda <- plot.constrained.ordination(rrda_d)
+all_rda <- plot.constrained.ordination(rrda_a)
+meta_rda <- plot.constrained.ordination(rrda_m)
+
+
+
+# amount of the variation explained by metadata
+pct_ex_m/pct_ex * 100
+
+# amount of variation explained by diet + metatdata
+pct_ex_a/pct_ex *100
+
+# amount of variation explained by diet alone
+pct_ex_d/pct_ex *100
+
+signif((pct_ex_a - pct_ex_d)/pct_ex, 4)*100
+
+#rrda
+#summary(rrda)
+
+# inspect the difference between the wa and lc scores:
+#spenvcor(rrda)
+#plot(rrda, dis=c("wa","lc"), type="p"); ordispider(rrda)
+
+# show procrustes between the unconstrained and constrained
+#plot(procrustes(un_rda,rrda))
+
+# see how similar by fitting env var to the unconstrained ordination
+#plot(un_rda); plot(envfit(un_rda, env))
+
+
+# select a "best" model
+#rrda1 <- rda(tax_t ~ ., env)
+#rrda0 <- rda(tax_t ~ 1, env)
+
+# steps to best model
+#rrda <- step(rrda0, scope = formula(rrda1), test = "perm")
+#anova(rrda)
+#anova(rrda, by = "term")
+#anova(rrda, by = "axis")
+
+#rrda.plot <- plot(rrda_d, display = c("sp","wa","bp"))
+#eigenvals(rrda)/sum(eigenvals(rrda))
+
+
+
+
+```
+
+```{r cowplot rda, echo = F, fig.width=8.5, fig.height = 8.5}
+
+plot_grid(unconstrained, diet_rda$plot, all_rda$plot, meta_rda$plot)
+
+# if my math is correct, diet vectors alone explain 44% of the variation, metadata alone explains 33%, and diet + metadata explains 48%. So excluding metadata, diet explains 3.4% of the varation. However, it's likely that diet also explains the metadata or the metadata explains the diet since diet is probably influenced by cultural and gender effected preferences. So these variables are highly likely to be correlated and dependent. 
+
+# will redo with a tree-based distance matrix to see if it improves ability to distinguish between groups where I guess groups are individuals....Should I be doing this with the whole dataset? Not just each person's average? I think if we use all the data I might be able to see the seperation between people more clearly on these plots. 
+
+# look into applying gabes tree - the weighted was better with that tree - which is what was used in the Advantages of phylogentic distance based constrained ordination analyses for the examination of microbial communities.
+
+# Other thoughts, what if we placed the diets on the context of NHANES data to get informative diet vectors - would that help?
+```
+
+Hypothesis, use metadata to with rda and the dietary distances - does it explain the variation?
+
+```{r rda diet, echo = F}
+
+# load food distance matrix
+food_beta_w <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/weighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+# make distance matrix
+food_dist <- as.dist(food_beta_w)
+# environmental variables
+food_env <- env[,colnames(env) %in% c("Gender", "Age", "BMI")]
+
+#unconstrained
+eig_unf <- (pcoa(food_dist)$values$Eigenvalues)/sum(pcoa(food_dist)$values$Eigenvalues)
+pct_ex_unf <- sum(eig_unf[1:2])*100
+plot((pcoa(food_dist)$vectors)[,1:2])
+
+# constrained (accepts a distance matrix)
+#fdbrda <- dbrda(food_dist ~ Gender + Age + BMI, data = food_env)
+#eig_f <- eigenvals(fdbrda)/sum(eigenvals(fdbrda))
+#pct_ex_f <- sum(eig_f[1:2])*100
+
+#plot(fdbrda, display = c("sp","wa","bp"))
+
+#anova(fdbrda, by = "terms")
+
+# amount of dietary variation explained by the metadata
+#(pct_ex_f/pct_ex_unf)*100
+
+# 38.5% of the variation in diet can be explained by the three metadata categories.
+# 77% if we only include gender - gender is a major contributor to diet!
+
+#TO DO color by gender
+```

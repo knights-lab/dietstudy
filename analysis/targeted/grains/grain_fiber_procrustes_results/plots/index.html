@@ -1,0 +1,444 @@
+<!--
+*Summary of Emperor's Information*
+Command executed on May 30, 2018 at 13:12:39
+Emperor Version: 0.9.51
+QIIME Version: 0.9.51
+HostName: x-10-145-39-41.wireless.umn.edu
+Metadata: /Users/abby/Documents/Projects/dietstudy/analysis/targeted/data/map_smry.txt
+Coordinates: /Users/abby/Documents/Projects/dietstudy/analysis/targeted/grains/grain_fiber_procrustes_results
+Command: /Users/abby/miniconda3/envs/qiime/bin/make_emperor.py -c -i . -m ../../data/map_smry.txt -o plots/
+-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Emperor</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="emperor_required_resources/img/favicon.ico" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <!-- Style files -->
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/emperor/css/emperor.css">
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/css/jquery-ui2.css">
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/css/colorPicker.css">
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/css/spectrum.css">
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/css/d3.parcoords.css">
+    <link rel="stylesheet" type="text/css" href="emperor_required_resources/css/chosen.min.css">
+
+    <!-- Emperor logo for the splash window -->
+    <table id="logotable" style="vertical-align:middle;text-align:center;height:100%;width:100%;margin:0;padding:0;border:0;">
+        <tr><td><img src="emperor_required_resources/img/emperor.png" alt="Emperor" id="logo"/></td></tr>
+    </table>
+
+    <!-- JavaScript code -->
+
+    <!-- jQuery and other plugins -->
+    <script type="text/javascript" src="emperor_required_resources/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/jquery.colorPicker.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/spectrum.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/chosen.jquery.min.js"></script>
+
+    <!-- D3.js for the parallel coordinates plugin -->
+    <script type="text/javascript" src="emperor_required_resources/js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/d3.parcoords.js"></script>
+
+    <!-- THREE.js and plugins for screenshots -->
+    <script type="text/javascript" src="emperor_required_resources/js/three.min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/js/Detector.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/js/OrbitControls.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/js/ColorConverter.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/js/SVGRenderer.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/THREEx.screenshot.js"></script>
+
+    <!-- General utilities (underscore.js and FileSaver.js) -->
+    <script type="text/javascript" src="emperor_required_resources/js/underscore-min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/chroma.min.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/js/FileSaver.min.js"></script>
+
+    <!-- Emperor library code -->
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/animate.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/draw.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/emperor.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/trajectory.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/ui.js"></script>
+    <script type="text/javascript" src="emperor_required_resources/emperor/js/util.js"></script>
+
+    <script type="text/javascript">
+
+var g_mappingFileHeaders = ['SampleID','Gender','Age','Weight','Height','BMI','Supplement','Waist.Circumference','Study.Status','oilGrams.assigned','Weight.Change','Activity.Factor','Medications','Dietary.Supp','Race.Ethnicity','Time.Baseline','Cholesterol.Baseline','Trigs.Baseline','HDL.Baseline','LDL.Baseline','NonHDL.Chol.Baseline','Glu.Baseline','Ins.Baseline','Homa.IR.Baseline','Time.Final','Cholesterol.Final','Trigs.Final','HDL.Final','LDL.Final','NonHDL.Final','Glu.Final','Ins.Final','HOMA.IR.Final','Last.period','self_report_qual','Monte.Carlo.p.value','Count.better','M.2','Procrustes'];
+var g_mappingFileData = { 'MCTs25_1': ['MCTs25_1','M','23.9','104.8','182','31.6','MCT','100','Complete','17','0','1.55','None','None','White','9:27 AM','135','62','39','84','96','76','8.4','1.58','7:39 AM','152','112','42','88','110','78','12.3','2.37','NA','bad','0.101','101','0.797','ns'],'MCTs34_1': ['MCTs34_1','F','41.4','53.9','161.3','20.7','EVOO','85.5','No blood draw','9','NA','1.325','Thyroid hormone;lexapro','Multivitamin;VitD;fish oil','White','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','good','0.048','48','0.627','sig'],'MCTs34_0': ['MCTs34_0','F','41.4','53.9','161.3','20.7','EVOO','85.5','No blood draw','9','NA','1.325','Thyroid hormone;lexapro','Multivitamin;VitD;fish oil','White','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','good','0.048','48','0.627','sig'],'MCTs19_0': ['MCTs19_0','F','20.7','65.3','169','22.9','MCT','87','Complete','12','0.7','1.325','Hormonal IUD','Multivitamin','White','7:19 AM','176','77','45','115','131','80','8.4','1.66','7:40 AM','163','74','42','106','121','77','11','2.09','2/14/17','good','0.015','15','0.624','sig'],'MCTs19_1': ['MCTs19_1','F','20.7','65.3','169','22.9','MCT','87','Complete','12','0.7','1.325','Hormonal IUD','Multivitamin','White','7:19 AM','176','77','45','115','131','80','8.4','1.66','7:40 AM','163','74','42','106','121','77','11','2.09','2/14/17','good','0.015','15','0.624','sig'],'MCTs13_0': ['MCTs13_0','F','40.6','59.1','165.1','21.7','EVOO','78.5','Complete','11','0.1','1.55','None','None','White','8:28 AM','219','81','74','129','145','94','12','2.79','8:12 AM','229','60','84','133','145','87','5.1','1.1','2/6/17','good','0.1','100','0.614','ns'],'MCTs13_1': ['MCTs13_1','F','40.6','59.1','165.1','21.7','EVOO','78.5','Complete','11','0.1','1.55','None','None','White','8:28 AM','219','81','74','129','145','94','12','2.79','8:12 AM','229','60','84','133','145','87','5.1','1.1','2/6/17','good','0.1','100','0.614','ns'],'MCTs01_1': ['MCTs01_1','F','25.9','74.6','172.7','25','EVOO','NA','Complete','12','-0.4','1.375','Nexplanon (bc implant)','Multivitamin;VitD;VitC;Zinc','White','8:35 AM','165','65','72','81','94','87','7.5','1.61','9:30 AM','133','45','66','58','67','77','4.7','0.89','1/21/17','good','0.09','90','0.722','ns'],'MCTs14_1': ['MCTs14_1','M','40.7','88','184.2','25.9','EVOO','90.5','Complete','16','0','1.55','None','Tumeric;B-complex;fish oil; probiotic','White','8:09 AM','219','103','53','146','166','95','5.9','1.38','9:35 AM','178','148','42','106','136','91','8.3','1.86','NA','good','0.186','186','0.743','ns'],'MCTs14_0': ['MCTs14_0','M','40.7','88','184.2','25.9','EVOO','90.5','Complete','16','0','1.55','None','Tumeric;B-complex;fish oil; probiotic','White','8:09 AM','219','103','53','146','166','95','5.9','1.38','9:35 AM','178','148','42','106','136','91','8.3','1.86','NA','good','0.186','186','0.743','ns'],'MCTs06_1': ['MCTs06_1','M','23.7','78','185.4','22.7','MCT','87','Complete','17','-1.3','1.55','None','Whey protein;fish oil','White','10:00 AM','148','43','67','72','80','78','4.3','0.83','8:00 AM','150','65','62','75','88','77','6.9','1.31','NA','good','0.31','310','0.492','ns'],'MCTs15_0': ['MCTs15_0','F','21.3','49.7','163','18.7','MCT','79','Complete','10','-1.2','1.375','None','None','White','8:44 AM','140','54','46','83','94','85','11.1','2.33','8:50 AM','175','58','56','107','119','86','7.7','1.64','1/25/17','good','0.056','56','0.519','sig'],'MCTs15_1': ['MCTs15_1','F','21.3','49.7','163','18.7','MCT','79','Complete','10','-1.2','1.375','None','None','White','8:44 AM','140','54','46','83','94','85','11.1','2.33','8:50 AM','175','58','56','107','119','86','7.7','1.64','1/25/17','good','0.056','56','0.519','sig'],'MCTs36_1': ['MCTs36_1','M','61.6','74.9','164.1','27.8','EVOO','100.4','Complete','11','0.2','1.55','lisinopril','None','Indian','8:30 AM','234','109','47','165','187','103','10.8','2.75','8:23 AM','243','138','54','162','189','95','10.2','2.39','NA','bad','0.053','53','0.693','sig'],'MCTs33_1': ['MCTs33_1','M','37.9','64.5','166','23.4','MCT','84.6','Complete','12','-0.6','1.325','None','None','White','9:35 AM','208','68','59','134','148','85','3.9','0.82','9:42 AM','210','80','60','134','150','86','4.2','0.89','NA','good','0.001','1','0.614','sig'],'MCTs03_1': ['MCTs03_1','M','25.4','91.2','185.1','26.6','MCT','104','Complete','18','2.9','1.55','Allegra;Flonase;Asthma inhaler','VitD','White','9:00 AM','186','88','52','116','134','95','10.1','2.37','9:03 AM','166','87','53','96','114','92','6.9','1.57','NA','good','0.397','397','0.685','ns'],'MCTs03_0': ['MCTs03_0','M','25.4','91.2','185.1','26.6','MCT','104','Complete','18','2.9','1.55','Allegra;Flonase;Asthma inhaler','VitD','White','9:00 AM','186','88','52','116','134','95','10.1','2.37','9:03 AM','166','87','53','96','114','92','6.9','1.57','NA','good','0.397','397','0.685','ns'],'MCTs04_0': ['MCTs04_0','F','24','50.6','163.8','18.9','MCT','78','Complete','12','0.6','1.55','None','Multivitamin','White','8:35 AM','138','45','69','60','69','94','6.3','1.46','9:15 AM','118','51','61','47','57','92','13.3','3.02','2/10/17','good','0.029','29','0.581','sig'],'MCTs04_1': ['MCTs04_1','F','24','50.6','163.8','18.9','MCT','78','Complete','12','0.6','1.55','None','Multivitamin','White','8:35 AM','138','45','69','60','69','94','6.3','1.46','9:15 AM','118','51','61','47','57','92','13.3','3.02','2/10/17','good','0.029','29','0.581','sig'],'MCTs29_1': ['MCTs29_1','F','22.3','69.3','162.6','26.2','EVOO','96','Complete','11','-1.1','1.325','None','None','White','9:45 AM','159','79','52','91','107','78','9','1.73','9:25 AM','149','56','49','89','101','81','15.9','3.18','1/22/17','good','0.674','673','0.337','ns'],'MCTs21_1': ['MCTs21_1','F','29.1','53.7','161.3','20.6','MCT','79','Complete','10','-0.1','1.725','Hormonal IUD','Multivitamin;VitD;fish oil','White','7:10 AM','182','77','64','103','118','84','11.4','2.36','7:06 AM','154','49','61','83','93','80','14.5','2.86','NA','bad','0.081','81','0.703','ns'],'MCTs28_0': ['MCTs28_0','F','61','50.1','162.6','18.9','MCT','84.7','No blood draw','10','NA','1.325','Thyroid hormone','VitD;VitB;gulcosamine','Asian','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','good','0.318','318','0.785','ns'],'MCTs21_0': ['MCTs21_0','F','29.1','53.7','161.3','20.6','MCT','79','Complete','10','-0.1','1.725','Hormonal IUD','Multivitamin;VitD;fish oil','White','7:10 AM','182','77','64','103','118','84','11.4','2.36','7:06 AM','154','49','61','83','93','80','14.5','2.86','NA','bad','0.081','81','0.703','ns'],'MCTs29_0': ['MCTs29_0','F','22.3','69.3','162.6','26.2','EVOO','96','Complete','11','-1.1','1.325','None','None','White','9:45 AM','159','79','52','91','107','78','9','1.73','9:25 AM','149','56','49','89','101','81','15.9','3.18','1/22/17','good','0.674','673','0.337','ns'],'MCTs35_0': ['MCTs35_0','F','29.5','64.5','163.2','24.2','EVOO','84.5','Complete','12','1','1.55','ibuprofen','Multivitamin;folate','African','9:38 AM','184','44','64','111','120','77','9.2','1.75','7:32 AM','163','30','69','87','93','71','5.5','0.96','1/27/17','bad','0.111','111','0.653','ns'],'MCTs01_0': ['MCTs01_0','F','25.9','74.6','172.7','25','EVOO','NA','Complete','12','-0.4','1.375','Nexplanon (bc implant)','Multivitamin;VitD;VitC;Zinc','White','8:35 AM','165','65','72','81','94','87','7.5','1.61','9:30 AM','133','45','66','58','67','77','4.7','0.89','1/21/17','good','0.09','90','0.722','ns'],'MCTs20_0': ['MCTs20_0','F','33.5','69.5','172.7','23.3','EVOO','91','Complete','11','-0.7','1.325','Hormonal IUD;ibuprofen','Multivitamin;VitD','White','9:16 AM','167','58','66','89','100','92','6.6','1.5','9:10 AM','168','48','68','91','101','88','4.9','1.06','NA','good','0.009','9','0.491','sig'],'MCTs20_1': ['MCTs20_1','F','33.5','69.5','172.7','23.3','EVOO','91','Complete','11','-0.7','1.325','Hormonal IUD;ibuprofen','Multivitamin;VitD','White','9:16 AM','167','58','66','89','100','92','6.6','1.5','9:10 AM','168','48','68','91','101','88','4.9','1.06','NA','good','0.009','9','0.491','sig'],'MCTs24_1': ['MCTs24_1','F','26','54.6','157','22.2','EVOO','79.5','Complete','11','-1.4','1.55','None','Multivitamin','Asian','8:25 AM','150','64','48','89','102','82','9.1','1.84','9:00 AM','145','64','52','79','92','80','6.4','1.26','2/1/17','good','0.186','186','0.791','ns'],'MCTs37_1': ['MCTs37_1','M','45.2','84.9','176.5','27.3','MCT','97.5','Complete','14','-1.3','1.325','Metformin;ranitidine;atrovistatin','None','Indian','8:30 AM','121','126','42','54','80','98','21.2','5.13','8:10 AM','117','90','39','60','78','95','16.8','3.94','NA','good','0.408','408','0.793','ns'],'MCTs09_1': ['MCTs09_1','F','21.7','66.9','167.6','23.8','MCT','85','Complete','14','0.4','1.55','Estrogen/progestrin bc pill','Fiber powder;calcium;Mg;fish oil;probiotic;VitD','White','7:30 AM','177','57','61','104','116','84','9','1.87','7:42 AM','183','72','57','112','126','78','8.9','1.71','1/23/17','good','0.001','1','0.548','sig'],'MCTs09_0': ['MCTs09_0','F','21.7','66.9','167.6','23.8','MCT','85','Complete','14','0.4','1.55','Estrogen/progestrin bc pill','Fiber powder;calcium;Mg;fish oil;probiotic;VitD','White','7:30 AM','177','57','61','104','116','84','9','1.87','7:42 AM','183','72','57','112','126','78','8.9','1.71','1/23/17','good','0.001','1','0.548','sig'],'MCTs31_1': ['MCTs31_1','F','30.1','59.9','164.8','22.1','EVOO','84.9','Complete','11','-0.3','1.55','None','Multivitamin;VitD;fish oil','White','8:12 AM','187','47','81','97','106','77','13.9','2.64','8:15 AM','172','55','74','88','99','72','5.4','0.96','2/2/17','good','0.839','838','0.899','ns'],'MCTs36_0': ['MCTs36_0','M','61.6','74.9','164.1','27.8','EVOO','100.4','Complete','11','0.2','1.55','lisinopril','None','Indian','8:30 AM','234','109','47','165','187','103','10.8','2.75','8:23 AM','243','138','54','162','189','95','10.2','2.39','NA','bad','0.053','53','0.693','sig'],'MCTs07_0': ['MCTs07_0','M','28.5','90.2','181.3','27.4','MCT','95.5','Complete','18','-3.2','1.55','None','VitD','White','8:37 AM','151','57','57','83','94','88','9.5','2.06','8:43 AM','158','57','50','96','108','89','5.7','1.25','NA','good','0.011','11','0.604','sig'],'MCTs22_0': ['MCTs22_0','F','22','48.5','162.6','18.3','MCT','76.5','Complete','10','1.6','1.325','None','None','White','7:15 AM','216','64','54','149','162','92','9.9','2.25','7:15 AM','223','55','56','156','167','87','10.8','2.32','2/10/17','good','0.01','10','0.611','sig'],'MCTs08_1': ['MCTs08_1','M','32.3','59.4','177.8','18.8','MCT','81','Complete','18','-0.6','1.9','None','Multivitamin','White','9:23 AM','148','40','63','78','86','95','4.4','1.03','8:05 AM','154','46','62','83','92','86','3.6','0.76','NA','good','0.92','919','0.921','ns'],'MCTs28_1': ['MCTs28_1','F','61','50.1','162.6','18.9','MCT','84.7','No blood draw','10','NA','1.325','Thyroid hormone','VitD;VitB;gulcosamine','Asian','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','NA','good','0.318','318','0.785','ns'],'MCTs06_0': ['MCTs06_0','M','23.7','78','185.4','22.7','MCT','87','Complete','17','-1.3','1.55','None','Whey protein;fish oil','White','10:00 AM','148','43','67','72','80','78','4.3','0.83','8:00 AM','150','65','62','75','88','77','6.9','1.31','NA','good','0.31','310','0.492','ns'],'MCTs25_0': ['MCTs25_0','M','23.9','104.8','182','31.6','MCT','100','Complete','17','0','1.55','None','None','White','9:27 AM','135','62','39','84','96','76','8.4','1.58','7:39 AM','152','112','42','88','110','78','12.3','2.37','NA','bad','0.101','101','0.797','ns'],'MCTs23_1': ['MCTs23_1','M','37.9','82.9','193','22.3','EVOO','96','Complete','14','-2.6','1.325','None','Multivitamin','White','9:30 AM','109','76','52','42','58','75','7.2','1.33','9:40 AM','111','113','51','37','60','78','5.9','1.14','NA','good','0.043','43','0.729','sig'],'MCTs24_0': ['MCTs24_0','F','26','54.6','157','22.2','EVOO','79.5','Complete','11','-1.4','1.55','None','Multivitamin','Asian','8:25 AM','150','64','48','89','102','82','9.1','1.84','9:00 AM','145','64','52','79','92','80','6.4','1.26','2/1/17','good','0.186','186','0.791','ns'],'MCTs07_1': ['MCTs07_1','M','28.5','90.2','181.3','27.4','MCT','95.5','Complete','18','-3.2','1.55','None','VitD','White','8:37 AM','151','57','57','83','94','88','9.5','2.06','8:43 AM','158','57','50','96','108','89','5.7','1.25','NA','good','0.011','11','0.604','sig'],'MCTs27_1': ['MCTs27_1','F','28.8','70.9','161.3','27.3','EVOO','90','Complete','11','-0.1','1.325','Estrogen/progestrin bc pill;lexapro;cold meds','Multivitamin;VitD','White','8:35 AM','172','65','72','87','100','84','5.3','1.1','8:47 AM','174','85','66','90','107','83','10.1','2.07','1/22/17','good','0','0','0.459','sig'],'MCTs33_0': ['MCTs33_0','M','37.9','64.5','166','23.4','MCT','84.6','Complete','12','-0.6','1.325','None','None','White','9:35 AM','208','68','59','134','148','85','3.9','0.82','9:42 AM','210','80','60','134','150','86','4.2','0.89','NA','good','0.001','1','0.614','sig'],'MCTs32_0': ['MCTs32_0','M','37','83.5','181.6','25.3','EVOO','86.7','Complete','12','-0.4','1.325','None','Multivitamin;fish oil','White','10:05 AM','163','59','38','113','125','82','8.5','1.72','9:59 AM','150','67','35','101','115','87','8.4','1.8','NA','good','0.235','235','0.746','ns'],'MCTs18_1': ['MCTs18_1','M','22.6','67.7','175','22.1','MCT','75','Complete','16','0.4','1.725','ibuprofen','Multivitamin','White','9:55 AM','131','64','52','66','79','87','4.8','1.03','10:15 AM','152','76','54','82','97','86','3.7','0.79','NA','good','0.048','48','0.728','sig'],'MCTs32_1': ['MCTs32_1','M','37','83.5','181.6','25.3','EVOO','86.7','Complete','12','-0.4','1.325','None','Multivitamin;fish oil','White','10:05 AM','163','59','38','113','125','82','8.5','1.72','9:59 AM','150','67','35','101','115','87','8.4','1.8','NA','good','0.235','235','0.746','ns'],'MCTs08_0': ['MCTs08_0','M','32.3','59.4','177.8','18.8','MCT','81','Complete','18','-0.6','1.9','None','Multivitamin','White','9:23 AM','148','40','63','78','86','95','4.4','1.03','8:05 AM','154','46','62','83','92','86','3.6','0.76','NA','good','0.92','919','0.921','ns'],'MCTs16_1': ['MCTs16_1','F','19.7','49.7','171','17','EVOO','76','Complete','13','-0.1','1.725','None','Multivitamin;VitC;Fe;B12','White','7:20 AM','176','49','64','102','112','80','5.8','1.15','7:15 AM','158','55','65','83','94','78','6.9','1.33','1/26/17','bad','0.608','607','0.813','ns'],'MCTs16_0': ['MCTs16_0','F','19.7','49.7','171','17','EVOO','76','Complete','13','-0.1','1.725','None','Multivitamin;VitC;Fe;B12','White','7:20 AM','176','49','64','102','112','80','5.8','1.15','7:15 AM','158','55','65','83','94','78','6.9','1.33','1/26/17','bad','0.608','607','0.813','ns'],'MCTs35_1': ['MCTs35_1','F','29.5','64.5','163.2','24.2','EVOO','84.5','Complete','12','1','1.55','ibuprofen','Multivitamin;folate','African','9:38 AM','184','44','64','111','120','77','9.2','1.75','7:32 AM','163','30','69','87','93','71','5.5','0.96','1/27/17','bad','0.111','111','0.653','ns'],'MCTs22_1': ['MCTs22_1','F','22','48.5','162.6','18.3','MCT','76.5','Complete','10','1.6','1.325','None','None','White','7:15 AM','216','64','54','149','162','92','9.9','2.25','7:15 AM','223','55','56','156','167','87','10.8','2.32','2/10/17','good','0.01','10','0.611','sig'],'MCTs10_1': ['MCTs10_1','F','29.1','65.6','168.9','23','MCT','NA','Complete','13','1.2','1.55','Estrogen/progestrin bc pill','None','White','7:05 AM','161','82','64','80','97','88','8','1.74','7:00 AM','158','85','52','89','106','78','5.4','1.04','1/25/17','good','0.009','9','0.59','sig'],'MCTs10_0': ['MCTs10_0','F','29.1','65.6','168.9','23','MCT','NA','Complete','13','1.2','1.55','Estrogen/progestrin bc pill','None','White','7:05 AM','161','82','64','80','97','88','8','1.74','7:00 AM','158','85','52','89','106','78','5.4','1.04','1/25/17','good','0.009','9','0.59','sig'],'MCTs31_0': ['MCTs31_0','F','30.1','59.9','164.8','22.1','EVOO','84.9','Complete','11','-0.3','1.55','None','Multivitamin;VitD;fish oil','White','8:12 AM','187','47','81','97','106','77','13.9','2.64','8:15 AM','172','55','74','88','99','72','5.4','0.96','2/2/17','good','0.839','838','0.899','ns'],'MCTs27_0': ['MCTs27_0','F','28.8','70.9','161.3','27.3','EVOO','90','Complete','11','-0.1','1.325','Estrogen/progestrin bc pill;lexapro;cold meds','Multivitamin;VitD','White','8:35 AM','172','65','72','87','100','84','5.3','1.1','8:47 AM','174','85','66','90','107','83','10.1','2.07','1/22/17','good','0','0','0.459','sig'],'MCTs23_0': ['MCTs23_0','M','37.9','82.9','193','22.3','EVOO','96','Complete','14','-2.6','1.325','None','Multivitamin','White','9:30 AM','109','76','52','42','58','75','7.2','1.33','9:40 AM','111','113','51','37','60','78','5.9','1.14','NA','good','0.043','43','0.729','sig'],'MCTs37_0': ['MCTs37_0','M','45.2','84.9','176.5','27.3','MCT','97.5','Complete','14','-1.3','1.325','Metformin;ranitidine;atrovistatin','None','Indian','8:30 AM','121','126','42','54','80','98','21.2','5.13','8:10 AM','117','90','39','60','78','95','16.8','3.94','NA','good','0.408','408','0.793','ns'],'MCTs18_0': ['MCTs18_0','M','22.6','67.7','175','22.1','MCT','75','Complete','16','0.4','1.725','ibuprofen','Multivitamin','White','9:55 AM','131','64','52','66','79','87','4.8','1.03','10:15 AM','152','76','54','82','97','86','3.7','0.79','NA','good','0.048','48','0.728','sig'],'MCTs26_0': ['MCTs26_0','M','27.1','94.3','190.5','26','EVOO','94.2','Complete','15','-2.8','1.55','None','None','White','9:25 AM','152','54','62','79','90','89','8.8','1.93','7:35 AM','157','65','58','87','100','75','4.3','0.8','NA','bad','0.21','210','0.82','ns'],'MCTs26_1': ['MCTs26_1','M','27.1','94.3','190.5','26','EVOO','94.2','Complete','15','-2.8','1.55','None','None','White','9:25 AM','152','54','62','79','90','89','8.8','1.93','7:35 AM','157','65','58','87','100','75','4.3','0.8','NA','bad','0.21','210','0.82','ns'] };
+var g_animatableMappingFileHeaders = ['Age','Weight','Height','BMI','oilGrams.assigned','Activity.Factor','Monte.Carlo.p.value','Count.better','M.2'];
+
+var g_spherePositions = new Array();
+g_spherePositions['MCTs10_0'] = { 'name': 'MCTs10_0', 'color': 0, 'x': 0.156497, 'y': 0.003837, 'z': -0.033073, 'P1': 0.156497, 'P2': 0.003837, 'P3': -0.033073 };
+g_spherePositions['MCTs03_0'] = { 'name': 'MCTs03_0', 'color': 0, 'x': -0.059690, 'y': 0.149999, 'z': -0.020730, 'P1': -0.059690, 'P2': 0.149999, 'P3': -0.020730 };
+g_spherePositions['MCTs04_0'] = { 'name': 'MCTs04_0', 'color': 0, 'x': -0.173907, 'y': -0.127483, 'z': 0.100089, 'P1': -0.173907, 'P2': -0.127483, 'P3': 0.100089 };
+g_spherePositions['MCTs07_0'] = { 'name': 'MCTs07_0', 'color': 0, 'x': 0.074110, 'y': 0.120786, 'z': 0.009101, 'P1': 0.074110, 'P2': 0.120786, 'P3': 0.009101 };
+g_spherePositions['MCTs06_0'] = { 'name': 'MCTs06_0', 'color': 0, 'x': -0.020045, 'y': -0.105295, 'z': 0.022694, 'P1': -0.020045, 'P2': -0.105295, 'P3': 0.022694 };
+g_spherePositions['MCTs01_0'] = { 'name': 'MCTs01_0', 'color': 0, 'x': -0.021389, 'y': 0.094409, 'z': -0.090864, 'P1': -0.021389, 'P2': 0.094409, 'P3': -0.090864 };
+g_spherePositions['MCTs29_0'] = { 'name': 'MCTs29_0', 'color': 0, 'x': -0.075300, 'y': 0.001903, 'z': -0.162147, 'P1': -0.075300, 'P2': 0.001903, 'P3': -0.162147 };
+g_spherePositions['MCTs28_0'] = { 'name': 'MCTs28_0', 'color': 0, 'x': 0.030255, 'y': -0.000628, 'z': -0.125115, 'P1': 0.030255, 'P2': -0.000628, 'P3': -0.125115 };
+g_spherePositions['MCTs27_0'] = { 'name': 'MCTs27_0', 'color': 0, 'x': 0.120879, 'y': 0.128200, 'z': 0.073163, 'P1': 0.120879, 'P2': 0.128200, 'P3': 0.073163 };
+g_spherePositions['MCTs26_0'] = { 'name': 'MCTs26_0', 'color': 0, 'x': -0.019120, 'y': 0.055288, 'z': -0.067525, 'P1': -0.019120, 'P2': 0.055288, 'P3': -0.067525 };
+g_spherePositions['MCTs25_0'] = { 'name': 'MCTs25_0', 'color': 0, 'x': -0.047098, 'y': 0.064694, 'z': 0.102761, 'P1': -0.047098, 'P2': 0.064694, 'P3': 0.102761 };
+g_spherePositions['MCTs24_0'] = { 'name': 'MCTs24_0', 'color': 0, 'x': 0.017398, 'y': -0.110527, 'z': -0.084341, 'P1': 0.017398, 'P2': -0.110527, 'P3': -0.084341 };
+g_spherePositions['MCTs09_0'] = { 'name': 'MCTs09_0', 'color': 0, 'x': 0.111501, 'y': 0.062505, 'z': 0.164854, 'P1': 0.111501, 'P2': 0.062505, 'P3': 0.164854 };
+g_spherePositions['MCTs08_0'] = { 'name': 'MCTs08_0', 'color': 0, 'x': -0.103466, 'y': 0.122858, 'z': 0.062080, 'P1': -0.103466, 'P2': 0.122858, 'P3': 0.062080 };
+g_spherePositions['MCTs21_0'] = { 'name': 'MCTs21_0', 'color': 0, 'x': -0.012591, 'y': 0.057054, 'z': 0.095592, 'P1': -0.012591, 'P2': 0.057054, 'P3': 0.095592 };
+g_spherePositions['MCTs20_0'] = { 'name': 'MCTs20_0', 'color': 0, 'x': 0.137757, 'y': 0.011083, 'z': -0.039253, 'P1': 0.137757, 'P2': 0.011083, 'P3': -0.039253 };
+g_spherePositions['MCTs23_0'] = { 'name': 'MCTs23_0', 'color': 0, 'x': 0.155480, 'y': 0.027265, 'z': -0.052909, 'P1': 0.155480, 'P2': 0.027265, 'P3': -0.052909 };
+g_spherePositions['MCTs22_0'] = { 'name': 'MCTs22_0', 'color': 0, 'x': 0.007496, 'y': 0.087272, 'z': -0.066152, 'P1': 0.007496, 'P2': 0.087272, 'P3': -0.066152 };
+g_spherePositions['MCTs16_0'] = { 'name': 'MCTs16_0', 'color': 0, 'x': 0.011676, 'y': 0.050670, 'z': -0.109781, 'P1': 0.011676, 'P2': 0.050670, 'P3': -0.109781 };
+g_spherePositions['MCTs31_0'] = { 'name': 'MCTs31_0', 'color': 0, 'x': -0.031001, 'y': -0.142414, 'z': 0.122595, 'P1': -0.031001, 'P2': -0.142414, 'P3': 0.122595 };
+g_spherePositions['MCTs14_0'] = { 'name': 'MCTs14_0', 'color': 0, 'x': 0.198875, 'y': -0.174986, 'z': 0.112235, 'P1': 0.198875, 'P2': -0.174986, 'P3': 0.112235 };
+g_spherePositions['MCTs15_0'] = { 'name': 'MCTs15_0', 'color': 0, 'x': 0.012347, 'y': 0.105180, 'z': -0.082982, 'P1': 0.012347, 'P2': 0.105180, 'P3': -0.082982 };
+g_spherePositions['MCTs34_0'] = { 'name': 'MCTs34_0', 'color': 0, 'x': -0.052691, 'y': 0.004388, 'z': -0.117902, 'P1': -0.052691, 'P2': 0.004388, 'P3': -0.117902 };
+g_spherePositions['MCTs13_0'] = { 'name': 'MCTs13_0', 'color': 0, 'x': 0.119476, 'y': 0.035017, 'z': 0.111949, 'P1': 0.119476, 'P2': 0.035017, 'P3': 0.111949 };
+g_spherePositions['MCTs36_0'] = { 'name': 'MCTs36_0', 'color': 0, 'x': -0.025407, 'y': -0.070908, 'z': 0.028106, 'P1': -0.025407, 'P2': -0.070908, 'P3': 0.028106 };
+g_spherePositions['MCTs37_0'] = { 'name': 'MCTs37_0', 'color': 0, 'x': -0.159498, 'y': 0.017178, 'z': -0.007540, 'P1': -0.159498, 'P2': 0.017178, 'P3': -0.007540 };
+g_spherePositions['MCTs18_0'] = { 'name': 'MCTs18_0', 'color': 0, 'x': -0.289809, 'y': 0.043521, 'z': -0.008302, 'P1': -0.289809, 'P2': 0.043521, 'P3': -0.008302 };
+g_spherePositions['MCTs19_0'] = { 'name': 'MCTs19_0', 'color': 0, 'x': -0.122978, 'y': -0.047137, 'z': 0.139557, 'P1': -0.122978, 'P2': -0.047137, 'P3': 0.139557 };
+g_spherePositions['MCTs32_0'] = { 'name': 'MCTs32_0', 'color': 0, 'x': 0.079032, 'y': -0.142479, 'z': 0.166510, 'P1': 0.079032, 'P2': -0.142479, 'P3': 0.166510 };
+g_spherePositions['MCTs33_0'] = { 'name': 'MCTs33_0', 'color': 0, 'x': 0.060211, 'y': 0.021934, 'z': -0.086219, 'P1': 0.060211, 'P2': 0.021934, 'P3': -0.086219 };
+g_spherePositions['MCTs35_0'] = { 'name': 'MCTs35_0', 'color': 0, 'x': -0.079000, 'y': -0.343183, 'z': -0.156450, 'P1': -0.079000, 'P2': -0.343183, 'P3': -0.156450 };
+g_spherePositions['MCTs10_1'] = { 'name': 'MCTs10_1', 'color': 0, 'x': 0.037383, 'y': -0.018241, 'z': 0.028203, 'P1': 0.037383, 'P2': -0.018241, 'P3': 0.028203 };
+g_spherePositions['MCTs03_1'] = { 'name': 'MCTs03_1', 'color': 0, 'x': 0.006400, 'y': 0.034156, 'z': 0.025146, 'P1': 0.006400, 'P2': 0.034156, 'P3': 0.025146 };
+g_spherePositions['MCTs04_1'] = { 'name': 'MCTs04_1', 'color': 0, 'x': -0.017110, 'y': 0.012346, 'z': -0.000869, 'P1': -0.017110, 'P2': 0.012346, 'P3': -0.000869 };
+g_spherePositions['MCTs07_1'] = { 'name': 'MCTs07_1', 'color': 0, 'x': 0.037837, 'y': 0.022063, 'z': 0.027504, 'P1': 0.037837, 'P2': 0.022063, 'P3': 0.027504 };
+g_spherePositions['MCTs06_1'] = { 'name': 'MCTs06_1', 'color': 0, 'x': -0.041963, 'y': -0.064856, 'z': 0.045244, 'P1': -0.041963, 'P2': -0.064856, 'P3': 0.045244 };
+g_spherePositions['MCTs01_1'] = { 'name': 'MCTs01_1', 'color': 0, 'x': -0.029443, 'y': 0.027125, 'z': 0.030514, 'P1': -0.029443, 'P2': 0.027125, 'P3': 0.030514 };
+g_spherePositions['MCTs29_1'] = { 'name': 'MCTs29_1', 'color': 0, 'x': -0.044883, 'y': -0.021079, 'z': -0.064955, 'P1': -0.044883, 'P2': -0.021079, 'P3': -0.064955 };
+g_spherePositions['MCTs28_1'] = { 'name': 'MCTs28_1', 'color': 0, 'x': 0.024084, 'y': -0.110041, 'z': -0.009179, 'P1': 0.024084, 'P2': -0.110041, 'P3': -0.009179 };
+g_spherePositions['MCTs27_1'] = { 'name': 'MCTs27_1', 'color': 0, 'x': 0.017707, 'y': 0.054444, 'z': 0.015221, 'P1': 0.017707, 'P2': 0.054444, 'P3': 0.015221 };
+g_spherePositions['MCTs26_1'] = { 'name': 'MCTs26_1', 'color': 0, 'x': -0.026322, 'y': -0.014161, 'z': -0.023140, 'P1': -0.026322, 'P2': -0.014161, 'P3': -0.023140 };
+g_spherePositions['MCTs25_1'] = { 'name': 'MCTs25_1', 'color': 0, 'x': -0.061707, 'y': 0.030200, 'z': 0.003354, 'P1': -0.061707, 'P2': 0.030200, 'P3': 0.003354 };
+g_spherePositions['MCTs24_1'] = { 'name': 'MCTs24_1', 'color': 0, 'x': 0.025212, 'y': -0.011056, 'z': -0.049312, 'P1': 0.025212, 'P2': -0.011056, 'P3': -0.049312 };
+g_spherePositions['MCTs09_1'] = { 'name': 'MCTs09_1', 'color': 0, 'x': 0.002499, 'y': 0.009782, 'z': -0.077710, 'P1': 0.002499, 'P2': 0.009782, 'P3': -0.077710 };
+g_spherePositions['MCTs08_1'] = { 'name': 'MCTs08_1', 'color': 0, 'x': 0.032473, 'y': 0.009142, 'z': 0.078104, 'P1': 0.032473, 'P2': 0.009142, 'P3': 0.078104 };
+g_spherePositions['MCTs21_1'] = { 'name': 'MCTs21_1', 'color': 0, 'x': 0.014994, 'y': -0.014384, 'z': 0.000439, 'P1': 0.014994, 'P2': -0.014384, 'P3': 0.000439 };
+g_spherePositions['MCTs20_1'] = { 'name': 'MCTs20_1', 'color': 0, 'x': 0.019018, 'y': 0.045170, 'z': -0.013224, 'P1': 0.019018, 'P2': 0.045170, 'P3': -0.013224 };
+g_spherePositions['MCTs23_1'] = { 'name': 'MCTs23_1', 'color': 0, 'x': 0.010202, 'y': 0.073246, 'z': -0.012356, 'P1': 0.010202, 'P2': 0.073246, 'P3': -0.012356 };
+g_spherePositions['MCTs22_1'] = { 'name': 'MCTs22_1', 'color': 0, 'x': -0.059143, 'y': 0.029963, 'z': -0.023941, 'P1': -0.059143, 'P2': 0.029963, 'P3': -0.023941 };
+g_spherePositions['MCTs16_1'] = { 'name': 'MCTs16_1', 'color': 0, 'x': 0.077332, 'y': -0.063183, 'z': 0.029043, 'P1': 0.077332, 'P2': -0.063183, 'P3': 0.029043 };
+g_spherePositions['MCTs31_1'] = { 'name': 'MCTs31_1', 'color': 0, 'x': 0.046030, 'y': -0.083335, 'z': -0.022980, 'P1': 0.046030, 'P2': -0.083335, 'P3': -0.022980 };
+g_spherePositions['MCTs14_1'] = { 'name': 'MCTs14_1', 'color': 0, 'x': 0.032770, 'y': -0.000522, 'z': 0.040456, 'P1': 0.032770, 'P2': -0.000522, 'P3': 0.040456 };
+g_spherePositions['MCTs15_1'] = { 'name': 'MCTs15_1', 'color': 0, 'x': 0.027731, 'y': 0.010187, 'z': -0.015052, 'P1': 0.027731, 'P2': 0.010187, 'P3': -0.015052 };
+g_spherePositions['MCTs34_1'] = { 'name': 'MCTs34_1', 'color': 0, 'x': 0.065595, 'y': 0.039539, 'z': -0.083502, 'P1': 0.065595, 'P2': 0.039539, 'P3': -0.083502 };
+g_spherePositions['MCTs13_1'] = { 'name': 'MCTs13_1', 'color': 0, 'x': -0.028263, 'y': 0.013884, 'z': 0.011045, 'P1': -0.028263, 'P2': 0.013884, 'P3': 0.011045 };
+g_spherePositions['MCTs36_1'] = { 'name': 'MCTs36_1', 'color': 0, 'x': -0.015306, 'y': 0.000521, 'z': 0.045677, 'P1': -0.015306, 'P2': 0.000521, 'P3': 0.045677 };
+g_spherePositions['MCTs37_1'] = { 'name': 'MCTs37_1', 'color': 0, 'x': 0.010027, 'y': -0.011400, 'z': 0.047418, 'P1': 0.010027, 'P2': -0.011400, 'P3': 0.047418 };
+g_spherePositions['MCTs18_1'] = { 'name': 'MCTs18_1', 'color': 0, 'x': -0.050680, 'y': 0.019820, 'z': 0.026113, 'P1': -0.050680, 'P2': 0.019820, 'P3': 0.026113 };
+g_spherePositions['MCTs19_1'] = { 'name': 'MCTs19_1', 'color': 0, 'x': -0.045837, 'y': -0.000059, 'z': 0.052758, 'P1': -0.045837, 'P2': -0.000059, 'P3': 0.052758 };
+g_spherePositions['MCTs32_1'] = { 'name': 'MCTs32_1', 'color': 0, 'x': -0.058496, 'y': 0.023284, 'z': -0.015099, 'P1': -0.058496, 'P2': 0.023284, 'P3': -0.015099 };
+g_spherePositions['MCTs33_1'] = { 'name': 'MCTs33_1', 'color': 0, 'x': 0.041981, 'y': 0.040124, 'z': -0.049780, 'P1': 0.041981, 'P2': 0.040124, 'P3': -0.049780 };
+g_spherePositions['MCTs35_1'] = { 'name': 'MCTs35_1', 'color': 0, 'x': -0.050123, 'y': -0.082679, 'z': -0.045139, 'P1': -0.050123, 'P2': -0.082679, 'P3': -0.045139 };
+
+var g_ellipsesDimensions = new Array();
+var g_segments = 8, g_rings = 8, g_radius = 0.005864;
+var g_xAxisLength = 0.488684;
+var g_yAxisLength = 0.493182;
+var g_zAxisLength = 0.328657;
+var g_xMaximumValue = 0.198875;
+var g_yMaximumValue = 0.149999;
+var g_zMaximumValue = 0.166510;
+var g_xMinimumValue = -0.289809;
+var g_yMinimumValue = -0.343183;
+var g_zMinimumValue = -0.162147;
+var g_maximum = 0.343183;
+var g_pc1Label = "PC1 (9.62 %)";
+var g_pc2Label = "PC2 (8.32 %)";
+var g_pc3Label = "PC3 (7.37 %)";
+var g_number_of_custom_axes = 0;
+var g_fractionExplained = [0.096213, 0.083196, 0.073662];
+var g_fractionExplainedRounded = [9.62, 8.32, 7.37];
+
+var g_taxaPositions = new Array();
+
+
+var g_vectorPositions = new Array();
+
+var g_comparisonPositions = new Array();
+var g_isSerialComparisonPlot = false;
+g_comparisonPositions['MCTs01'] = [[-0.0213889097436, 0.0944085000326, -0.0908636517409], [-0.0294430725385, 0.0271245189649, 0.0305139010209]];
+g_comparisonPositions['MCTs03'] = [[-0.0596895151694, 0.149999214319, -0.0207297734666], [0.00639952380965, 0.0341560758651, 0.0251457527004]];
+g_comparisonPositions['MCTs04'] = [[-0.173907058093, -0.127482518452, 0.100089223862], [-0.0171095110704, 0.0123464293508, -0.000868903838427]];
+g_comparisonPositions['MCTs06'] = [[-0.0200453080718, -0.105295037934, 0.0226939439685], [-0.0419628738181, -0.0648561913217, 0.0452436442605]];
+g_comparisonPositions['MCTs07'] = [[0.0741098870133, 0.120786099875, 0.0091010358391], [0.0378368425753, 0.0220626310522, 0.0275036086706]];
+g_comparisonPositions['MCTs08'] = [[-0.103466195858, 0.122857732798, 0.0620801934999], [0.0324726523326, 0.00914164382143, 0.0781038556258]];
+g_comparisonPositions['MCTs09'] = [[0.111500749424, 0.0625045651804, 0.164854072154], [0.00249900334288, 0.0097816138985, -0.0777102901653]];
+g_comparisonPositions['MCTs10'] = [[0.156497327412, 0.00383679945391, -0.033072770226], [0.0373833933368, -0.0182409656142, 0.0282034472797]];
+g_comparisonPositions['MCTs13'] = [[0.119476223689, 0.0350172822031, 0.111949040222], [-0.028262539212, 0.0138842134657, 0.0110446386916]];
+g_comparisonPositions['MCTs14'] = [[0.198874994499, -0.174986379702, 0.112235152432], [0.032770430542, -0.000521979771086, 0.0404556014886]];
+g_comparisonPositions['MCTs15'] = [[0.0123466168496, 0.105180405767, -0.08298241605], [0.0277308920121, 0.0101869121445, -0.0150515728968]];
+g_comparisonPositions['MCTs16'] = [[0.0116756875355, 0.0506698907118, -0.109781236317], [0.0773322255829, -0.063182628468, 0.0290433195285]];
+g_comparisonPositions['MCTs18'] = [[-0.289808981231, 0.0435206263262, -0.00830208191221], [-0.0506803975551, 0.0198197299639, 0.0261133892416]];
+g_comparisonPositions['MCTs19'] = [[-0.12297817937, -0.0471369000531, 0.13955656301], [-0.0458370301318, -5.93373352232e-05, 0.0527579471414]];
+g_comparisonPositions['MCTs20'] = [[0.137757030383, 0.0110827433943, -0.0392529754314], [0.0190182015681, 0.0451701626888, -0.0132235849097]];
+g_comparisonPositions['MCTs21'] = [[-0.0125913881433, 0.0570542232413, 0.0955916615161], [0.0149941021612, -0.014383518812, 0.000439318998585]];
+g_comparisonPositions['MCTs22'] = [[0.00749578752325, 0.0872721525533, -0.0661520195404], [-0.0591431351798, 0.0299630422403, -0.0239409217886]];
+g_comparisonPositions['MCTs23'] = [[0.155479825008, 0.0272650537028, -0.0529094568983], [0.0102022737812, 0.0732463271615, -0.0123563479501]];
+g_comparisonPositions['MCTs24'] = [[0.0173981392428, -0.110527266283, -0.0843408962987], [0.025212278027, -0.0110557683162, -0.0493123976701]];
+g_comparisonPositions['MCTs25'] = [[-0.047097630717, 0.0646939761085, 0.102761349667], [-0.06170716723, 0.0302004635702, 0.00335422754717]];
+g_comparisonPositions['MCTs26'] = [[-0.0191197971251, 0.0552880128815, -0.0675247414551], [-0.0263224525309, -0.0141608294165, -0.023140058754]];
+g_comparisonPositions['MCTs27'] = [[0.120878582122, 0.128199590457, 0.0731626609964], [0.0177073289705, 0.0544441588552, 0.0152209874559]];
+g_comparisonPositions['MCTs28'] = [[0.0302550297865, -0.000628085838767, -0.125115138366], [0.0240842622578, -0.110040671759, -0.00917857029995]];
+g_comparisonPositions['MCTs29'] = [[-0.0752998668132, 0.00190289147937, -0.162147366198], [-0.0448826244758, -0.021079411016, -0.0649554873296]];
+g_comparisonPositions['MCTs31'] = [[-0.0310011661572, -0.142413647059, 0.122595321754], [0.0460297305217, -0.0833351892097, -0.022979925273]];
+g_comparisonPositions['MCTs32'] = [[0.0790322066118, -0.142478748686, 0.166509626551], [-0.0584962418758, 0.0232844578955, -0.0150985906138]];
+g_comparisonPositions['MCTs33'] = [[0.0602113272895, 0.0219338539309, -0.0862191165409], [0.0419814146707, 0.0401242399593, -0.0497800534024]];
+g_comparisonPositions['MCTs34'] = [[-0.0526907624099, 0.00438806932509, -0.117902076905], [0.0655949263618, 0.0395385181048, -0.0835024297085]];
+g_comparisonPositions['MCTs35'] = [[-0.0790003422859, -0.343183140408, -0.156449891721], [-0.0501230185604, -0.082678992005, -0.0451392860006]];
+g_comparisonPositions['MCTs36'] = [[-0.0254066338293, -0.0709077416838, 0.0281062140715], [-0.0153063933626, 0.000520696826372, 0.045676587652]];
+g_comparisonPositions['MCTs37'] = [[-0.159497679372, 0.0171777823578, -0.00754045047602], [0.0100269756869, -0.0114003527844, 0.0474181932973]];
+document.getElementById("logo").style.display = 'none';
+document.getElementById("logotable").style.display = 'none';
+
+ </script>
+</head>
+
+<body>
+
+<div id="overlay">
+    <div>
+    <img src="emperor_required_resources/img/emperor.png" alt="Emperor" id="small-logo"/>
+        <h1>WebGL is not enabled!</h1>
+        <p>Emperor's visualization framework is WebGL based, it seems that your system doesn't have this resource available. Here is what you can do:</p>
+        <p id="explanation"><strong>Chrome:</strong> Type "chrome://flags/" into the address bar, then search for "Disable WebGL". Disable this option if you haven't already. <em>Note:</em> If you follow these steps and still don't see an image, go to "chrome://flags/" and then search for "Override software rendering list" and enable this option.</p>
+        <p id="explanation"><strong>Safari:</strong> Open Safari's menu and select Preferences. Click on the advanced tab, and then check "Show Developer" menu. Then open the "Developer" menu and select "Enable WebGL".</p>
+        <p id="explanation"><strong>Firefox:</strong> Go to Options through Firefox > Options or Tools > Options. Go to Advanced, then General. Check "Use hardware acceleration when available" and restart Firefox.</p>
+        <p id="explanation"><strong>Other browsers:</strong> The only browsers that support WebGL are Chrome, Safari, and Firefox. Please switch to these browsers when using Emperor.</p>
+        <p id="explanation"><em>Note:</em> Once you went through these changes, reload the page and it should work!</p>
+        <p id="source">Sources: Instructions for <a href="https://www.biodigitalhuman.com/home/enabling-webgl.html">Chrome and Safari</a>, and <a href="http://www.infewbytes.com/?p=144">Firefox</a></p>
+    </div>
+</div>
+
+<div id="emperor-plot-toggle">
+    <form>
+      <div id="plottype">
+        <input id="pcoa" type="radio" id="pcoa" name="plottype" checked="checked" /><label for="pcoa">PCoA</label>
+        <input id="parallel" type="radio" id="parallel" name="plottype" /><label for="parallel">Parallel</label>
+      </div>
+    </form>
+</div>
+<div id="pcoaPlotWrapper" class="emperor-plot-wrapper">
+    <label id="pointCount" class="ontop">
+    </label>
+
+    <div id="finder" class="arrow-right">
+    </div>
+
+    <div id="labels" class="unselectable">
+    </div>
+
+    <div id="taxalabels" class="unselectable">
+    </div>
+
+    <div id="axislabels" class="axis-labels">
+    </div>
+
+    <div id="main-plot">
+    </div>
+</div>
+
+<div id="parallelPlotWrapper" class="emperor-plot-wrapper">
+</div>
+
+<div id="emperor-separator" class="emperor-separator" ondblclick="separatorDoubleClick()"></div>
+
+<div id="emperor-menu">
+    <div id="emperor-menu-tabs">
+        <ul>
+            <li><a href="#keytab">Key</a></li>
+            <li><a href="#colorby">Colors</a></li>
+            <li><a href="#showby">Visibility</a></li>
+            <li><a href="#scalingby">Scaling</a></li>
+            <li><a href="#labelby">Labels</a></li>
+            <li><a href="#axes">Axes</a></li>
+            <li><a href="#animations">Animations</a></li>
+            <li><a href="#options">Options</a></li>
+        </ul>
+        <div id="keytab" class="emperor-tab-div">
+            <form name="keyFilter">
+                <label>Filter  </label><input name="filterBox" id="searchBox" type="text" onkeyup="filterKey()"></input>
+            </form>
+            <div id="key">
+            </div>
+        </div>
+        <div id="colorby" class="emperor-tab-div">
+            <select id="colormap-drop-down" class="emperor-tab-drop-down" onchange="colorByMenuChanged()"></select>
+            
+            <br><br>
+            <select id="colorbycombo" onchange="colorByMenuChanged()" class="emperor-tab-drop-down">
+            </select>
+            <div class="list" id="colorbylist">
+            </div>
+        </div>
+        <div id="showby" class="emperor-tab-div">
+            <table class="emperor-tab-table">
+                <tr>
+                    <td>
+                        <select id="showbycombo" onchange="showByMenuChanged()" class="emperor-tab-drop-down">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="list" id="showbylist" style="height:100%%;width:100%%">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 12px; padding-right:12px;">
+                        <hr class='section-break'>
+                        <br>
+                        <label for="sphereopacity" class="text">Global Sphere Opacity</label>
+                        <label id="sphereopacity" class="slidervalue"></label>
+                        <div id="sopacityslider" class="slider-range-max"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <button id="toggle-visibility-selection-button" onClick="toggleVisibleCategories()">Invert Selected</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="scalingby" class="emperor-tab-div">
+            <table class="emperor-tab-table">
+                <tr>
+                    <td>
+                        <select id="scalingbycombo" onchange="scalingByMenuChanged()" class="emperor-tab-drop-down">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="list" id="scalingbylist" style="height:100%%;width:100%%">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 12px; padding-right:12px;">
+                        <hr class='section-break'>
+                        <br>
+                        <label for="sphereradius" class="text">Global Sphere Scale</label>
+                        <label id="sphereradius" class="slidervalue"></label>
+                        <div id="sradiusslider" class="slider-range-max"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="labelby" class="emperor-tab-div">
+            <div id="labels-top">
+                <form name="plotoptions">
+                    <input type="checkbox" onClick="toggleLabels()">Samples Label Visibility</input>
+                </form>
+                <br>
+                <label for="labelopacity" class="text">Label Opacity</label>
+                <label id="labelopacity" class="slidervalue"></label>
+                <div id="lopacityslider" class="slider-range-max"></div>
+                <div id="label-color-holder clearfix">
+                    <table class="emperor-tab-table">
+                        <tr><td><div id="labelColor" class="colorbox"></div></td><td><label>Master Label Color</label></td></tr>
+                        <br><br>
+                </table></div>
+            </div>
+            <br>
+            <select id="labelcombo" onchange="labelMenuChanged()" class="emperor-tab-drop-down">
+            </select>
+            <div class="list" id="label-list">
+            </div>
+        </div>
+        <div id="axes" class="emperor-tab-div">
+            <div id="pcoaaxes">
+                <div class="list" id="axeslist">
+                </div>
+            </div>
+        </div>
+        <div id="animations" class="emperor-tab-div">
+            <table class="emperor-tab-table-with-sliders">
+                <tr>
+                    <td>
+                        <a id="reset-button" class="media-button" href="javascript:void(0);" onclick="javascript:resetAnimation()"><img src="emperor_required_resources/img/reset.png" ></img></a>
+                        <a id="play-button" class="media-button" href="javascript:void(0);" onclick="javascript:playAnimation()"><img src="emperor_required_resources/img/play.png"></img></a>
+                        <a id="pause-button" class="media-button" href="javascript:void(0);" onclick="javascript:pauseAnimation()"><img src="emperor_required_resources/img/pause.png"></img></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="animation-speed" class="text">Speed</label>
+                        <label id="animation-speed" class="slidervalue"></label>
+                        <div id="animation-speed-slider" class="slider-range-max"></div>
+                        <div id="labelColorHolder clearfix">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br><label for="gradient-category-drop-down" class="text">Gradient Category</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="gradient-category-drop-down" class="emperor-tab-drop-down"></select><br>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="trajectory-category-drop-down" class="text">Trajectory Category</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="trajectory-category-drop-down" class="emperor-tab-drop-down" onchange="colorAnimationsByCategoryChanged()"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="emperor-animation-color-selector">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="options" class="emperor-tab-div">
+            <table class="emperor-tab-table">
+                <tr><td><div id="axeslabelscolor" class="colorbox" name="axeslabelscolor"></div></td><td title="Axes Labels Color">Axes Labels Color</td></tr>
+                <tr><td><div id="axescolor" class="colorbox" name="axescolor"></div></td><td title="Axes Color Title">Axes Color</td></tr>
+                <tr><td><div id="rendererbackgroundcolor" class="colorbox" name="rendererbackgroundcolor"></div></td><td title="Background Color Title">Background Color</td></tr>
+            <tr><td><div id="edgecolorselector_a" class="colorbox" name="edgecolorselector_a"></div></td><td title="edgecolor_a">Edge Color Selector A</td></tr>
+            <tr><td><div id="edgecolorselector_b" class="colorbox" name="edgecolorselector_b"></div></td><td title="edgecolor_b">Edge Color Selector B</td></tr>
+
+                <tr><td colspan="2">
+                        <div id="pcoaviewoptions" class="">
+            <br>
+            <form name="edgesvisibility">
+            <input type="checkbox" onClick="toggleEdgesVisibility()" checked>Edges Visibility</input>
+            </form>
+            <br>
+                            <form name="settingsoptionscolor">
+                            </form>
+                            <div id="pcoaoptions" class="">
+                                <form name="settingsoptions">
+                                    <input type="checkbox" onchange="toggleScaleCoordinates(this)" id="scale_checkbox" name="scale_checkbox">Scale coords by percent explained</input>
+                                </form>
+                            </div>
+                            <br><input id="reset" class="button" type="submit" value="Recenter Camera" style="" onClick="resetCamera()">
+                            <br><br>
+                            <hr class='section-break'>
+                            <br>Filename <small>(only letters, numbers, ., - and _)</small>:
+                            <br><input name="saveas_name" id="saveas_name" value="screenshot" type="text"/>
+                            <br><input id="saveas_legends" class="checkbox" type="checkbox" style=""> Create legend
+                            <input id="saveas" class="button" type="submit" value="Save as SVG" style="" onClick="saveSVG()"/>
+                            <br><br>For a PNG, simply press 'ctrl+p'.
+                            <div id="paralleloptions" class="">
+                            </div>
+                        </div>
+                        <br>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

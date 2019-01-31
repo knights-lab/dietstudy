@@ -1,0 +1,340 @@
+---
+title: "Microbes v. grains"
+author: "Abby"
+date: "May 9, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(cowplot)
+library(zoo)
+library(RColorBrewer)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load mapping file, echo = FALSE}
+
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map <- map[grep("Blank", map$X.SampleID, invert = T),] # Drop blanks
+
+```
+
+
+```{r load microbiome species taxa table, echo = FALSE}
+# load summarized clr table at desired level
+microbes <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_p.txt", row=1) 
+
+# drop soylent
+microbes <- microbes[,!(colnames(microbes) %in% c("MCTs11", "MCTs12"))]
+
+# drop bad subject
+#microbes <- microbes[,!(colnames(microbes) %in% c("MCTs05"))]
+
+```
+
+```{r load food otus, echo = FALSE}
+# load foods that appear in most people
+food <- read.table("data/processed_food/dhydrt.limited.smry.otu.txt", sep = "\t", header = T, comment = "", row.names = "taxonomy")
+
+# drop X.FoodID
+food <- food[!colnames(food) == "X.FoodID"]
+
+# limit to just grains
+#food <- food[grep("L1_Grain_Product", rownames(food)),]
+
+#summarize
+split = strsplit(rownames(food),";")
+foodStrings = sapply(split,function(x) paste(x[1:6],collapse=";"));
+food_L = rowsum(food,foodStrings);
+
+# foodStrings = sapply(split,function(x) paste(x[1:1], collapse = ";"))
+# food_L1 = rowsum(food,foodStrings)
+
+# drop soylent
+food <- food_L[,!(colnames(food_L) %in% c("MCTs11", "MCTs12"))]
+
+# drop bad subject
+#food_L <- food_L[,!(colnames(food_L) %in% c("MCTs05"))]
+
+```
+
+
+
+
+```{r correlate microbes by username with foods by username, echo = FALSE, warning=FALSE, fig.width=10, fig.height=15}
+
+# set x and y to indivudal samples that overlap
+x <- food[colnames(food) %in% colnames(microbes)]
+y <- microbes[colnames(microbes) %in% colnames(x)]
+
+x <- as.data.frame(t(x))
+y <- as.data.frame(t(y))
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # plants
+    a<-as.numeric(x[,i]) # this was the step where moving from serina's code wasn't working
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, method = "pearson", use = "everything"), 
+             cor.test(a,b,method = "pearson")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.001, 0.01, 0.05, 0.25, Inf), label=c("***", "**", "*", "^", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<1])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<1])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# Fix labeling
+#dat.m$Food <- gsun(".*L2__", "", dat.m$Food)
+dat.m$Food <- gsub(".*;", "", dat.m$Food)
+dat.m$Food <- gsub("_", " ", dat.m$Food)
+dat.m$Food <- gsub("W .*$", "", dat.m$Food)
+dat.m$Taxa <- gsub(".*;p__", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("_", " ", dat.m$Taxa)
+
+
+# order the taxa
+# make wide kegg v. taxa (as columns) filled with correlation
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Taxa, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Taxa <- as.factor(dat.m$Taxa)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Taxa")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(y=Food, x=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-1,1), space = "Lab", name = "Pearson") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  labs(y = "Food commonly consumed by study participants", x = "Phyla (CLR corrected)") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+```
+
+
+```{r correlate with nutr, echo = FALSE, warning=FALSE, fig.width=10, fig.height=15}
+
+nutr <- read.table("data/processed_nutr/nutr_65_smry_no_soy.txt", header = T, comment = "", row.names = 1)
+
+# drop bad sample
+nutr <- nutr[,!(colnames(nutr) %in% c("MCTs05"))]
+
+# set x and y to indivudal samples that overlap
+x <- nutr[colnames(nutr) %in% colnames(microbes)]
+y <- microbes[colnames(microbes) %in% colnames(x)]
+
+x <- as.data.frame(t(x))
+x <- x[order(rownames(x)),]
+y <- as.data.frame(t(y))
+
+
+dat <- NULL
+
+for(i in colnames(x)){ # food
+  for(j in colnames(y)){ # plants
+    a<-as.numeric(x[,i]) # this was the step where moving from serina's code wasn't working
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, use = "everything", method = "pearson"), 
+             cor.test(a,b,method = "pearson")$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.001, 0.01, 0.05,0.25,Inf), label=c("***", "**", "*", "^", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<1])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<1])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# order the taxa
+# make wide kegg v. taxa (as columns) filled with correlation
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Taxa, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Food")
+tax_order <- hclust((dist(1-cor(order))/2))$order
+
+#can't reorder unless it's a factor first
+dat.m$Taxa <- as.factor(dat.m$Taxa)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Taxa <- factor(dat.m$Taxa, levels(dat.m$Taxa)[tax_order])
+
+# get the order pathways
+order <- dat.m %>% select(Taxa, Food, Correlation)
+order <- order %>% spread(Food, Correlation)
+order <- remove_rownames(order)
+order <- column_to_rownames(order, "Taxa")
+food_order <- hclust((dist(1-cor(order))/2))$order
+
+# set foods as factor
+dat.m$Food <- as.factor(dat.m$Food)
+
+# reorder the factors in the dataframe to be in the taxaorder
+dat.m$Food <- factor(dat.m$Food, levels(dat.m$Food)[food_order])
+
+# Fix labeling
+dat.m$Taxa <- gsub(".*;p__", "", dat.m$Taxa)
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(y=Food, x=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="#5e3c99", mid="#f7f7f7", high="#e66101", midpoint = 0, limit = c(-1,1), space = "Lab", name = "Pearson") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=2) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  labs(y = "Nutritional Variable", x = "Phyla (CLR corrected)") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+
+```
+
+```{r, b/f ratio, echo = F}
+
+# fb_ratio <- as.data.frame(t(microbes))
+# fb_ratio$FB <- 1-log(fb_ratio$`k__Bacteria;p__Firmicutes`/fb_ratio$`k__Bacteria;p__Bacteroidetes`)
+# 
+# 
+# # foods correated wtih FB ratio?
+# veg <- as.data.frame(t(food_L3))
+# 
+# cors <- apply(veg, 2, function(xx) cor(fb_ratio$FB, xx, method = "spearman"))
+# pvals <- apply(veg, 2, function(xx) cor.test(fb_ratio$FB, xx, method = "spearman", exact = F)$p.value)
+# 
+# qvals <- p.adjust(pvals, method = "fdr")
+# cors <- rbind(cors,qvals)
+# cors <- as.data.frame(cors)
+# 
+# sigs <- as.data.frame(t(cors))
+# sigs <- sigs[sigs$qvals < 0.5,]
+# 
+# sigs
+
+```
+
+
+```{r, fb food plots, echo = F, fig.height=4, fig.width=4}
+
+# plot <- as.data.frame(t(food_L3))
+# plot <- plot[,colnames(plot) %in% rownames(sigs)]
+# plot <- rownames_to_column(plot, var = "UserName")
+# 
+# fb_ratio <- rownames_to_column(fb_ratio, var = "UserName")
+# plot <- merge(fb_ratio, plot)
+# 
+# colnames(plot) <- gsub("?.*p__", "", colnames(plot))
+# colnames(plot) <- gsub("?.*L3_", "", colnames(plot))
+# rownames(sigs) <- gsub("?.*L3_", "", rownames(sigs))
+# 
+# # set colors
+# cols <- brewer.pal(8, "Set3")
+# cols2 <- colorRampPalette(cols)
+# subject_cols <- (sample(cols2(32)))
+# 
+# 
+# for (i in rownames(sigs)) {
+#   rho <- paste("italic(r) == ", round(sigs[i,"cors"], 3))
+#   q <- paste("italic(qval) ==", round(sigs[i,"qvals"], 3))
+#   labels = data.frame(x = quantile(plot[,i])[4], y =quantile(plot[,"FB"])[1], 
+#                        label = paste(rho, q, sep = " ~ "))
+#    
+#    
+#    print(ggplot(data = plot, aes_string(x = i, y = "FB")) + 
+#            geom_smooth(method = "lm", color = "black", fill = "grey") +
+#            geom_point(aes(fill = UserName), color = subject_cols, size = 3) +
+#            geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+#            theme(legend.position = "none") +
+#            geom_text(data = labels, aes(x=x, y=y,
+#             label = label),
+#             parse = T, size = 3) +
+#            theme(axis.title = element_text(size = 12)) +
+#            labs(y = "1-log(F/B ratio)")) 
+# }
+
+
+
+```
+

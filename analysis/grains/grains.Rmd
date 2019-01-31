@@ -1,0 +1,339 @@
+---
+title: "Targeted analysis of fiber from grains"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+This is an R markdown document. Use the Knit button at the top of Rstudio to create figures and pdf reports of this document's contents. 
+
+The goal of this document is to address the following hypothesis.
+
+Hypothesis: Intake of fiber from grain is correlated with microbime beta diversity.
+
+Plan to follow to test hypothesis:
+1. Start with all the fiber data summarized for each person alreadly limited to just grains
+2. Take this data and the food map and put it into qiime to get beta-diversity distance matrix
+3. Plot pcoa
+4. Start with taxonomy counts UN_taxonomy_counts_s.txt
+5. beta diversity of counts table by putting it in qiime to get a beta diversity matrix. It is shotgun data, so no tree for unifrac. Need to do chi-squared and Bray-Curtis.
+6. Run transformed coordinate analyses in procrustes in qiime. Use qiime website to find example code.
+
+
+
+```{r setup, include=FALSE, message = FALSE}
+
+# Add packages used in knitting this document here:
+require(rmarkdown)
+require(knitr)
+require(ggplot2)
+require(dplyr)
+require(vegan)
+require(ape)
+require(tibble)
+
+
+# Update this first path to be the root directory for this project on your computer
+opts_knit$set(root.dir = "/Users/Abby/Documents/Projects/dietstudy")
+
+#opts_knit$set(root.dir = "//jenshiow-pc/Users/Constance/Documents/GitHub/dietstudy_targeted")
+
+# This creates a figure directory in the same directory where this .Rmd document is located
+# No need to change this code unless you want figures in different formats
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+
+```{r load data, echo = FALSE}
+
+# load the map example:
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# load the fiber data
+fiber <- read.table("data/fiber/fiber.smry.otu.txt", sep = "\t", header = T, comment = "", stringsAsFactors = F)
+#fiber <- fiber %>% select(-X.FoodID)
+
+# remove soylents
+fiber <- fiber %>% select(-c(MCTs11, MCTs12))
+# remove bad data person
+fiber <- fiber %>% select(-c(MCTs05))
+
+# Do a little normalization
+# Find and get median colsums
+median_col <- median(colSums(fiber[,2:32]))
+# Normalize and multiply by median_col
+fiber[,2:32] <- sweep(fiber[,2:32], 2, colSums(fiber[,2:32]), "/")
+# fiber[,2:32] <- ceiling(fiber[,2:32] * median_col)
+fiber[,2:32] <- sqrt(sqrt(fiber[,2:32]))
+fiber[,2:32] <- fiber[,2:32]*median_col
+fiber[,2:32] <- round(fiber[,2:32])
+
+# Subset fiber to grains
+grains <- fiber %>% slice(grep("L1_Grain", fiber$taxonomy))
+
+# remove any grains with rowsums = 0
+keep <- rowSums(grains[,2:32])>0
+grains <- grains %>% filter(keep)
+
+# export for use with QIIME
+# Need X.FoodID column to be first column
+# Need taxonomy to be last column
+# Need X.FoodID to be "#FoodID" needs a # to work with QIIME
+colnames(grains)[1] <- "#FoodID" 
+write.table(grains, "data/fiber/grains_data/grains_fiber.txt", sep = "\t", row.names = F, quote = F)
+
+
+
+```
+
+
+Create figures each in their own chunk. Give the chunck a descriptive, short name - this will become the name of the figure in the figs/ directory associated with this markdown document. This is an example - it wont work for you because you don't have the data. But this is the type of naming that makes sense. For sizing figures, try to think about the size of a future publication. So aim to have the figure sized to either be 3 inches wide, or 7.5 inches wide, these fit nicely in a two column publication. When possible - use ggplot for figures so we can combine them easily with cowplot in the future. 
+
+
+```{r sub, echo = F, fig.height=4, fig.width=4}
+# Import the beta diversity table from grains_beta (weighted or unweighted)
+food_beta <- read.table(file="data/fiber/grains_data/grains_beta/unweighted_unifrac_grains_fiber.txt")
+
+food_dist <- as.dist(food_beta)
+# refer this code to make a pcoa you will have to fix naming and play with the data structure of the dataframe called plot to get this to work.
+
+#betad as matrix 
+plot <- data.frame(pcoa(food_dist)$vectors)
+
+# move rownames to a column
+plot <- rownames_to_column(plot, var = "UserName")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot <- inner_join(plot, map, by = 'UserName')
+
+Grain <- ggplot(plot, aes(x = Axis.1, y = Axis.2)) +
+  geom_point(aes(fill = plot$UserName), alpha=1, pch = 21, size = 3) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  labs(title="Uweighted Unifrac Grain Fiber") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic() +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "none",
+        legend.title = element_blank())
+
+Grain
+
+```
+```{r sub2, echo = F, fig.height=4, fig.width=4}
+# Import the beta diversity table for taxonomy
+taxa_beta <- read.table(file="../dietstudy/data/processed_UN_tax/UN_tax_beta/euclidean_UN_taxonomy_clr_s.txt")
+
+taxa_beta <- taxa_beta[rownames(taxa_beta) %in% rownames(food_beta),colnames(taxa_beta) %in% colnames(food_beta)]
+
+tax_dist <- as.dist(taxa_beta)
+
+#betad as matrix 
+plot_taxa <- data.frame(pcoa(tax_dist)$vectors)
+
+# move rownames to a column
+plot_taxa <- rownames_to_column(plot_taxa, var = "UserName")
+
+#merge map and PCOA by SampleID - select both lines and run together - won't work otherwise
+plot_taxa <- inner_join(plot_taxa, map, by = 'UserName')
+
+Taxa <- ggplot(plot_taxa, aes(x = Axis.1, y = Axis.2)) +
+  geom_point(aes(fill = plot_taxa$UserName), alpha=1, pch = 21, size = 3) +
+  scale_color_manual(values = c("black", "dark grey")) +
+  #scale_shape_manual(values = shape_pal3) +
+  labs(title="Taxa Euclidean CLR") +
+  guides(fill = guide_legend(override.aes = list(alpha=1)), size = FALSE, col = FALSE) +
+  #guides(size = FALSE, fill = FALSE) +
+  theme_classic() +                                                                      
+  theme(plot.title = element_text(size = 14, hjust = 0.5),
+        legend.position = "none",
+        legend.title = element_blank())
+
+Taxa
+
+```
+
+# Is procrustes significant?
+
+```{r grain_fiber_micro_pro, echo = F, include =T, fig.height=2.5, fig.width=2.5}
+set.seed(7)
+
+# make pcoas 
+pcoa_f <- as.data.frame(pcoa(food_dist)$vectors)
+pcoa_t <- as.data.frame(pcoa(tax_dist)$vectors)
+
+# procrustes
+pro <- procrustes(pcoa_f, pcoa_t)
+pro_test <- protest(pcoa_f, pcoa_t, perm = 999)
+
+eigen <- sqrt(pro$svd$d)
+percent_var <- signif(eigen/sum(eigen), 4)*100
+
+beta_pro <- data.frame(pro$X)
+trans_pro <- data.frame(pro$Yrot)
+beta_pro$UserName <- rownames(beta_pro)
+beta_pro$type <- "Grain Fiber (Unweighted Unifrac)"
+trans_pro$UserName <- rownames(trans_pro)
+trans_pro$type <- "Microbiome (CLR-Euclidean)"
+
+colnames(trans_pro) <- colnames(beta_pro)
+
+pval <- signif(pro_test$signif, 1)
+
+plot <- rbind(beta_pro, trans_pro)
+
+food_micro <- ggplot(plot) +
+  geom_point(size = 4, alpha=0.75, aes(x = Axis.1, y = Axis.2, color = type)) +
+  scale_color_manual(values = c("#fe9700", "#5f86b7")) +
+    theme_classic() +
+    geom_line(aes(x= Axis.1, y=Axis.2, group=UserName), col = "darkgrey", alpha = 0.6) +
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.title = element_blank(),
+        legend.text = element_text(size=9),
+        legend.position = 'bottom',
+        axis.text = element_text(size=9),
+        axis.title = element_text(size=9),
+         aspect.ratio = 1) +
+  guides(color = guide_legend(ncol = 1)) +
+  annotate("text", x = 0.1, y = -0.27, label = paste0("p-value=",pval), size = 3) +
+  xlab(paste0("PC 1 [",percent_var[1],"%]")) +
+  ylab(paste0("PC 2 [",percent_var[2],"%]")) 
+
+food_micro + theme(legend.position = "none")
+
+
+# so there is significant agreement between fiber from grains diversity and microbiome diversity (actually holds weighted and unweighted)
+
+# better ways to visualize this - make a box plot of the lengths v. permuted lengths?
+```
+
+
+
+```{r diet alpha v. stability, echo = F, fig.height=4, fig.width=4}
+# load grains alpha diversity
+grains_alpha <- read.delim(file = "data/fiber/grains_data/grains_alpha.txt", sep = "\t")
+colnames(grains_alpha)[1] <- "UserName"
+
+beta_cloud <- read.delim(file = "../dietstudy/analysis/beta_diversity/beta_div_cloud.txt", sep = "\t")
+
+# food alpha v. beta cloud?
+test <- merge(beta_cloud, grains_alpha)
+test <- test[!test$UserName %in% c("MCTs11", "MCTs12"),] # drop soylents
+cor <- cor((1/test$ave_cloud), test$PD_whole_tree, method = "spearman")
+pval <- cor.test((1/test$ave_cloud), test$PD_whole_tree, method = "spearman", exact = F)$p.value
+
+  rho <- paste("italic(r) == ", round(cor, 3))
+  p <- paste("italic(pval) ==", round(pval, 3))
+  labels = data.frame(y = quantile((1/test$ave_cloud))[1], 
+                      x =90, 
+                      label = paste(rho, p, sep = " ~ "))
+
+ggplot(test, aes(y = (1/ave_cloud), x = PD_whole_tree)) + 
+  geom_smooth(method = "lm", color = "black", fill = "grey") +
+  geom_point(aes(fill = UserName), color = "#fe9700", size = 3) +
+  geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+  theme_classic() + 
+  theme(legend.position = "none") +
+  geom_text(data = labels, aes(x=x, y=y,
+                               label = label),
+            parse = T, size = 3) +
+  labs(x = "Grains fiber alpha diversity\n(PD whole tree)", y= "Microbiome Stability")
+
+```
+
+
+```{r corrs_fiber_microbes, echo = F}
+
+# set x to food variable of interest
+x <- grains
+x <- x[,colnames(x) != "#FoodID"]
+x <- column_to_rownames(x, var = "taxonomy")
+
+# set y to taxonomy
+y <- read.delim(file = "../dietstudy/data/processed_UN_tax/UN_taxonomy_clr_f.txt", sep = "\t")
+y <- column_to_rownames(y, var = "X.taxonomy")
+
+# change the level for fiber comparison
+#summarize
+split = strsplit(rownames(x),";")
+fiberStrings = sapply(split,function(x) paste(x[1:2],collapse=";"));
+x = rowsum(x,fiberStrings);
+
+
+# limit to the same individuals
+y <- y[,colnames(y) %in% colnames(x)]
+x <- x[,colnames(x) %in% colnames(y)]
+
+
+x <- as.data.frame(t(x))
+y <- as.data.frame(t(y))
+
+# drop rare fiber sources
+x <- x[,colMeans(x)>5]
+
+lim <- quantile(colMeans(y))[2]
+y <- y[,colMeans(y)>lim]
+
+dat <- NULL
+
+for(i in colnames(x)){ 
+  for(j in colnames(y)){
+    a<-as.numeric(x[,i]) 
+    b<-as.numeric(y[,j])
+    tmp <- c(i,j,cor(a,b, method = "spearman", use = "pairwise.complete.obs"), 
+             cor.test(a,b,method = "spearman", use = "pairwise.complete.obs", exact = F)$p.value)
+    if(is.null(dat)){
+      dat <- tmp
+    }
+    else{
+      dat<-rbind(dat,tmp)
+    }
+  }
+}
+
+dat<- data.frame(row.names = NULL, dat, stringsAsFactors = FALSE)
+
+colnames(dat)<-c("Food","Taxa","Correlation","Pvalue")
+dat$Correlation <- as.numeric(dat$Correlation)
+dat$Pvalue <- as.numeric(dat$Pvalue)
+dat$fdr_pval <- (p.adjust(dat$Pvalue, 'fdr'))
+
+dat$Significance<-cut(dat$fdr_pval, breaks=c(-Inf, 0.25, Inf), label=c("*", "")) #converts numeric p-values to factors based on significance level
+
+# prune for complete cases with significant correlations
+dat.c<-dat[complete.cases(dat),]
+taxkeep<-unique(dat.c$Taxa[dat.c$fdr_pval<=0.5])
+
+taxassign<-taxkeep
+dat.w<-dat.c[dat.c$Taxa %in% taxassign,] 
+
+foodkeep <- unique(dat.w$Food[dat.w$fdr_pval<=0.5])
+dat.m<-dat.w[dat.w$Food %in% foodkeep,]
+
+# Fix labeling
+dat.m$Food <- gsub(".*L2_", "", dat.m$Food)
+dat.m$Food <- gsub("_", " ", dat.m$Food)
+dat.m$Taxa <- gsub(".*;f__", "", dat.m$Taxa)
+dat.m$Taxa <- gsub("_", " ", dat.m$Taxa)
+
+
+
+#plot the correlations for the collapsed levels
+ggplot(data = dat.m, aes(x=Food, y=Taxa, fill=Correlation)) + 
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low="purple", mid="white", high="green", midpoint = 0, limit = c(-0.999,0.9999), space = "Lab", name = "Spearman") +
+  geom_text(data = dat.m, aes(label=Significance), color="black", size=3) +
+  #theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+                                   size = 8, hjust = 1), 
+        axis.text.y = element_text(size = 8)) +
+  labs(x = "Fiber Grain Source", y = "Family") +
+  theme(strip.text.y = element_text(angle = 0, face = "italic"), 
+        strip.background = element_rect(color="grey", fill = "white")) +
+  coord_fixed()
+
+
+```

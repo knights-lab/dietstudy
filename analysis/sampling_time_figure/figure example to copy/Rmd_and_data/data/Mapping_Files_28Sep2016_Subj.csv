@@ -1,0 +1,12 @@
+Subject File,,,,,,,,
+Subject,Start_Date,CC_Date,Diet_StartDate,Diet_EndDate,Abx_StartDate,Abx_EndDate,Notes,"All lifestyle and diet questionnaire data needs to be entered here as many additional columns, unless decision is made to put that data in a separate file."
+AAA,29-Jul-2013,5-Nov-2014,NA,NA,14-Aug-2013,23-Aug-2013,AAA had unplanned doxycycline+cephalexin after beginning to sample intending to do CC.  Restarted sampling later to complete CC protocol.,
+AAB,9-May-2013,18-Nov-2013,NA,NA,30-Jul-2014,4-Aug-2014,-,
+AAD,10-Aug-2013,19-Oct-2013,NA,NA,NA,NA,-,
+AAF,16-Dec-2013,1-Feb-2014,NA,NA,NA,NA,-,
+AAG,21-Aug-2013,3-Nov-2013,NA,NA,NA,NA,-,
+AAI,10-Sep-2013,9-Dec-2013,NA,NA,NA,NA,-,
+AAN,10-Jul-2014,4-Oct-2014,NA,NA,NA,NA,-,
+AAP,12-Jul-2014,19-Sep-2014,NA,NA,NA,NA,-,
+AAK,10-Oct-2013,NA,NA,NA,11-Dec-2013,15-Dec-2013,"CC sample designations in full code of subject AAK are incorrect, originally given this code by mistake. In reality AAK did perturbation arms AB, then after 6 months did perturbation DA",
+DNA_QC,NA,NA,NA,NA,NA,NA,-,

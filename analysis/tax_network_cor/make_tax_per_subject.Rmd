@@ -1,0 +1,63 @@
+
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(dplyr)
+require(reshape2)
+require(zoo)
+require(RColorBrewer)
+
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+
+tax_map$StudyDate <- as.Date.factor(tax_map$StudyDate, format = "%m/%d/%y")
+
+```
+
+```{r load microbiome data, echo=FALSE}
+tax <- read.delim("data/processed_tax/taxonomy_norm.txt", row = 1)
+```
+
+
+```{r procrustes by individual, echo = F}
+# make a table for tax and map for each individual
+#loop through and write each to a txt file
+
+#make lists to fill
+taxsub <- list()
+mapsub <- list()
+
+for (i in unique(tax_map$UserName)){
+  subgroup <- tax_map[tax_map$UserName == i,]
+  
+  # tax
+  taxsub[[i]] <- tax[,colnames(tax) %in% subgroup$X.SampleID]  # subset to match the foodsub ids
+  taxsub[[i]] <- rownames_to_column(taxsub[[i]], var = "#taxonomy")
+  
+  # map
+  mapsub[[i]] <- subgroup[subgroup$X.SampleID %in% colnames(taxsub[[i]]),] # subset to match the foodsub ids
+  colnames(mapsub[[i]])[1] <- "#SampleID"
+  }
+
+
+for (df in names(mapsub)) {
+  # write taxa to table
+  write.table(taxsub[[df]], file = paste0("analysis/tax_network_cor/tax_username/", df, "_tax", ".txt"), sep = "\t", quote = F,  row.names = F, col.names = T)
+  
+  # write map to table
+  write.table(mapsub[[df]], file = paste0("analysis/tax_network_cor/tax_username/", df, "_map", ".txt"), sep = "\t", quote = F,  row.names = F, col.names = T)
+  
+}
+
+
+```

@@ -1,0 +1,10 @@
+Source,Target,Pval,Sparcc
+Prevotella_copri,.Eubacterium._siraeum,0,0.20361332146
+Faecalibacterium_prausnitzii,Paraprevotella_xylaniphila,0,0.212381709387
+Bacteroides_thetaiotaomicron,Paraprevotella_xylaniphila,0,0.217643804665
+Parasutterella_excrementihominis,Paraprevotella_xylaniphila,0,0.235423579278
+Bacteroides_vulgatus,Ruminococcus_callidus,0,0.218483435223
+Bacteroides_salyersiae,Ruminococcus_callidus,0,0.204642272697
+Prevotella_stercorea,Dialister_invisus,0,0.256301371641
+Alistipes_senegalensis,Bacteroides_salanitronis,0,0.205976755809
+Bacteroides_oleiciplenus,Bacteroides_salanitronis,0,0.263087631733

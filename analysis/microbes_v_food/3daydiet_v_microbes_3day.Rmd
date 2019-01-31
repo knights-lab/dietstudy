@@ -1,0 +1,39 @@
+---
+title: "3day"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    dev: png
+---
+
+
+```{r setup, include=FALSE, message = TRUE}
+library(knitr)
+library(ggplot2)
+
+# set the path for root directory
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+
+# create a directory for the figure and set it's resolution/format
+# opts_chunk$set(echo = TRUE, fig.path = "Figs_18_5_11/", dev = c("tiff"), dpi = 300, dev.args = list(compression="lzw"))
+opts_chunk$set(echo = TRUE, fig.path = "Figs_3day/", dev = c("pdf","png"), dpi = 300)
+```
+
+```{r correlations, echo=F, fig.width=8, fig.height=11}
+
+source(file = "lib/food_v_tax_per_person_3day.R")
+
+datlist<- list()
+
+run_correlations(foods_3d, tax_3d)
+
+# dat list contains all the correlations for each subject!
+save(datlist,file = "data/food_v_microbes_per_person_3day.RData")
+
+
+```
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

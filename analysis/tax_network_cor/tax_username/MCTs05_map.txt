@@ -1,0 +1,14 @@
+#SampleID	UserName	StudyDayNo	StudyDate	Gender	Age	Weight	Height	BMI	Supplement	Waist.Circumference	Study.Status	oilGrams.assigned	fecal.status	fecal.time	BMI.1	Weight.Change	Plate	SampleOrder	SampleType	Timing	Activity.Factor	Medications	Dietary.Supp
+MCT.f.0069	MCTs05	1	2017-01-31	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	7:45 PM	19.9	-0.6	4	4	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0070	MCTs05	2	2017-02-01	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	8:15 AM	19.9	-0.6	3	63	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0071	MCTs05	3	2017-02-02	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	2:20 PM	19.9	-0.6	1	21	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0072	MCTs05	4	2017-02-03	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	1:30 PM	19.9	-0.6	5	25	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0074	MCTs05	6	2017-02-05	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	10:30 AM	19.9	-0.6	3	76	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0075	MCTs05	7	2017-02-06	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	0	1	8:15 AM	19.9	-0.6	3	58	Sample	Pre	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0076	MCTs05	8	2017-02-07	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	5	1	2:30 PM	19.9	-0.6	2	47	Sample	Transition	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0077	MCTs05	9	2017-02-08	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	8:10 AM	19.9	-0.6	1	66	Sample	Transition	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0078	MCTs05	10	2017-02-09	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	12:00 PM	19.9	-0.6	2	16	Sample	Transition	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0080	MCTs05	12	2017-02-11	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	10:30 AM	19.9	-0.6	5	49	Sample	Post	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0081	MCTs05	13	2017-02-12	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	2:15 PM	19.9	-0.6	3	26	Sample	Post	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0083	MCTs05	15	2017-02-14	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	9:30 AM	19.9	-0.6	3	73	Sample	Post	1.375	Hormonal IUD;ibuprofen	None
+MCT.f.0085	MCTs05	17	2017-02-16	F	23.1	57.2	169.5	19.9	EVOO	85.5	Complete	10	1	8:20 AM	19.9	-0.6	2	23	Sample	Post	1.375	Hormonal IUD;ibuprofen	None

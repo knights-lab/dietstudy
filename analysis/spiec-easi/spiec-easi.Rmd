@@ -1,0 +1,118 @@
+---
+title: "Microbiome visualization"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+Visualizing microbimoe composition for all subjects.
+
+```{r setup, include=FALSE, message = FALSE}
+
+# my fav packages
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+require(ggdendro)
+require(vegan)
+require(phyloseq)
+require(igraph)
+
+# do this one time
+# library(devtools)
+# install_github("zdk123/SpiecEasi", force=TRUE)
+library(SpiecEasi)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load data and map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+
+# get names of species to keep
+taxa_to_keep <- read.table("data/processed_tax/taxonomy_norm_s.txt", header = T, row.names = 1, sep = "\t", comment = "")
+
+# load raw count data for spieceasi analysis
+raw_taxa <- read.delim("raw/hoho.tax.txt", row = 1, stringsAsFactors = F)
+
+# fix the names and collapse the counts
+split <- strsplit(rownames(raw_taxa),";")     
+taxaStrings <- sapply(split,function(x) paste(x[1:7],collapse=";"))
+for (i in 1:7) taxaStrings = gsub("(;[A-z]__$)?(;NA$)?","",taxaStrings,perl=T) # clean tips
+raw_taxa <- rowsum(raw_taxa,taxaStrings)
+rownames(raw_taxa) = sapply(strsplit(rownames(raw_taxa),";"),function(x) paste(x[1:7],collapse=";"));
+
+
+# subset to correct sample rows and columns
+raw_taxa <- raw_taxa[rownames(raw_taxa) %in% rownames(taxa_to_keep), colnames(raw_taxa) %in% tax_map$X.SampleID]
+
+```
+
+```{r order, echo = F, fig.width = 6, fig.height=7}
+myplots <- NULL
+myphy <- NULL
+myspiec <- NULL
+
+mynames <- unique(tax_map$UserName)
+
+for (i in mynames[1:2]) {
+  rownames(tax_map) <- tax_map$X.SampleID
+  keep = rownames(tax_map)[which(tax_map$UserName == i)]
+  test <- raw_taxa[,keep]
+  mynames <- rownames(test)
+
+  rownames(test) <- paste("OTU", 1:nrow(test))
+  otu <- as.matrix(test)
+  otu <- otu_table(otu, taxa_are_rows = T)
+  taxa_names <- as.data.frame(mynames)
+  taxa_names <- colsplit(taxa_names$mynames, ";", names = c("Kingdom", "Phylum", "Class", "Order", "Family",
+                                                            "Genus", "Species"))
+  rownames(taxa_names) <- paste("OTU", 1:nrow(test))
+  taxa_names <- as.matrix(taxa_names)
+  taxa_names <- tax_table(taxa_names)
+  test_phy <- phyloseq(otu, taxa_names)
+  test_phy
+  
+  # run speic.easi
+  test_spiec <- spiec.easi(test_phy, method='mb', lambda.min.ratio=1e-2, nlambda=20, icov.select.params=list(rep.num=20, nc = 2))
+  
+  # make the igraph object
+  test_ctl <- adj2igraph(test_spiec$refit, vertex.attr=list(name=taxa_names(test_phy)))
+  
+  # set the layout
+  am.coord <- layout.fruchterman.reingold(test_ctl)
+  #vsize = rowMeans(clr(otu_table(test_phy)))
+  plot(test_ctl, layout=am.coord, vertex.size = 1, vertex.label=NA, main="MB")
+  
+  plot <- plot_network(test_ctl, test_phy, type = 'taxa', color = "Class", label = NULL)
+
+  myplots[[i]] <- plot
+  myspiec[[i]] <- test_spiec
+  
+}
+
+```
+
+### well, that didn't work - need to work out what is necessary here to get the plots to actually get plotted.
+
+# library(Matrix)
+# elist.unweight <- summary(as(test_spiec$refit, "symmetricMatrix"))
+# elist.weighted <- summary(symBeta(getOptBeta(test_spiec), mode='maxabs'))
+# 
+# dd.ctl <- igraph::degree_distribution(test_ctl, cumulative=FALSE)
+# sum(seq_along(dd.ctl)*dd.ctl)-1
+# 
+# plot(seq_along(dd.ctl)-1, dd.ctl, type='b', xlim=c(0,20),
+# ylab="Frequency", xlab="Degree", col='red')
+```{r myplots, echo = F, fig.width = 6, fig.height=8}
+myplots
+
+```

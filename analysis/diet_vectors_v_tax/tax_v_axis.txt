@@ -1,0 +1,7 @@
+taxa	food_vector	correlation	pvalue	qvalue	Significance
+k__Bacteria;p__Proteobacteria;c__Betaproteobacteria;o__Burkholderiales;NA	1. Mixed grain meals	0.520894428152493	0.00223800905047138	0.0979128959581229	*
+k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Pasteurellales;f__Pasteurellaceae	3. Alcohol, cheese, and meat	-0.497434017595308	0.0037714813037317	0.13200184563061	*
+k__Bacteria;p__Proteobacteria;c__Betaproteobacteria;o__Burkholderiales;f__Sutterellaceae	4. Fats and snacks	-0.521260997067449	0.00221917824062039	0.0979128959581229	*
+k__Bacteria;p__Firmicutes;c__Erysipelotrichia;o__Erysipelotrichales;f__Erysipelotrichaceae	4. Fats and snacks	0.485703812316716	0.00483101052104508	0.140904473530481	*
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae	5. Cakes and oils	0.541055718475073	0.00138622058144827	0.0979128959581229	*
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;NA	5. Cakes and oils	0.561950146627566	0.000816884522881997	0.0979128959581229	*
