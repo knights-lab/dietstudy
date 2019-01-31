@@ -1,0 +1,503 @@
+---
+title: "Figure 4"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    dev: png
+---
+
+Figure 4: Will show the the correlation between dietary diversity and microbiome diversity
+
+There is a significant correlation between microbiome stability and dietary alpha diversity, so make sure to show that.
+
+Top panel: Microbime variability v. dietary alpha diveristy and dietary beta diversity
+Bottom panel
+
+Supplemental will be whatever doesn't fit nicely on the figure. Consider individual foods microbiome stability correlations etc.
+
+
+```{r setup, include=FALSE, message = FALSE}
+# this chunck sets up the rmd document
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+require(ggdendro)
+require(vegan)
+require(ape)
+
+# set the path for root directory
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+
+# create a directory for the figure and set it's resolution/format
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+
+# set up colors
+pal <- c("#ff0000", "#ffd940", "#008c4b", "#00138c", "#8c235b", "#ffbfbf", "#8c7723", "#468c75", "#8091ff", "#ff80c4", "#8c3123", "#fff2bf", "#40fff2", "#69698c", "#ff0044", "#ff9180", "#e5ff80", "#bffbff", "#5940ff", "#8c696e", "#8c7369", "#858c69", "#40d9ff", "#c480ff", "#ff8c40", "#4b8c00", "#23698c", "#69238c", "#8c4b00", "#bfffbf", "#004b8c", "#eabfff", "#ffc480", "#40ff59", "#80c4ff", "#ff40f2")
+
+set.seed(42)
+```
+
+```{r load data, echo = FALSE}
+#### load the maps for downstream use ####
+map_sample <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+rownames(map_sample) <- map_sample$X.SampleID
+
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+map_sample$StudyDate <- as.Date.factor(map_sample$StudyDate, format = "%m/%d/%y")
+
+#load other maps
+food_map <- read.table("data/maps/food_map.txt", sep = "\t", header = T, comment = "")
+tax_map <- read.table("data/maps/taxonomy_norm_map.txt", sep = "\t", header = T, comment = "")
+
+# load the food distance matrix, unweighted unifrac
+food_un <- read.delim("data/processed_food/dhydrt_beta/unweighted_unifrac_dhydrt.txt", row = 1) # weighted in not significant
+food_dist <- as.dist(food_un)
+
+
+# load food alpha diversity, pd whole tree
+food_alpha <- read.delim("data/processed_food/dhydrt_alpha.txt", row = 1)
+
+# load microbiome alpha diversity
+tax_alpha <- read.delim("data/processed_tax/taxa_alpha.txt", sep = "\t", row.names = 1) #from the taxonomy counts values
+
+# load taxonomy collapsed for each person
+tax <- read.delim("data/processed_tax/taxonomy_clr_s.txt", row = 1)
+# make taxonomy distance matrix
+tax_dist <- dist(t(tax))
+# convert to data frame to use below
+tax_beta <- as.data.frame(as.matrix(tax_dist))
+
+
+# calculate mean of the mean distance to self for each sample, for each UserName 
+# Food
+mydist <- NULL
+
+for (i in unique(food_map$UserName)) {
+  name <- food_map[food_map$UserName == i,1]
+  name <- as.vector(name)
+  tmp <- food_un[rownames(food_un) %in% name, colnames(food_un) %in% name]
+  num <- rowMeans(tmp, na.rm = T)
+  num <- cbind(i,num)
+  mydist <- rbind(num, mydist)
+  colnames(mydist) <- c("UserName", "food_mean_beta_div")
+}
+
+food_dist <- as.data.frame(mydist)
+food_dist$food_mean_beta_div <- as.character(food_dist$food_mean_beta_div)
+food_dist$food_mean_beta_div <- as.numeric(food_dist$food_mean_beta_div)
+
+
+# Taxa
+
+mydist <- NULL
+
+for (i in unique(tax_map$UserName)) {
+  name <- tax_map[tax_map$UserName == i,1]
+  name <- as.vector(name)
+  tmp <- tax_beta[rownames(tax_beta) %in% name, colnames(tax_beta) %in% name]
+  num <- rowMeans(tmp, na.rm = T)
+  num <- cbind(i,num)
+  mydist <- rbind(num, mydist)
+  colnames(mydist) <- c("UserName", "mean_beta_div")
+}
+
+tax_dist <- as.data.frame(mydist)
+tax_dist <- droplevels(tax_dist)
+tax_dist$mean_beta_div <- as.character(tax_dist$mean_beta_div)
+tax_dist$mean_beta_div <- as.numeric(tax_dist$mean_beta_div)
+tax_dist$mean_beta_div <- 1/tax_dist$mean_beta_div
+
+# Get average microbiome distance to self 
+# This will also be used to order the plot
+micro_order <- tax_dist %>% 
+  group_by(UserName) %>% 
+  dplyr::summarise(ave_cloud = median(mean_beta_div, na.rm=T)) # ave_cloud is inverse variability = stability
+# sort by mean
+micro_order <- micro_order[order(micro_order$ave_cloud),]
+# get factor names for ordering
+ord_factor <- as.character(micro_order$UserName)
+# 
+# # calculate median food distance to self
+# food_order <- food_dist %>% 
+#   group_by(UserName) %>% 
+#   dplyr::summarize(food_cloud = median(food_mean_beta_div))
+
+
+
+```
+
+
+```{r pre-post-stability, echo = F}
+
+# add metadata
+tax_dist_meta <- merge(tax_dist, map_sample, by = 0)
+
+# Check microbiome
+stability_test <- tax_dist_meta %>% 
+  group_by(UserName.x, Supplement, Timing) %>% 
+  summarise(ave = median(mean_beta_div, na.rm=T)) %>% 
+  filter(Timing %in% c("Pre", "Post"))
+
+stability_test <- stability_test %>% spread(Timing, ave)
+
+test_EVOO <- stability_test %>% filter(Supplement == "EVOO")
+test_MCT <- stability_test %>% filter(Supplement == "MCT")
+
+# paired t-test (post-pre) for difference between supplementation
+t.test(stability_test$Post, stability_test$Pre, paired = T) # all - no diff
+t.test(test_EVOO$Post, test_EVOO$Pre, paired = T) # EVOO - no diff
+t.test(test_MCT$Post, test_MCT$Pre, paired = T) # MCT - no diff
+
+# becuase there is no difference in microbiome variability pre-post supplementation or pre-post by supplement we combined pre/post and supplementation arms downstream analysis of variability.
+```
+
+
+
+
+
+```{r food_div, echo = F, include = F, fig.height = 4, fig.width =6}
+plot_food_per_subject <- food_dist
+plot_food_per_subject <- merge(plot_food_per_subject, map_sample, by = 0)
+
+# reorder by ordered factor
+plot_food_per_subject$UserName.x <- factor(plot_food_per_subject$UserName.x, levels = ord_factor)
+
+
+shading <- data.frame(min = seq(from = 0.5, to = max(as.numeric(as.factor(plot_food_per_subject$UserName.x))), by = 1),
+           max = seq(from = 1.5, to = max(as.numeric(plot_food_per_subject$UserName.x)) + 0.5, by = 1))
+shading$UserName.x <- levels(plot_food_per_subject$UserName.x)
+shading$col <- ifelse(shading$UserName.x %in% c("MCTs11", "MCTs12"), 1, 0)
+
+mean_food_div <- plot_food_per_subject %>% group_by(UserName.x) %>% summarise(median(food_mean_beta_div))
+colnames(mean_food_div) <- c("UserName", "food_mean_beta_div")
+mean_food_test <- merge(micro_order, mean_food_div)
+mytest <- cor.test(mean_food_test$food_mean_beta_div, mean_food_test$ave_cloud, method = "spearman")
+
+# make plot (switch directionality)
+food_div <- ggplot() +
+  geom_boxplot(data = plot_food_per_subject, aes(x = UserName.x, y = food_mean_beta_div, fill = UserName.x), fill = "orange", outlier.shape = NA, lwd = .25) +
+  geom_rect(data = shading, aes(xmin = min, xmax = max, ymin = -Inf, ymax = Inf, fill = factor(col), alpha = 0.1)) + # shade soylent
+  scale_fill_manual(values = c("white", "grey")) +
+  geom_smooth(data = plot_food_per_subject, aes(x = as.integer(UserName.x), y = food_mean_beta_div), method = "loess", color = "black") +
+  geom_boxplot(data = plot_food_per_subject, aes(x = UserName.x, y = food_mean_beta_div, fill = UserName.x), fill = "orange", outlier.shape = NA, lwd = .25) +
+  geom_jitter(data = plot_food_per_subject, aes(x = UserName.x, y = food_mean_beta_div), shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 9), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Food variability (Unweighted Unifrac)", x = " ") +
+  annotate("text", x = 1.5, y = 0.25, label = paste("r =",signif(mytest$estimate, 1), ",", "pval =", signif(mytest$p.value, 1)), size = 2)+
+  coord_flip()
+  
+
+
+food_div
+
+```
+
+```{r microbiome div per subject, echo = F, include = F}
+
+plot_tax_per_subject <- tax_dist #%>%
+  #filter(UserName != "MCTs06", #Infrequent Bowel Movements
+        # UserName != "MCTs29"  #Infrequent Bowel Movements
+        # ) 
+plot_tax_per_subject <- merge(plot_tax_per_subject, map_sample, by = 0)
+
+plot_tax_per_subject$UserName.x <- gsub("MCTs", "", plot_tax_per_subject$UserName.x)
+ord_factor <- gsub("MCTs", "", ord_factor)
+
+# apply ordering
+plot_tax_per_subject$UserName.x <- factor(plot_tax_per_subject$UserName.x, levels = ord_factor)
+
+# plot taxonomy diversity
+tax_div <- ggplot()+
+  geom_boxplot(data = plot_tax_per_subject, aes(x = UserName.x, y = mean_beta_div, fill = UserName), fill = "red", outlier.shape = NA, lwd = .25) +
+  geom_rect(data = shading, aes(xmin = min, xmax = max, ymin = -Inf, ymax = Inf, fill = factor(col), alpha = 0.1)) + # shade soylent
+  scale_fill_manual(values = c("white", "grey")) +
+  geom_smooth(data = plot_tax_per_subject, aes(x = as.integer(UserName.x), y = mean_beta_div), method = "loess", color = "black") +
+  geom_boxplot(data = plot_tax_per_subject, aes(x = UserName.x, y = mean_beta_div, fill = UserName), fill = "red", outlier.shape = NA, lwd = .25) +
+  geom_jitter(data = plot_tax_per_subject, aes(x = UserName.x, y = mean_beta_div), shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 9),
+        axis.title.y = element_text(size = 9),
+        axis.text.y = element_text(size = 6),
+        legend.position = "none") +
+  labs(y = "Microbiome stability (CLR-Euclidean)", x = "") +
+  coord_flip()
+
+tax_div
+
+
+```
+
+```{r food_alpha, echo = F, include = F}
+plot_food_alpha <- food_alpha
+plot_food_alpha <- merge(plot_food_alpha, map_sample, by = 0)
+
+
+mean_food_alpha <- plot_food_alpha %>% group_by(UserName) %>% summarise(median(PD_whole_tree))
+mean_food_test <- merge(micro_order, mean_food_alpha)
+mytest <- cor.test(mean_food_test$`median(PD_whole_tree)`, mean_food_test$ave_cloud, method = "spearman")
+
+
+# fix naming for ordering
+plot_food_alpha$UserName <- gsub("MCTs", "", plot_food_alpha$UserName)
+
+# apply ordering
+plot_food_alpha$UserName <- factor(plot_food_alpha$UserName, levels = ord_factor)
+
+# plot taxonomy diversity
+alpha_food <- ggplot()+
+  geom_boxplot(data = plot_food_alpha, aes(x = UserName, y = PD_whole_tree, fill = UserName), fill = "orange", outlier.shape = NA, lwd = .25) +
+  geom_rect(data = shading, aes(xmin = min, xmax = max, ymin = -Inf, ymax = Inf, fill = factor(col), alpha = 0.1)) + # shade soylent
+  scale_fill_manual(values = c("white", "grey")) +
+  geom_smooth(data = plot_food_alpha, aes(x = as.integer(UserName), y = PD_whole_tree), method = "loess", color = "black") +
+  geom_boxplot(data = plot_food_alpha, aes(x = UserName, y = PD_whole_tree, fill = UserName), fill = "orange", outlier.shape = NA, lwd = .25) +
+  geom_jitter(data = plot_food_alpha, aes(x = UserName, y = PD_whole_tree) ,shape = 21, fill = NA, size = 0.5, width = 0.2, alpha = 0.5) +
+ 
+  theme_classic() +
+  theme(axis.title.x = element_text(size = 9), 
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none") +
+  labs(y = "Food diversity (PD-whole-tree)", x = "") +
+  annotate("text", x = 1.5, y = 125, label = paste("r =",signif(mytest$estimate, 1), ",", "pval =", signif(mytest$p.value, 1)), size = 2)+
+  coord_flip()
+
+alpha_food
+
+
+
+```
+
+```{r microbe_alpha, echo = F, include = F}
+plot_micro_alpha <- tax_alpha
+plot_micro_alpha <- merge(plot_micro_alpha, map_sample, by = 0)
+
+
+mean_micro_alpha <- plot_micro_alpha %>% group_by(UserName) %>% summarise(med_chao = median(chao1), med_shan = median(shannon), med_simp = median(simpson))
+mean_micro_test <- merge(micro_order, mean_micro_alpha)
+test_shan <- cor.test(mean_micro_test$med_shan, mean_food_test$ave_cloud, method = "spearman", exact = F)$p.value
+test_chao <- cor.test(mean_micro_test$med_chao, mean_food_test$ave_cloud, method = "spearman", exact = F)$p.value
+test_simp <- cor.test(mean_micro_test$med_simp, mean_food_test$ave_cloud, method = "spearman", exact = F)$p.value
+
+# no relationship between alpha div and micorbiome stability, don't include in plot.
+
+```
+
+
+```{r species_stability, echo = F, include = T, fig.height=4, fig.width=6}
+
+# # first get tax average per subject using CLR
+tax_subject <- read.delim("data/processed_UN_tax/UN_taxonomy_clr_s.txt", row = 1)
+
+# Sort by average abundance
+tax_subject <- tax_subject[order(rowMeans(tax_subject),decreasing=T),]
+
+# fix naming
+rownames(tax_subject) <- gsub("?.*s__", "", rownames(tax_subject))
+rownames(tax_subject) <- gsub("?.*g__", "Genus_", rownames(tax_subject))
+rownames(tax_subject) <- gsub("?.*f__", "Family_", rownames(tax_subject))
+rownames(tax_subject) <- gsub("?.*o__", "Order_", rownames(tax_subject))
+rownames(tax_subject) <- gsub("?.*p__", "Phylum_", rownames(tax_subject))
+rownames(tax_subject) <- gsub(";NA", "", rownames(tax_subject))
+rownames(tax_subject) <- gsub("\\[", "", rownames(tax_subject))
+rownames(tax_subject) <- gsub("\\]", "", rownames(tax_subject))
+rownames(tax_subject) <- gsub("\\.", "", rownames(tax_subject))
+rownames(tax_subject) <- gsub("-", "_", rownames(tax_subject))
+rownames(tax_subject) <- gsub(" ", "_", rownames(tax_subject))
+
+
+# subset to same number of subjects
+tax_subject <- tax_subject[,colnames(tax_subject) %in% micro_order$UserName]
+micro_order <- micro_order[micro_order$UserName %in% colnames(tax_subject),]
+micro_order <- micro_order[order(micro_order$UserName),]
+
+# get correlations pvalues
+pvals <- apply(tax_subject, 1, function(x) {cor.test(x, micro_order$ave_cloud, method = "spearman")$p.value})
+cors <- apply(tax_subject, 1, function(x) {cor(x, micro_order$ave_cloud, method = "spearman")})
+
+qvals <- p.adjust(pvals, method = "fdr")
+qvals <- qvals[qvals <= 0.25]
+
+qvals <- as.data.frame(qvals)
+cors <- as.data.frame(cors)
+
+out <- merge(qvals, cors, by = 0)
+
+out <- out[order(out$qvals, decreasing = F),]
+out <- remove_rownames(out)
+
+colnames(out)[1] <- "Taxa"
+
+out
+
+plot <- as.data.frame(t(tax_subject))
+plot <- plot[,colnames(plot) %in% out$Taxa]
+plot <- rownames_to_column(plot, var = "UserName")
+plot <- merge(micro_order, plot)
+
+out <- remove_rownames(out)
+out <- column_to_rownames(out, var = "Taxa")
+rownames(out) <- as.character(rownames(out))
+colnames(plot) <- as.character(colnames(plot))
+
+for (i in colnames(plot[3:ncol(plot)])) {
+  rho <- paste("italic(r) == ", round(out[i,"cors"], 2))
+  q <- paste("italic(qval) ==", round(out[i,"qvals"], 2))
+  labels = data.frame(x = max(plot[,i])-2, y =min(plot[,"ave_cloud"])+0.04, 
+                       label = paste(rho, q, sep = " ~ "))
+  labels$xlab <- i
+  labels$xlab <- gsub("_", " ", labels$xlab)
+   
+   print(ggplot(data = plot, aes_string(x = i, y = "ave_cloud")) + 
+           geom_smooth(method = "lm", color = "black", fill = "grey") +
+           geom_point(aes(fill = UserName), color = "red", size = 3) +
+           geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+           theme(legend.position = "none") +
+           geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+            labs(y = "Microbiome Stability", x = labels$xlab))
+}
+
+
+
+```
+
+
+
+```{r figure_4, echo = F, message = F, fig.width=11, fig.height=6}
+
+plot_grid(tax_div, alpha_food, food_div, labels = "AUTO", ncol = 3, align = "h", rel_widths = c(1.0,1.0, 1.0))
+
+```
+
+
+```{r diet_micro_stability, echo = F, fig.height = 4, fig.width=6}
+
+# Are any foods associated with beta-diversity cloud size?
+# load average foods per person
+food <- read.table("data/processed_food/dhydrt.smry.txt", header = T, sep = "\t", comment = "")
+
+# get the foods in the correct format
+food <- remove_rownames(food)
+food <- column_to_rownames(food, var = "taxonomy")
+food <- food %>% select(-X.FoodID)
+
+# collapse by taxa level 3
+split <- strsplit(rownames(food),";")             # Split and rejoin on lv7 to get species level
+foodStrings <- sapply(split,function(x) paste(x[1:2],collapse=";"))
+food <- rowsum(food,foodStrings)              # Collapse by taxonomy name
+
+# Sort by average abundance
+food <- food[order(rowMeans(food),decreasing=T),]
+
+# fix naming
+rownames(food) <- gsub("\\;", "__", rownames(food))
+
+# subset to same number of subjects
+food <- food[,colnames(food) %in% micro_order$UserName]
+micro_order <- micro_order[micro_order$UserName %in% colnames(food),]
+micro_order <- micro_order[order(micro_order$UserName),]
+
+# get correlations pvalues
+pvals <- apply(food, 1, function(x) {cor.test(x, micro_order$ave_cloud, method = "spearman", exact = F)$p.value})
+cors <- apply(food, 1, function(x) {cor(x, micro_order$ave_cloud, method = "spearman")})
+
+qvals <- p.adjust(pvals, method = "fdr")
+qvals <- qvals[qvals <= 0.25]
+
+qvals <- as.data.frame(qvals)
+cors <- as.data.frame(cors)
+
+out <- merge(qvals, cors, by = 0)
+
+out <- out[order(out$qvals, decreasing = F),]
+out <- remove_rownames(out)
+
+colnames(out)[1] <- "Food"
+
+out
+
+plot <- as.data.frame(t(food))
+plot <- plot[,colnames(plot) %in% out$Food]
+plot <- rownames_to_column(plot, var = "UserName")
+plot <- merge(micro_order, plot)
+
+out <- remove_rownames(out)
+out <- column_to_rownames(out, var = "Food")
+rownames(out) <- as.character(rownames(out))
+colnames(plot) <- as.character(colnames(plot))
+
+for (i in colnames(plot[3:ncol(plot)])) {
+  rho <- paste("italic(r) == ", round(out[i,"cors"], 2))
+  q <- paste("italic(qval) ==", round(out[i,"qvals"], 2))
+  labels = data.frame(x = (max(plot[,i])-(0.2*(max(plot[,i])))), y =mean(plot[,"ave_cloud"]), 
+                       label = paste(rho, q, sep = " ~ "))
+  labels$xlab <- i
+  labels$xlab <- gsub("_", " ", labels$xlab)
+   
+   print(ggplot(data = plot, aes_string(x = i, y = "ave_cloud")) + 
+           geom_smooth(method = "lm", color = "black", fill = "grey") +
+           geom_point(aes(fill = UserName), color = "orange", size = 3) +
+           geom_point(aes(fill = UserName), shape = 1, size =3, color = "black") +
+           theme(legend.position = "none") +
+           geom_text(data = labels, aes(x=x, y=y,
+            label = label),
+            parse = T, size = 3) +
+            labs(y = "Microbiome Stability", x = labels$xlab))
+}
+
+
+
+```
+
+
+```{r food_vec_stability, echo = F}
+#food beta diversity (unweighted unifrac)
+food_beta_un <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/unweighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+
+food_beta_w <- read.delim("data/processed_food/dhydrt_smry_no_soy_beta/weighted_unifrac_dhydrt.smry.no.soy.txt", sep = "\t", row.names = 1)
+
+#get PCOA vectors to compare with taxonomy
+food_vectors_un <- data.frame(pcoa(food_beta_un)$vectors)
+food_vectors_w <- data.frame(pcoa(food_beta_w)$vectors)
+
+# limit to top 5 food vectors
+food_vectors_un<- as.data.frame(t(food_vectors_un[,1:5]))
+food_vectors_w <- as.data.frame(t(food_vectors_w[,1:5]))
+
+# drop soylents from micro_order
+micro_order_ns <- micro_order[!micro_order$UserName %in% c("MCTs11", "MCTs12"), ]
+
+pvals <- apply(food_vectors_w, 1, function(x) {cor.test(x, micro_order_ns$ave_cloud, method = "spearman", exact = F)$p.value})
+cors <- apply(food_vectors_w, 1, function(x) {cor(x, micro_order_ns$ave_cloud, method = "spearman")})
+
+qvals <- p.adjust(pvals, method = "fdr")
+#qvals <- qvals[qvals <= 0.25]
+
+qvals <- as.data.frame(qvals)
+cors <- as.data.frame(cors)
+
+out <- merge(qvals, cors, by = 0)
+
+out <- out[order(out$qvals, decreasing = F),]
+out <- remove_rownames(out)
+
+out
+```
+
+
+
+
+

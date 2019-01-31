@@ -1,0 +1,309 @@
+---
+title: "Sample characteristics by treatment"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+
+# Note: This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# 
+# When you click the **Knit** button a pdf document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You need LaTex to make a pdf.
+
+library(knitr)
+library(plyr)
+library(dplyr)
+library(broom)
+library(tibble)
+library(reshape2)
+library(ggplot2)
+library(lsmeans)
+library(cowplot)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path='Figs/', dev = c("png", "pdf"), dpi = 300)
+
+```
+
+
+```{r load maping data}
+
+map <- read.table("data/maps/UserName_map.txt", sep = "\t", header = TRUE)
+
+#drop subjects who didn't complete
+map_drop <- map %>% 
+  filter(Supplement == "EVOO" | Supplement == "MCT") %>% 
+  droplevels()
+
+# make a long version of the map
+map_long <- read.table("data/maps/UserName_map_long.txt", sep = "\t", header = TRUE)
+
+map_long_drop <- map_long %>% filter(Supplement == "EVOO" | Supplement == "MCT") %>% droplevels()
+
+```
+
+```{r print table of characteristics}
+
+mean(map_drop$Age)
+sd(map_drop$Age)
+
+mean(map_drop$Weight)
+sd(map_drop$Weight)
+
+mean(map_drop$Height)
+sd(map_drop$Height)
+
+mean(map_drop$Waist.Circumference, na.rm = TRUE)
+sd(map_drop$Waist.Circumference,na.rm = T)
+
+mean(map_drop$Cholesterol.Baseline, na.rm=T)
+sd(map_drop$Cholesterol.Baseline, na.rm=T)
+
+mean(map_drop$Trigs.Baseline, na.rm = T)
+sd(map_drop$Trigs.Baseline, na.rm = T)
+
+mean(map_drop$HDL.Baseline, na.rm = T)
+sd(map_drop$HDL.Baseline, na.rm = T)
+
+mean(map_drop$LDL.Baseline, na.rm = T)
+sd(map_drop$LDL.Baseline, na.rm =T)
+
+mean(map_drop$Glu.Baseline, na.rm = T)
+sd(map_drop$Glu.Baseline, na.rm = T)
+
+mean(map_drop$Ins.Baseline, na.rm = T)
+sd(map_drop$Ins.Baseline, na.rm = T)
+
+smry_gender <- ddply(map_drop, .(Gender), summarise, 
+              Age_mean=mean(Age), 
+              Age_sd = sd(Age), 
+              Gender_count=length(Gender),
+              Weight_mean = mean(Weight),
+              Weight_sd = sd(Weight),
+              Height_mean = mean(Height),
+              Height_sd = sd(Height),
+              Waist_cir_mean = mean(Waist.Circumference, na.rm = TRUE),
+              Waist_cir_sd = sd(Waist.Circumference, na.rm = TRUE),
+              Base_Chole_mean = mean(Cholesterol.Baseline, na.rm = TRUE),
+              Base_Chole_sd = sd(Cholesterol.Baseline, na.rm = TRUE),
+              Base_Trig_mean = mean(Trigs.Baseline, na.rm = TRUE),
+              Base_Trig_sd = sd(Trigs.Baseline, na.rm = TRUE),
+              Base_HDL_mean = mean(HDL.Baseline, na.rm = TRUE),
+              Base_HDL_sd = sd(HDL.Baseline, na.rm = TRUE),
+              Base_LDL_mean = mean(LDL.Baseline, na.rm = TRUE),
+              Base_LDL_sd = sd(LDL.Baseline, na.rm = TRUE),
+              Base_Glu_mean = mean(Glu.Baseline, na.rm = TRUE),
+              Base_Glu_sd = sd(Glu.Baseline, na.rm = TRUE),
+              Base_Ins_mean = mean(Ins.Baseline, na.rm = TRUE),
+              Base_Ins_sd = sd(Ins.Baseline, na.rm = TRUE),
+              Base_HOMA_IR_mean = mean(Homa.IR.Baseline, na.rm = TRUE),
+              Base_HOMA_IR_sd = sd(Homa.IR.Baseline, na.rm = TRUE))
+
+t(column_to_rownames(smry_gender, "Gender"))
+
+t.test(Age ~ Gender, data = map_drop)
+t.test(Weight ~ Gender, data = map_drop)
+t.test(Height ~ Gender, data = map_drop)
+t.test(Waist.Circumference ~ Gender, data = map_drop)
+t.test(Cholesterol.Baseline ~ Gender, data = map_drop)
+t.test(Trigs.Baseline ~ Gender, data = map_drop)
+t.test(HDL.Baseline ~ Gender, data = map_drop)
+t.test(LDL.Baseline ~ Gender, data = map_drop)
+t.test(Glu.Baseline ~ Gender, data = map_drop)
+t.test(Ins.Baseline ~ Gender, data = map_drop)
+```
+
+```{r print table of characteristics by supplement}
+
+
+smry_supp <- ddply(map_drop, .(Supplement), summarise, 
+              Age_mean=mean(Age), 
+              Age_sd = sd(Age), 
+              Subject_no=length(Gender),
+              Weight_mean = mean(Weight),
+              Weight_sd = sd(Weight),
+              Height_mean = mean(Height),
+              Height_sd = sd(Height),
+              Waist_cir_mean = mean(Waist.Circumference, na.rm = TRUE),
+              Waist_cir_sd = sd(Waist.Circumference, na.rm = TRUE),
+              Base_Chole_mean = mean(Cholesterol.Baseline, na.rm = TRUE),
+              Base_Chole_sd = sd(Cholesterol.Baseline, na.rm = TRUE),
+              Base_Trig_mean = mean(Trigs.Baseline, na.rm = TRUE),
+              Base_Trig_sd = sd(Trigs.Baseline, na.rm = TRUE),
+              Base_HDL_mean = mean(HDL.Baseline, na.rm = TRUE),
+              Base_HDL_sd = sd(HDL.Baseline, na.rm = TRUE),
+              Base_LDL_mean = mean(LDL.Baseline, na.rm = TRUE),
+              Base_LDL_sd = sd(LDL.Baseline, na.rm = TRUE),
+              Base_Glu_mean = mean(Glu.Baseline, na.rm = TRUE),
+              Base_Glu_sd = sd(Glu.Baseline, na.rm = TRUE),
+              Base_Ins_mean = mean(Ins.Baseline, na.rm = TRUE),
+              Base_Ins_sd = sd(Ins.Baseline, na.rm = TRUE),
+              Base_HOMA_IR_mean = mean(Homa.IR.Baseline, na.rm = TRUE),
+              Base_HOMA_IR_sd = sd(Homa.IR.Baseline, na.rm = TRUE))
+
+t(column_to_rownames(smry_supp, "Supplement"))
+
+```
+
+
+# At baseline, there are no differences in characteristics between supplementation groups
+```{r test for significance at baseline between supplement groups for those w. blood draw}
+
+# view the categories and see if there are any differences between groups at baseline
+plot(Age ~ Supplement, data = map_drop)
+t.test(Age ~ Supplement, data = map_drop) # p-val = 0.34
+
+# view Gender
+# plot(Gender ~ Supplement, data = map_drop)
+# table(map_drop$Gender)
+
+# what is the easiest way to test frequency? Chi-sq?
+# TODO, figure this out??!
+
+# view weight
+plot(Weight ~ Supplement, data = map_drop)
+t.test(Weight ~ Supplement, data = map_drop) # p-val = 0.82
+
+# view height
+plot(Height ~ Supplement, data = map_drop)
+t.test(Height ~ Supplement, data = map_drop) # p-val = 0.89
+
+# view waist circumference
+plot(Waist.Circumference ~ Supplement, data = map_drop)
+t.test(Waist.Circumference ~ Supplement, data = map_drop) # p-val = 0.51
+
+# view baseline cholesterol
+plot(Cholesterol.Baseline ~ Supplement, data = map_drop)
+t.test(Cholesterol.Baseline ~ Supplement, data = map_drop) # p-val = 0.34
+
+# view baseline Trigs
+plot(Trigs.Baseline ~ Supplement, data = map_drop)
+t.test(Trigs.Baseline ~ Supplement, data = map_drop) # p-val = 0.79
+
+# view hdl baseline
+plot(HDL.Baseline ~ Supplement, data = map_drop)
+t.test(HDL.Baseline ~ Supplement, data =  map_drop) # p-val = 0.36
+
+# view ldl baseline
+plot(LDL.Baseline ~ Supplement, data = map_drop)
+t.test(LDL.Baseline ~ Supplement, data = map_drop) # p-val = 0.49
+
+# view glucose
+plot(Glu.Baseline ~ Supplement, data = map_drop)
+t.test(Glu.Baseline ~ Supplement, data = map_drop) # p-val = 0.31
+
+# view insulin 
+plot(Ins.Baseline ~ Supplement, data = map_drop) # p-val = 0.52
+t.test(Ins.Baseline ~ Supplement, data = map_drop)
+```
+
+
+
+```{r Do mean blood test results change from pre to post, fig.height=4,fig.width=13 , message = F}
+
+
+# get p-value for each blood results for plotting (Welch two sample t-test)
+myvals <- NULL
+myvals[1] <- t.test((Cholesterol.Final - Cholesterol.Baseline) ~ Supplement, data = map_drop)$p.value
+myvals[2] <- t.test((map_drop$Trigs.Final - map_drop$Trigs.Baseline) ~ map_drop$Supplement)$p.value
+myvals[3] <- t.test((map_drop$HDL.Final - map_drop$HDL.Baseline) ~ map_drop$Supplement)$p.value
+myvals[4] <- t.test((map_drop$LDL.Final - map_drop$LDL.Baseline) ~ map_drop$Supplement)$p.value
+myvals[5] <- t.test((map_drop$NonHDL.Final - map_drop$NonHDL.Chol.Baseline) ~ map_drop$Supplement)$p.value
+myvals[6] <- t.test((map_drop$Glu.Final - map_drop$Glu.Baseline) ~ map_drop$Supplement)$p.value
+myvals[7] <- t.test((map_drop$Ins.Final - map_drop$Ins.Baseline) ~ map_drop$Supplement)$p.value
+myvals[8] <- t.test((map_drop$HOMA.IR.Final - map_drop$Homa.IR.Baseline) ~ map_drop$Supplement)$p.value
+
+myvals <- p.adjust(myvals, method = "fdr")
+myvals  # after adjustment for multiple comparisons
+
+# Cholesterol
+
+Chole <- ggplot(map_long_drop, aes(x = Blood.draw, y = Cholesterol)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+# Triglycerides
+
+Trigs <- ggplot(map_long_drop, aes(x = Blood.draw, y = Trigs)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+# HDL
+HDL <- ggplot(map_long_drop, aes(x = Blood.draw, y = HDL)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+# LDL
+LDL <- ggplot(map_long_drop, aes(x = Blood.draw, y = LDL)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+# Non-HDL Chol
+nonHDL.Chol <- ggplot(map_long_drop, aes(x = Blood.draw, y = NonHDL.Chol)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+# Glu
+Glu <- ggplot(map_long_drop, aes(x = Blood.draw, y = Glu)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+#Insulin
+Ins <- ggplot(map_long_drop, aes(x = Blood.draw, y = Ins)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+# Homa.ir
+Homa.IR <- ggplot(map_long_drop, aes(x = Blood.draw, y = Homa.IR)) +
+  geom_point(aes(group = UserName, color = Supplement)) +
+  geom_line(aes(group = UserName, color = Supplement)) +
+  facet_grid(~Supplement) +
+  geom_smooth(aes(group = Supplement), size = 2, method = "lm", se = FALSE, color = "grey") +
+  scale_color_manual(values =  c("#e66101", "#5e3c99"))+
+  theme(legend.position = "none")
+
+
+plot_grid(Chole, Trigs , HDL, LDL, nonHDL.Chol, Glu, Ins, Homa.IR, nrow = 2)
+
+
+
+
+
+```
+
+
+

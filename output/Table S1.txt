@@ -1,0 +1,49 @@
+Level 3 Food Groups	Species or Higher Taxonomy
+White breads rolls	Odoribacter splanchnicus
+White breads rolls	Parabacteroides merdae
+Cheese NS as to type	Bacteroides stercoris
+Salty snacks from grain products	Bacteroides massiliensis
+Cooked cereals rice	Bacteroides sp. 1 1 6
+Other vegetables raw	Barnesiella viscericola
+Other vegetables raw	Uncl. Family Lachnospiraceae
+Regular salad dressings	Parabacteroides sp. SN4
+Salty snacks from grain products	Escherichia coli
+Cornbread corn muffins tortillas	Bacteroides barnesiae
+Cornbread corn muffins tortillas	Bacteroides faecichinchillae
+Cornbread corn muffins tortillas	Bacteroides massiliensis
+Cornbread corn muffins tortillas	Bacteroides thetaiotaomicron
+Cornbread corn muffins tortillas	Uncl. Genus Prevotella
+Regular salad dressings	Bacteroides salanitronis
+Regular salad dressings	Butyricimonas virosa
+Readytoeat cereals	Uncl. Genus Bifidobacterium
+Carrots	Fusicatenibacter saccharivorans
+Regular salad dressings	[Eubacterium] rectale
+Regular salad dressings	Blautia wexlerae
+Other vegetables raw	Uncl. Order Bacteroidales
+Other vegetables raw	Parabacteroides merdae
+Other vegetables raw	[Eubacterium] rectale
+Frankfurters sausages lunchmeats meat spreads	Uncl. Genus Haemophilus
+Olives pickles relishes excluding tomatoes	Butyricicoccus pullicaecorum
+Other vegetables raw	Ruminococcus faecis
+Dried beans mixtures	Bacteroides eggerthii
+Dried beans	Parabacteroides goldsteinii
+Dried beans	Tannerella sp. 6 1 58FAA CT1
+Citrus fruit juices	Uncl. Family Enterobacteriaceae
+Bars	Lachnospiraceae bacterium TF01-11
+Tea	Streptococcus thermophilus
+Water not bottled	[Eubacterium] siraeum
+Other vegetables raw	Bacteroides fragilis
+Other vegetables raw	Odoribacter splanchnicus
+Other vegetables raw	Alistipes senegalensis
+Other vegetables raw	Alistipes shahii
+Other vegetables raw	Alistipes timonensis
+Tomatoes cooked	Bacteroides intestinalis
+Tomatoes cooked	Uncl. Order Clostridiales
+White potatoes chips and sticks	Bacteroides coprocola
+White potatoes chips and sticks	Paraprevotella clara
+White potatoes chips and sticks	Uncl. Genus Alistipes
+White potatoes chips and sticks	Alistipes finegoldii
+White potatoes chips and sticks	Alistipes onderdonkii
+White potatoes chips and sticks	Alistipes sp. AL-1
+Dried peas lentils and mixtures	Bifidobacterium kashiwanohense
+Citrus fruit juices	Ruminococcus faecis

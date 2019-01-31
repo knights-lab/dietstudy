@@ -1,0 +1,106 @@
+---
+title: "Supplemental Figure 1"
+author: "Abby"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+  toc: true
+  dev: png
+---
+
+Visualizing samples (both diet and microbiome) avaliable for each subject.
+
+```{r setup, include=FALSE, message = FALSE}
+
+require(rmarkdown)
+require(knitr)
+require(tidyverse)
+require(stringr)
+require(RColorBrewer) 
+require(cowplot)
+require(reshape2)
+
+opts_knit$set(root.dir = "/Users/abby/Documents/Projects/dietstudy/")
+opts_chunk$set(echo = TRUE, fig.path = "Figs/", dev = c("png", "pdf"), dpi = 300)
+
+```
+
+```{r load long map, echo = FALSE}
+map <- read.table("data/maps/SampleID_map.txt", sep = "\t", header = T, comment = "")
+map_username <- read.table("data/maps/UserName_map.txt", sep = "\t", header = T, comment = "")
+
+# set up colors
+cols <- brewer.pal(8, "Set3")
+cols2 <- colorRampPalette(cols)
+
+```
+
+
+```{r import food and microbes, include =F, message = F}
+# import diet data
+food <- read.table("data/processed_food/dhydrt.txt", header = T, sep = "\t", comment = "", row.names = "taxonomy")
+food <- food[, !(colnames(food) == "X.FoodID")]
+
+# import microbiome data
+microbes <- read.table("data/processed_tax/taxonomy_norm_s.txt", header = T, sep = "\t", comment = "", row.names = "X.taxonomy")
+
+```
+
+```{r load and map, echo = F, fig.width=16, fig.height = 7}
+# which samples do we have for food?
+food_names <- colnames(food)
+# which samples do we have for microbiome?
+fecal_sample_names <- colnames(microbes)
+
+#order these to look at quickly
+food_names <- sort(food_names)
+fecal_sample_names <- sort(fecal_sample_names)
+
+
+# create new variables in the map to use for plotting
+map$food_included <- ifelse(map$X.SampleID %in% food_names, 1, 0)
+map$microbiome_included <- ifelse(map$X.SampleID %in% fecal_sample_names, 1, 0)
+
+map$plot_fill <- ifelse(map$food_included == 1 & map$microbiome_included == 1, "Both", 
+                        ifelse(map$food_included == 1 & map$microbiome_included == 0, "Food Only",
+                               ifelse(map$food_included == 0 & map$microbiome_included == 1, "Microbiome Only", "No Data")))
+
+map$plot_fill <- as.factor(map$plot_fill)
+
+map <- map[-grep("Blank",map$X.SampleID),]
+map <- map[map$Study.Status != "Dropped",]
+
+#number of microbime samples:
+sum(map$microbiome_included)
+
+#number of diet records:
+sum(map$food_included)
+
+#number of paired microbime-diet samples:
+sum(map$plot_fill == "Both")
+
+```
+
+```{r, plot, echo = F, fig.height = 2.5, fig.width = 7.5}
+map$StudyDayNo <- as.factor(map$StudyDayNo)
+map$Subject <- gsub("MCTs", "", map$UserName)
+
+# must order by supplement before faceting for some reason
+map <- map[order(map$Supplement),]
+
+# pick colors that make sense, overlapping should the color you get when you mix the two
+cols = c("#7E0ED5", "#fb00ae", "#011bfb", "white")
+
+ggplot(map, aes(x = StudyDayNo, y = Subject)) +
+  geom_point(pch = 21, size = 1.5, col = "white") + 
+  annotate("rect", xmin = 7.5, xmax=10.5, ymin = 0, ymax = 17.5, alpha = 0.2, fill = "grey") +
+  annotate("rect", xmin = 10.5, xmax=17.5, ymin = 0, ymax = 17.5, alpha = 0.5, fill = "grey") +
+  geom_point(aes(color = as.factor(map$plot_fill)), size = 1.5) +
+  scale_color_manual("Data Availability", values = cols) +
+  theme_classic() +
+  theme(legend.position = "right",
+        axis.text = element_text(size = 5)) +
+  facet_grid(Supplement~., scales = "free") +
+  xlab("Study Day") 
+
+```

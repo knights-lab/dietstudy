@@ -1,0 +1,37 @@
+09/05/2017 02:55:52 PM : DEBUG : Attempting to load the database metadata file at /panfs/roc/scratch/ben/globus/SHOGUN/rep82/metadata.yaml
+09/05/2017 02:55:52 PM : INFO : Loading the functional database and converting.
+09/05/2017 02:55:59 PM : INFO : Starting functional prediction with input file /panfs/roc/scratch/ben/projects/analysis_MCT/data/embalmer_taxatable_clean.txt at level species
+09/05/2017 02:55:59 PM : DEBUG : Level for summarization 7 and starting summarizing KEGG Table at level with median.
+09/05/2017 02:56:51 PM : DEBUG : Number of rows 7193
+09/05/2017 02:56:51 PM : INFO : Reading in taxatable for functional prediction at /panfs/roc/scratch/ben/projects/analysis_MCT/data/embalmer_taxatable_clean.txt.
+09/05/2017 02:56:51 PM : DEBUG : Taxatable for functional prediction shape (1869, 487)
+09/05/2017 02:56:51 PM : DEBUG : Normalizing to median depth
+09/05/2017 02:56:54 PM : DEBUG : Taxatable summarized shape (1826, 487)
+09/05/2017 02:56:54 PM : INFO : Starting functional prediction.
+09/05/2017 02:56:54 PM : DEBUG : Kegg table for functional prediction shape (7193, 11747)
+09/05/2017 02:56:54 PM : DEBUG : Taxatable for functional prediction shape (1826, 487)
+09/05/2017 02:57:19 PM : WARNING : Overlap of taxa and function 0.41
+09/05/2017 02:57:19 PM : DEBUG : Row names found in taxatable 755
+	Command being timed: "shogun --log debug functional --input /scratch.global/ben/projects/analysis_MCT/data/embalmer_taxatable_clean.txt --database /home/knightsd/hillm096/globus/SHOGUN/rep82 --output /scratch.global/ben/projects/analysis_MCT/results/shogun_function/filtered_functions --level species"
+	User time (seconds): 80.54
+	System time (seconds): 16.66
+	Percent of CPU this job got: 101%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:36.06
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 643852
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 472749
+	Voluntary context switches: 272
+	Involuntary context switches: 208
+	Swaps: 0
+	File system inputs: 2952
+	File system outputs: 28256
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

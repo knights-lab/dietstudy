@@ -1,0 +1,3 @@
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs33_food_beta/MCTs33_food_pcoa.txt	MCTs33_tax_beta/MCTs33_tax_pcoa.txt	3	0.001	1	0.495

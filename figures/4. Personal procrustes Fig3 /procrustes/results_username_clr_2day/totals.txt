@@ -1,0 +1,96 @@
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs01_food_beta/MCTs01_food_pcoa.txt	MCTs01_tax_beta/MCTs01_tax_pcoa.txt	3	0.136	136	0.790
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs03_food_beta/MCTs03_food_pcoa.txt	MCTs03_tax_beta/MCTs03_tax_pcoa.txt	3	0.911	910	0.884
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs04_food_beta/MCTs04_food_pcoa.txt	MCTs04_tax_beta/MCTs04_tax_pcoa.txt	3	0.001	1	0.551
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs05_food_beta/MCTs05_food_pcoa.txt	MCTs05_tax_beta/MCTs05_tax_pcoa.txt	3	0.392	392	0.436
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs06_food_beta/MCTs06_food_pcoa.txt	MCTs06_tax_beta/MCTs06_tax_pcoa.txt	3	0.611	610	0.588
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs07_food_beta/MCTs07_food_pcoa.txt	MCTs07_tax_beta/MCTs07_tax_pcoa.txt	3	0.000	0	0.509
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs08_food_beta/MCTs08_food_pcoa.txt	MCTs08_tax_beta/MCTs08_tax_pcoa.txt	3	0.756	755	0.907
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs09_food_beta/MCTs09_food_pcoa.txt	MCTs09_tax_beta/MCTs09_tax_pcoa.txt	3	0.000	0	0.562
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs10_food_beta/MCTs10_food_pcoa.txt	MCTs10_tax_beta/MCTs10_tax_pcoa.txt	3	0.002	2	0.540
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs13_food_beta/MCTs13_food_pcoa.txt	MCTs13_tax_beta/MCTs13_tax_pcoa.txt	3	0.002	2	0.485
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs14_food_beta/MCTs14_food_pcoa.txt	MCTs14_tax_beta/MCTs14_tax_pcoa.txt	3	0.019	19	0.684
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs15_food_beta/MCTs15_food_pcoa.txt	MCTs15_tax_beta/MCTs15_tax_pcoa.txt	3	0.080	80	0.640
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs16_food_beta/MCTs16_food_pcoa.txt	MCTs16_tax_beta/MCTs16_tax_pcoa.txt	3	0.207	207	0.757
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs18_food_beta/MCTs18_food_pcoa.txt	MCTs18_tax_beta/MCTs18_tax_pcoa.txt	3	0.000	0	0.572
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs19_food_beta/MCTs19_food_pcoa.txt	MCTs19_tax_beta/MCTs19_tax_pcoa.txt	3	0.018	18	0.641
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs20_food_beta/MCTs20_food_pcoa.txt	MCTs20_tax_beta/MCTs20_tax_pcoa.txt	3	0.032	32	0.603
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs21_food_beta/MCTs21_food_pcoa.txt	MCTs21_tax_beta/MCTs21_tax_pcoa.txt	3	0.063	63	0.710
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs22_food_beta/MCTs22_food_pcoa.txt	MCTs22_tax_beta/MCTs22_tax_pcoa.txt	3	0.004	4	0.579
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs23_food_beta/MCTs23_food_pcoa.txt	MCTs23_tax_beta/MCTs23_tax_pcoa.txt	3	0.033	33	0.720
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs24_food_beta/MCTs24_food_pcoa.txt	MCTs24_tax_beta/MCTs24_tax_pcoa.txt	3	0.084	84	0.749
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs25_food_beta/MCTs25_food_pcoa.txt	MCTs25_tax_beta/MCTs25_tax_pcoa.txt	3	0.018	18	0.651
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs26_food_beta/MCTs26_food_pcoa.txt	MCTs26_tax_beta/MCTs26_tax_pcoa.txt	3	0.037	37	0.728
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs27_food_beta/MCTs27_food_pcoa.txt	MCTs27_tax_beta/MCTs27_tax_pcoa.txt	3	0.063	63	0.687
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs28_food_beta/MCTs28_food_pcoa.txt	MCTs28_tax_beta/MCTs28_tax_pcoa.txt	3	0.187	187	0.698
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs29_food_beta/MCTs29_food_pcoa.txt	MCTs29_tax_beta/MCTs29_tax_pcoa.txt	3	0.406	406	0.435
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs31_food_beta/MCTs31_food_pcoa.txt	MCTs31_tax_beta/MCTs31_tax_pcoa.txt	3	0.044	44	0.705
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs32_food_beta/MCTs32_food_pcoa.txt	MCTs32_tax_beta/MCTs32_tax_pcoa.txt	3	0.002	2	0.536
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs33_food_beta/MCTs33_food_pcoa.txt	MCTs33_tax_beta/MCTs33_tax_pcoa.txt	3	0.001	1	0.573
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs34_food_beta/MCTs34_food_pcoa.txt	MCTs34_tax_beta/MCTs34_tax_pcoa.txt	3	0.459	459	0.780
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs35_food_beta/MCTs35_food_pcoa.txt	MCTs35_tax_beta/MCTs35_tax_pcoa.txt	3	0.034	34	0.600
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs36_food_beta/MCTs36_food_pcoa.txt	MCTs36_tax_beta/MCTs36_tax_pcoa.txt	3	0.009	9	0.703
+#FP1	FP2	Num included dimensions	Monte Carlo p-value	Count better	M^2
+#Warning: p-values in this file are NOT currently adjusted for multiple comparisons.
+MCTs37_food_beta/MCTs37_food_pcoa.txt	MCTs37_tax_beta/MCTs37_tax_pcoa.txt	3	0.147	147	0.769

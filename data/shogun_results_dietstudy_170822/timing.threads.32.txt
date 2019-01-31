@@ -1,0 +1,85 @@
+08/21/2017 01:10:32 PM : DEBUG : Initiate Logger embalmer
+08/21/2017 01:10:32 PM : DEBUG : emb15 --queries /panfs/roc/scratch/gabe/ngs_data/raw/combined_seqsBOTH.fna --references /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/burst/rep82.edx --output /panfs/roc/scratch/ben/projects/analysis_MCT/results/shogun/embalmer_results.b6 --threads 32 --mode CAPITALIST --id 0.98 --npenalize --skipambig --forwardreverse --accelerator /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/burst/rep82.acx --taxonomy /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/rep82.tax --taxacut 2
+08/21/2017 01:17:08 PM : DEBUG :  --> EDB: Parsing compressed headers
+08/21/2017 01:24:26 PM : DEBUG :  --> Setting threads to 32
+08/21/2017 01:24:26 PM : DEBUG :  --> Setting run mode to CAPITALIST.
+08/21/2017 01:24:26 PM : DEBUG :  --> Setting identity threshold to 0.980000.
+08/21/2017 01:24:26 PM : DEBUG :  --> Setting N penalty (ref N vs query A/C/G/T).
+08/21/2017 01:24:26 PM : DEBUG :  --> Skipping highly ambiguous queries (5+ ambiguous bases).
+08/21/2017 01:24:26 PM : DEBUG :  --> Also considering the reverse complement of reads.
+08/21/2017 01:24:26 PM : DEBUG :  --> Using accelerator file /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/burst/rep82.acx
+08/21/2017 01:24:26 PM : DEBUG :  --> Assigning taxonomy based on input file /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/rep82.tax.
+08/21/2017 01:24:26 PM : DEBUG :  --> Ignoring 1/2 disagreeing taxonomy calls
+08/21/2017 01:24:26 PM : DEBUG : Using up to AVX-128 with 32 threads.
+08/21/2017 01:24:26 PM : DEBUG :  --> [Accel] Accelerator found. Parsing...
+08/21/2017 01:24:26 PM : DEBUG :  --> [Accel] Total accelerants: 39769367429 [bytes = 119308102287]
+08/21/2017 01:24:26 PM : DEBUG :  --> [Accel] Reading 0 ambiguous entries
+08/21/2017 01:24:26 PM : DEBUG :  --> [Accel] Using LARGE db mode...
+08/21/2017 01:24:26 PM : DEBUG : EDB database provided. Parsing...
+08/21/2017 01:24:26 PM : DEBUG :  --> EDB: Fingerprints are DISABLED
+08/21/2017 01:24:26 PM : DEBUG :  --> EDB: Sheared database (shear size = 515)
+08/21/2017 01:24:26 PM : DEBUG :  --> EDB: Unique-reference database
+08/21/2017 01:24:26 PM : DEBUG :  --> EDB: 39558392 refs [39580739 orig], 2472400 clumps, 1030 maxR
+08/21/2017 01:24:26 PM : DEBUG : Parsed 230597306 queries (209.457415). Calculating minMax...
+08/21/2017 01:24:26 PM : DEBUG : Found min 81, max 151 (0.048801).
+08/21/2017 01:24:26 PM : DEBUG : Converting queries... Converted (18.987614)
+08/21/2017 01:24:26 PM : DEBUG : Copying queries... Copied (0.593294)
+08/21/2017 01:24:26 PM : DEBUG : Sorting queries... Sorted (18.310885)
+08/21/2017 01:24:26 PM : DEBUG : Copying indices... Copied (0.223445)
+08/21/2017 01:24:26 PM : DEBUG : Determining uniqueness... Done (3.644466). Number unique: 172436817
+08/21/2017 01:24:26 PM : DEBUG : Collecting unique sequences... Done (1.360068)
+08/21/2017 01:24:26 PM : DEBUG : Creating data structures... Done (1.065784) [maxED: 3]
+08/21/2017 01:24:26 PM : DEBUG : Processing reverse complements... Processed (29.312859) [offset 18013268890 / 18013268890]
+08/21/2017 01:24:26 PM : DEBUG : Determining query ambiguity... Determined (4.960345)
+08/21/2017 01:24:26 PM : DEBUG : Creating bins... Created (7.721243); Unambig: 344864768, ambig: 8856, super-ambig: 10 [8856,344873624,344873634]
+08/21/2017 01:24:26 PM : DEBUG : Re-sorting... Re-sorted (25.198309)
+08/21/2017 01:24:26 PM : DEBUG : Calculating divergence... Calculated (3.703618) [35.595526 avg div; 150 max]
+08/21/2017 01:24:26 PM : DEBUG : Fingerprints not enabled
+08/21/2017 01:24:26 PM : DEBUG : Setting QBUNCH to 16
+08/21/2017 01:24:26 PM : DEBUG : Using ACCELERATOR to align 344873624 unique queries...
+08/21/2017 03:08:19 PM : DEBUG : Search complete. Consolidating results...
+08/21/2017 03:08:19 PM : DEBUG : CAPITALIST: Processed 93330899 investments
+08/21/2017 03:08:19 PM : DEBUG : Alignment time: 7067.006492 seconds
+08/21/2017 03:08:20 PM : DEBUG : 7068.22 seconds
+08/21/2017 03:08:20 PM : DEBUG : Subprocess finished.
+08/21/2017 03:08:20 PM : DEBUG : Beginning post align capitalist style with aligner embalmer
+08/21/2017 03:19:34 PM : DEBUG : Beginning redistribution for file: /panfs/roc/scratch/ben/projects/analysis_MCT/results/shogun/embalmer_taxatable.txt
+08/21/2017 03:19:34 PM : DEBUG : Attempting to load the database metadata file at /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/metadata.yaml
+08/21/2017 03:19:36 PM : DEBUG : Attempting to load the database metadata file at /panfs/roc/scratch/ben/projects/analysis_SHOGUN/data/references/rep82/metadata.yaml
+08/21/2017 03:19:36 PM : INFO : Loading the functional database and converting.
+08/21/2017 03:19:42 PM : INFO : Starting functional prediction with input file /panfs/roc/scratch/ben/projects/analysis_MCT/results/shogun/taxatable.species.txt at level species
+08/21/2017 03:19:42 PM : DEBUG : Level for summarization 7 and starting summarizing KEGG Table at level with median.
+08/21/2017 03:20:35 PM : DEBUG : Head of row names ['k__Archaea;p__;c__;o__;f__;g__;s__halophilic_archaeon_DL31', 'k__Archaea;p__Candidatus_Korarchaeota;c__;o__;f__;g__Candidatus_Korarchaeum;s__Candidatus_Korarchaeum_cryptofilum', 'k__Archaea;p__Crenarchaeota;c__Thermoprotei;o__Acidilobales;f__Acidilobaceae;g__Acidilobus;s__Acidilobus_saccharovorans']
+08/21/2017 03:20:35 PM : DEBUG : Number of rows 7193
+08/21/2017 03:20:35 PM : INFO : Reading in taxatable for functional prediction at /panfs/roc/scratch/ben/projects/analysis_MCT/results/shogun/taxatable.species.txt.
+08/21/2017 03:20:35 PM : DEBUG : Taxatable for functional prediction shape (1826, 610)
+08/21/2017 03:20:35 PM : DEBUG : Normalizing to median depth
+08/21/2017 03:20:35 PM : DEBUG : Taxatable summarized shape (1826, 610)
+08/21/2017 03:20:35 PM : INFO : Starting functional prediction.
+08/21/2017 03:20:35 PM : DEBUG : Kegg table for functional prediction shape (7193, 11747)
+08/21/2017 03:20:35 PM : DEBUG : Taxatable for functional prediction shape (1826, 610)
+08/21/2017 03:21:06 PM : WARNING : Overlap of taxa and function 0.41
+08/21/2017 03:21:06 PM : DEBUG : Row names found in taxatable 755
+	Command being timed: "shogun --log debug align --input /scratch.global/gabe/ngs_data/raw/combined_seqsBOTH.fna --database /scratch.global/ben/projects/analysis_SHOGUN/data/references/rep82 --aligner embalmer --output /scratch.global/ben/projects/analysis_MCT/results/shogun --threads 32 --level species"
+	User time (seconds): 196263.61
+	System time (seconds): 759.88
+	Percent of CPU this job got: 2512%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:10:41
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 228450908
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 2
+	Minor (reclaiming a frame) page faults: 3798308
+	Voluntary context switches: 128311
+	Involuntary context switches: 577227
+	Swaps: 0
+	File system inputs: 2952
+	File system outputs: 46275160
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

@@ -1,0 +1,2504 @@
+01/31/2018 11:02:02 AM SHI7 invocation: /home/knightsd/cole0463/.conda/envs/shi7/bin/shi7 --input magic/raw/R1 --adaptor Nextera --output magic/learnt/single -SE --filter_qual 36 --trim_qual 34
+01/31/2018 11:02:02 AM Existing temp directory deleted.
+01/31/2018 11:02:02 AM Detected pairs match on delimiter None
+01/31/2018 11:02:04 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/Blank.S67.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Blank.S67.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:06 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/Blank.S67.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Blank.S67.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 527 Surviving: 527 (100.00%) Dropped: 0 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:06 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0001.S22.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0001.S22.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:15 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0001.S22.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0001.S22.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1544781 Surviving: 1544760 (100.00%) Dropped: 21 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:15 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0004.S34.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0004.S34.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:21 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0004.S34.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0004.S34.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1167038 Surviving: 1167028 (100.00%) Dropped: 10 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:21 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0011.S46.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0011.S46.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:29 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0011.S46.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0011.S46.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1305578 Surviving: 1305569 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:29 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0013.S58.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0013.S58.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:36 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0013.S58.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0013.S58.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1263330 Surviving: 1263317 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:36 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0015.S70.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0015.S70.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:43 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0015.S70.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0015.S70.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1226257 Surviving: 1226240 (100.00%) Dropped: 17 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:43 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0016.S82.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0016.S82.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:48 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0016.S82.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0016.S82.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 979090 Surviving: 979079 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:48 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0017.S94.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0017.S94.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:02:56 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0017.S94.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0017.S94.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1578676 Surviving: 1578664 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:02:56 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0018.S106.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0018.S106.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:07 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0018.S106.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0018.S106.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 2227237 Surviving: 2227208 (100.00%) Dropped: 29 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:07 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0020.S23.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0020.S23.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:13 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0020.S23.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0020.S23.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1105790 Surviving: 1105778 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:13 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0021.S35.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0021.S35.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:21 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0021.S35.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0021.S35.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1225352 Surviving: 1225339 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:21 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0028.S47.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0028.S47.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:24 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0028.S47.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0028.S47.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 501831 Surviving: 501786 (99.99%) Dropped: 45 (0.01%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:24 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0030.S59.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0030.S59.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:31 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0030.S59.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0030.S59.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1180180 Surviving: 1180139 (100.00%) Dropped: 41 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:31 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0040.S71.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0040.S71.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:38 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0040.S71.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0040.S71.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1267753 Surviving: 1267741 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:38 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0048.S83.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0048.S83.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:45 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0048.S83.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0048.S83.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1068893 Surviving: 1068882 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:45 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0050.S95.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0050.S95.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:51 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0050.S95.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0050.S95.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1105272 Surviving: 1105256 (100.00%) Dropped: 16 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:51 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0053.S24.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0053.S24.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:03:57 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0053.S24.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0053.S24.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1045544 Surviving: 1045529 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:03:57 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0059.S36.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0059.S36.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:04 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0059.S36.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0059.S36.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1121838 Surviving: 1121821 (100.00%) Dropped: 17 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:04 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0063.S48.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0063.S48.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0063.S48.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0063.S48.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1433668 Surviving: 1433652 (100.00%) Dropped: 16 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:12 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0075.S60.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0075.S60.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:19 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0075.S60.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0075.S60.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1337351 Surviving: 1337336 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:19 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0078.S72.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0078.S72.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:25 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0078.S72.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0078.S72.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1040799 Surviving: 1040786 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:25 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0079.S84.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0079.S84.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:31 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0079.S84.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0079.S84.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1175404 Surviving: 1175393 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:31 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0100.S96.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0100.S96.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:39 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0100.S96.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0100.S96.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1354289 Surviving: 1354271 (100.00%) Dropped: 18 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:39 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0101.S108.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0101.S108.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:40 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0101.S108.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0101.S108.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 776 Surviving: 775 (99.87%) Dropped: 1 (0.13%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:40 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0109.S25.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0109.S25.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:48 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0109.S25.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0109.S25.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1008507 Surviving: 1008494 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:48 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0110.S37.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0110.S37.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:04:55 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0110.S37.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0110.S37.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1148332 Surviving: 1148321 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:04:55 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0112.S49.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0112.S49.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:00 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0112.S49.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0112.S49.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 885824 Surviving: 885821 (100.00%) Dropped: 3 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:00 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0124.S61.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0124.S61.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:07 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0124.S61.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0124.S61.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1276770 Surviving: 1276755 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:07 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0131.S73.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0131.S73.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:16 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0131.S73.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0131.S73.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1581596 Surviving: 1581587 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:16 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0132.S85.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0132.S85.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:22 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0132.S85.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0132.S85.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1244342 Surviving: 1244319 (100.00%) Dropped: 23 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:22 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0134.S97.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0134.S97.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:41 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0134.S97.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0134.S97.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 3803411 Surviving: 3803326 (100.00%) Dropped: 85 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:41 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0146.S109.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0146.S109.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:49 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0146.S109.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0146.S109.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1175711 Surviving: 1175695 (100.00%) Dropped: 16 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:49 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0148.S26.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0148.S26.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:05:55 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0148.S26.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0148.S26.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 990068 Surviving: 990054 (100.00%) Dropped: 14 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:05:55 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0149.S38.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0149.S38.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:01 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0149.S38.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0149.S38.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1023107 Surviving: 1023094 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:01 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0150.S50.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0150.S50.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:07 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0150.S50.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0150.S50.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1052041 Surviving: 1052035 (100.00%) Dropped: 6 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:07 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0156.S62.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0156.S62.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:16 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0156.S62.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0156.S62.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1561737 Surviving: 1561705 (100.00%) Dropped: 32 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:16 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0164.S74.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0164.S74.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:23 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0164.S74.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0164.S74.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1066594 Surviving: 1066587 (100.00%) Dropped: 7 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:23 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0170.S86.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0170.S86.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:28 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0170.S86.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0170.S86.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 766091 Surviving: 766084 (100.00%) Dropped: 7 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:28 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0173.S98.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0173.S98.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:38 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0173.S98.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0173.S98.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1793009 Surviving: 1792994 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:38 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0179.S110.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0179.S110.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:46 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0179.S110.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0179.S110.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1234875 Surviving: 1234848 (100.00%) Dropped: 27 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:46 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0185.S27.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0185.S27.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:46 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0185.S27.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0185.S27.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 758 Surviving: 758 (100.00%) Dropped: 0 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:46 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0189.S39.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0189.S39.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:50 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0189.S39.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0189.S39.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 358353 Surviving: 358338 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:50 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0217.S51.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0217.S51.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:06:56 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0217.S51.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0217.S51.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1166403 Surviving: 1166396 (100.00%) Dropped: 7 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:06:56 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0231.S63.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0231.S63.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:03 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0231.S63.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0231.S63.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1210079 Surviving: 1210067 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:03 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0232.S75.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0232.S75.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:11 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0232.S75.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0232.S75.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1275519 Surviving: 1275502 (100.00%) Dropped: 17 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:11 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0242.S87.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0242.S87.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:17 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0242.S87.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0242.S87.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1117696 Surviving: 1117682 (100.00%) Dropped: 14 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:17 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0243.S99.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0243.S99.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:24 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0243.S99.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0243.S99.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1237022 Surviving: 1237010 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:24 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0244.S111.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0244.S111.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:31 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0244.S111.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0244.S111.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1099538 Surviving: 1099526 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:31 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0246.S28.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0246.S28.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:36 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0246.S28.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0246.S28.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 941861 Surviving: 941850 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:36 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0268.S40.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0268.S40.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:41 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0268.S40.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0268.S40.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 893851 Surviving: 893842 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:41 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0272.S52.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0272.S52.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:49 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0272.S52.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0272.S52.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1243988 Surviving: 1243978 (100.00%) Dropped: 10 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:49 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0278.S64.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0278.S64.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:07:54 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0278.S64.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0278.S64.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 868421 Surviving: 868407 (100.00%) Dropped: 14 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:07:54 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0287.S76.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0287.S76.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:01 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0287.S76.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0287.S76.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1117922 Surviving: 1117903 (100.00%) Dropped: 19 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:01 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0290.S88.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0290.S88.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:08 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0290.S88.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0290.S88.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1216157 Surviving: 1216141 (100.00%) Dropped: 16 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:08 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0300.S100.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0300.S100.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:13 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0300.S100.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0300.S100.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 890140 Surviving: 890131 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:13 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0307.S112.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0307.S112.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:19 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0307.S112.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0307.S112.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1019349 Surviving: 1019336 (100.00%) Dropped: 13 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:19 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0315.S29.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0315.S29.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:26 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0315.S29.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0315.S29.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1089659 Surviving: 1089651 (100.00%) Dropped: 8 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:26 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0316.S41.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0316.S41.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:32 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0316.S41.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0316.S41.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1035665 Surviving: 1035645 (100.00%) Dropped: 20 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:32 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0317.S53.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0317.S53.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:39 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0317.S53.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0317.S53.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1261898 Surviving: 1261882 (100.00%) Dropped: 16 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:39 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0322.S65.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0322.S65.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:44 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0322.S65.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0322.S65.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 983126 Surviving: 983117 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:44 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0331.S77.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0331.S77.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:08:58 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0331.S77.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0331.S77.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 2791983 Surviving: 2791951 (100.00%) Dropped: 32 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:08:58 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0334.S89.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0334.S89.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:04 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0334.S89.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0334.S89.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 828631 Surviving: 828584 (99.99%) Dropped: 47 (0.01%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:04 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0335.S101.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0335.S101.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:17 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0335.S101.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0335.S101.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1140081 Surviving: 1140071 (100.00%) Dropped: 10 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:17 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0337.S113.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0337.S113.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:23 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0337.S113.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0337.S113.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 938399 Surviving: 938396 (100.00%) Dropped: 3 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:23 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0339.S30.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0339.S30.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:31 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0339.S30.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0339.S30.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1434352 Surviving: 1434337 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:31 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0367.S42.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0367.S42.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:37 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0367.S42.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0367.S42.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 954108 Surviving: 954097 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:37 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0374.S54.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0374.S54.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:42 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0374.S54.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0374.S54.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 873002 Surviving: 872985 (100.00%) Dropped: 17 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:42 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0396.S66.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0396.S66.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:49 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0396.S66.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0396.S66.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 997628 Surviving: 997620 (100.00%) Dropped: 8 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:49 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0402.S78.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0402.S78.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:09:54 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0402.S78.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0402.S78.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1003872 Surviving: 1003863 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:09:54 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0417.S90.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0417.S90.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:00 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0417.S90.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0417.S90.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 983762 Surviving: 983755 (100.00%) Dropped: 7 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:00 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0428.S102.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0428.S102.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:07 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0428.S102.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0428.S102.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1043423 Surviving: 1043415 (100.00%) Dropped: 8 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:07 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0429.S114.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0429.S114.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:13 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0429.S114.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0429.S114.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 725703 Surviving: 725693 (100.00%) Dropped: 10 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:13 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0433.S31.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0433.S31.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:18 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0433.S31.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0433.S31.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 967066 Surviving: 967045 (100.00%) Dropped: 21 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:18 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0435.S43.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0435.S43.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:40 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0435.S43.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0435.S43.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1659256 Surviving: 1659239 (100.00%) Dropped: 17 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:40 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0440.S55.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0440.S55.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:46 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0440.S55.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0440.S55.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1030802 Surviving: 1030793 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:46 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0456.S79.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0456.S79.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:10:53 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0456.S79.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0456.S79.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1188261 Surviving: 1188251 (100.00%) Dropped: 10 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:10:53 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0465.S91.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0465.S91.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:00 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0465.S91.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0465.S91.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1310783 Surviving: 1310765 (100.00%) Dropped: 18 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:00 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0471.S103.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0471.S103.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:06 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0471.S103.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0471.S103.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1023881 Surviving: 1023875 (100.00%) Dropped: 6 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:06 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0473.S115.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0473.S115.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0473.S115.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0473.S115.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 885829 Surviving: 885820 (100.00%) Dropped: 9 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:12 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0484.S32.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0484.S32.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0484.S32.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0484.S32.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1039 Surviving: 1039 (100.00%) Dropped: 0 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:12 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0514.S44.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0514.S44.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:24 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0514.S44.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0514.S44.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1715258 Surviving: 1715244 (100.00%) Dropped: 14 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:24 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0526.S56.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0526.S56.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:31 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0526.S56.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0526.S56.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1325372 Surviving: 1325357 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:31 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0527.S68.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0527.S68.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:40 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0527.S68.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0527.S68.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1664226 Surviving: 1664207 (100.00%) Dropped: 19 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:40 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0531.S80.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0531.S80.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:47 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0531.S80.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0531.S80.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1137656 Surviving: 1137641 (100.00%) Dropped: 15 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:47 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0532.S92.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0532.S92.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:11:55 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0532.S92.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0532.S92.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1379597 Surviving: 1379585 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:11:55 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0537.S104.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0537.S104.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:05 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0537.S104.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0537.S104.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1876912 Surviving: 1876878 (100.00%) Dropped: 34 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:05 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0538.S116.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0538.S116.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0538.S116.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0538.S116.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1453847 Surviving: 1453828 (100.00%) Dropped: 19 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:12 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0539.S33.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0539.S33.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:26 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0539.S33.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0539.S33.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 2741024 Surviving: 2740990 (100.00%) Dropped: 34 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:26 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0541.S45.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0541.S45.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:33 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0541.S45.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0541.S45.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1268539 Surviving: 1268531 (100.00%) Dropped: 8 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:33 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0542.S57.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0542.S57.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:40 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0542.S57.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0542.S57.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1402556 Surviving: 1402544 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:40 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0543.S69.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0543.S69.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:45 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0543.S69.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0543.S69.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 776435 Surviving: 776423 (100.00%) Dropped: 12 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:45 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0547.S81.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0547.S81.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:51 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0547.S81.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0547.S81.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1009133 Surviving: 1009113 (100.00%) Dropped: 20 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:51 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0549.S93.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0549.S93.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:12:56 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0549.S93.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0549.S93.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 879155 Surviving: 879148 (100.00%) Dropped: 7 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:12:56 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0551.S105.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0551.S105.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:13:04 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0551.S105.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0551.S105.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1442250 Surviving: 1442239 (100.00%) Dropped: 11 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:13:04 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0552.S117.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0552.S117.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:13:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/magic.0552.S117.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0552.S117.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 1461095 Surviving: 1461064 (100.00%) Dropped: 31 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:13:12 AM trimmomatic SE -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/Postive.Control.S107.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Postive.Control.S107.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+01/31/2018 11:13:12 AM Picked up _JAVA_OPTIONS: -Xmx49152000k
+TrimmomaticSE: Started with arguments:
+ -threads 16 /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/link/Postive.Control.S107.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Postive.Control.S107.R1.001.fq ILLUMINACLIP:/home/knightsd/cole0463/.cache/Python-Eggs/shi7-0.9.8-py3.6.egg-tmp/shi7/adapters/NexteraPE-PE.fa:2:30:10:2:true
+Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTCCGAGCCCACGAGAC'
+Using Long Clipping Sequence: 'CTGTCTCTTATACACATCTGACGCTGCCGACGA'
+ILLUMINACLIP: Using 1 prefix pairs, 4 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
+Quality encoding detected as phred33
+Input Reads: 697 Surviving: 697 (100.00%) Dropped: 0 (0.00%)
+TrimmomaticSE: Completed successfully
+
+01/31/2018 11:13:12 AM Adaptor removal complete!
+01/31/2018 11:13:12 AM Single End mode enabled. Skipping FLASH stitching.
+01/31/2018 11:13:12 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Blank.S67.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/Blank.S67.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:12 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 316 sequences were utter shi7, quality-wise.
+And 211 sequences were decent.
+The average trimmed length was 112.96.
+On average, the cut bases were: 6.54 (left), 5.66 (right).
+The average read quality was 37.171.
+-----
+
+01/31/2018 11:13:12 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0001.S22.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0001.S22.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:22 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 352092 sequences were utter shi7, quality-wise.
+And 1192668 sequences were decent.
+The average trimmed length was 116.27.
+On average, the cut bases were: 5.74 (left), 2.55 (right).
+The average read quality was 37.543.
+-----
+
+01/31/2018 11:13:22 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0004.S34.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0004.S34.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:30 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 269598 sequences were utter shi7, quality-wise.
+And 897430 sequences were decent.
+The average trimmed length was 115.98.
+On average, the cut bases were: 5.89 (left), 2.69 (right).
+The average read quality was 37.536.
+-----
+
+01/31/2018 11:13:30 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0011.S46.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0011.S46.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:37 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 341779 sequences were utter shi7, quality-wise.
+And 963790 sequences were decent.
+The average trimmed length was 115.55.
+On average, the cut bases were: 5.80 (left), 3.15 (right).
+The average read quality was 37.475.
+-----
+
+01/31/2018 11:13:37 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0013.S58.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0013.S58.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:42 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 247682 sequences were utter shi7, quality-wise.
+And 1015635 sequences were decent.
+The average trimmed length was 116.69.
+On average, the cut bases were: 5.70 (left), 2.02 (right).
+The average read quality was 37.622.
+-----
+
+01/31/2018 11:13:42 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0015.S70.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0015.S70.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:47 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 318728 sequences were utter shi7, quality-wise.
+And 907512 sequences were decent.
+The average trimmed length was 115.60.
+On average, the cut bases were: 5.97 (left), 2.81 (right).
+The average read quality was 37.499.
+-----
+
+01/31/2018 11:13:47 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0016.S82.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0016.S82.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:52 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 242510 sequences were utter shi7, quality-wise.
+And 736569 sequences were decent.
+The average trimmed length was 116.09.
+On average, the cut bases were: 5.66 (left), 2.93 (right).
+The average read quality was 37.496.
+-----
+
+01/31/2018 11:13:52 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0017.S94.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0017.S94.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:13:58 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 346715 sequences were utter shi7, quality-wise.
+And 1231949 sequences were decent.
+The average trimmed length was 116.21.
+On average, the cut bases were: 5.78 (left), 2.50 (right).
+The average read quality was 37.557.
+-----
+
+01/31/2018 11:13:58 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0018.S106.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0018.S106.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:09 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 528546 sequences were utter shi7, quality-wise.
+And 1698662 sequences were decent.
+The average trimmed length was 116.00.
+On average, the cut bases were: 5.61 (left), 2.98 (right).
+The average read quality was 37.514.
+-----
+
+01/31/2018 11:14:09 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0020.S23.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0020.S23.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:13 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 255447 sequences were utter shi7, quality-wise.
+And 850331 sequences were decent.
+The average trimmed length was 116.31.
+On average, the cut bases were: 5.74 (left), 2.48 (right).
+The average read quality was 37.555.
+-----
+
+01/31/2018 11:14:13 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0021.S35.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0021.S35.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:18 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 277883 sequences were utter shi7, quality-wise.
+And 947456 sequences were decent.
+The average trimmed length was 115.78.
+On average, the cut bases were: 5.77 (left), 2.42 (right).
+The average read quality was 37.587.
+-----
+
+01/31/2018 11:14:18 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0028.S47.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0028.S47.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:20 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 324935 sequences were utter shi7, quality-wise.
+And 176851 sequences were decent.
+The average trimmed length was 106.91.
+On average, the cut bases were: 5.54 (left), 1.76 (right).
+The average read quality was 37.648.
+-----
+
+01/31/2018 11:14:20 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0030.S59.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0030.S59.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:24 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 686520 sequences were utter shi7, quality-wise.
+And 493619 sequences were decent.
+The average trimmed length was 108.28.
+On average, the cut bases were: 5.86 (left), 1.48 (right).
+The average read quality was 37.636.
+-----
+
+01/31/2018 11:14:24 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0040.S71.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0040.S71.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:29 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 294260 sequences were utter shi7, quality-wise.
+And 973481 sequences were decent.
+The average trimmed length was 115.64.
+On average, the cut bases were: 5.90 (left), 2.46 (right).
+The average read quality was 37.560.
+-----
+
+01/31/2018 11:14:29 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0048.S83.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0048.S83.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:35 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 277166 sequences were utter shi7, quality-wise.
+And 791716 sequences were decent.
+The average trimmed length was 115.89.
+On average, the cut bases were: 5.65 (left), 2.79 (right).
+The average read quality was 37.511.
+-----
+
+01/31/2018 11:14:35 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0050.S95.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0050.S95.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:39 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 284834 sequences were utter shi7, quality-wise.
+And 820422 sequences were decent.
+The average trimmed length was 115.69.
+On average, the cut bases were: 5.86 (left), 2.77 (right).
+The average read quality was 37.512.
+-----
+
+01/31/2018 11:14:39 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0053.S24.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0053.S24.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:42 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 286474 sequences were utter shi7, quality-wise.
+And 759055 sequences were decent.
+The average trimmed length was 115.79.
+On average, the cut bases were: 5.81 (left), 2.96 (right).
+The average read quality was 37.481.
+-----
+
+01/31/2018 11:14:42 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0059.S36.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0059.S36.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:46 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 305853 sequences were utter shi7, quality-wise.
+And 815968 sequences were decent.
+The average trimmed length was 115.19.
+On average, the cut bases were: 6.09 (left), 3.08 (right).
+The average read quality was 37.472.
+-----
+
+01/31/2018 11:14:46 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0063.S48.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0063.S48.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:53 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 338267 sequences were utter shi7, quality-wise.
+And 1095385 sequences were decent.
+The average trimmed length was 115.69.
+On average, the cut bases were: 5.63 (left), 2.42 (right).
+The average read quality was 37.579.
+-----
+
+01/31/2018 11:14:53 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0075.S60.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0075.S60.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:14:59 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 327415 sequences were utter shi7, quality-wise.
+And 1009921 sequences were decent.
+The average trimmed length was 116.12.
+On average, the cut bases were: 5.76 (left), 2.44 (right).
+The average read quality was 37.551.
+-----
+
+01/31/2018 11:14:59 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0078.S72.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0078.S72.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:04 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 289718 sequences were utter shi7, quality-wise.
+And 751068 sequences were decent.
+The average trimmed length was 115.36.
+On average, the cut bases were: 6.05 (left), 2.80 (right).
+The average read quality was 37.466.
+-----
+
+01/31/2018 11:15:04 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0079.S84.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0079.S84.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:11 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 327171 sequences were utter shi7, quality-wise.
+And 848222 sequences were decent.
+The average trimmed length was 115.44.
+On average, the cut bases were: 5.72 (left), 3.16 (right).
+The average read quality was 37.462.
+-----
+
+01/31/2018 11:15:11 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0100.S96.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0100.S96.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:20 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 331224 sequences were utter shi7, quality-wise.
+And 1023047 sequences were decent.
+The average trimmed length was 115.96.
+On average, the cut bases were: 5.85 (left), 2.61 (right).
+The average read quality was 37.521.
+-----
+
+01/31/2018 11:15:20 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0101.S108.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0101.S108.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:20 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 409 sequences were utter shi7, quality-wise.
+And 366 sequences were decent.
+The average trimmed length was 113.45.
+On average, the cut bases were: 6.60 (left), 5.31 (right).
+The average read quality was 37.125.
+-----
+
+01/31/2018 11:15:20 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0109.S25.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0109.S25.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:25 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 293941 sequences were utter shi7, quality-wise.
+And 714553 sequences were decent.
+The average trimmed length was 115.39.
+On average, the cut bases were: 5.83 (left), 3.23 (right).
+The average read quality was 37.445.
+-----
+
+01/31/2018 11:15:25 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0110.S37.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0110.S37.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:30 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 311318 sequences were utter shi7, quality-wise.
+And 837003 sequences were decent.
+The average trimmed length was 115.28.
+On average, the cut bases were: 6.04 (left), 3.11 (right).
+The average read quality was 37.476.
+-----
+
+01/31/2018 11:15:30 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0112.S49.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0112.S49.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:35 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 245038 sequences were utter shi7, quality-wise.
+And 640783 sequences were decent.
+The average trimmed length was 115.20.
+On average, the cut bases were: 5.84 (left), 3.22 (right).
+The average read quality was 37.461.
+-----
+
+01/31/2018 11:15:35 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0124.S61.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0124.S61.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:41 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 293779 sequences were utter shi7, quality-wise.
+And 982976 sequences were decent.
+The average trimmed length was 116.30.
+On average, the cut bases were: 5.72 (left), 2.28 (right).
+The average read quality was 37.578.
+-----
+
+01/31/2018 11:15:41 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0131.S73.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0131.S73.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:48 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 437219 sequences were utter shi7, quality-wise.
+And 1144368 sequences were decent.
+The average trimmed length was 115.14.
+On average, the cut bases were: 6.00 (left), 2.85 (right).
+The average read quality was 37.487.
+-----
+
+01/31/2018 11:15:48 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0132.S85.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0132.S85.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:15:56 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 348810 sequences were utter shi7, quality-wise.
+And 895509 sequences were decent.
+The average trimmed length was 114.53.
+On average, the cut bases were: 5.58 (left), 2.16 (right).
+The average read quality was 37.594.
+-----
+
+01/31/2018 11:15:56 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0134.S97.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0134.S97.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:12 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 998534 sequences were utter shi7, quality-wise.
+And 2804792 sequences were decent.
+The average trimmed length was 115.41.
+On average, the cut bases were: 5.88 (left), 2.82 (right).
+The average read quality was 37.497.
+-----
+
+01/31/2018 11:16:12 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0146.S109.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0146.S109.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:19 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 273622 sequences were utter shi7, quality-wise.
+And 902073 sequences were decent.
+The average trimmed length was 116.03.
+On average, the cut bases were: 5.61 (left), 2.83 (right).
+The average read quality was 37.519.
+-----
+
+01/31/2018 11:16:19 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0148.S26.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0148.S26.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:23 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 266375 sequences were utter shi7, quality-wise.
+And 723679 sequences were decent.
+The average trimmed length was 115.82.
+On average, the cut bases were: 5.78 (left), 2.95 (right).
+The average read quality was 37.490.
+-----
+
+01/31/2018 11:16:23 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0149.S38.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0149.S38.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:29 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 279457 sequences were utter shi7, quality-wise.
+And 743637 sequences were decent.
+The average trimmed length was 115.37.
+On average, the cut bases were: 6.07 (left), 3.07 (right).
+The average read quality was 37.471.
+-----
+
+01/31/2018 11:16:29 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0150.S50.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0150.S50.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:33 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 271024 sequences were utter shi7, quality-wise.
+And 781011 sequences were decent.
+The average trimmed length was 115.75.
+On average, the cut bases were: 5.79 (left), 2.94 (right).
+The average read quality was 37.491.
+-----
+
+01/31/2018 11:16:33 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0156.S62.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0156.S62.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:40 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 373635 sequences were utter shi7, quality-wise.
+And 1188070 sequences were decent.
+The average trimmed length was 116.14.
+On average, the cut bases were: 5.74 (left), 2.33 (right).
+The average read quality was 37.562.
+-----
+
+01/31/2018 11:16:40 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0164.S74.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0164.S74.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:44 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 306125 sequences were utter shi7, quality-wise.
+And 760462 sequences were decent.
+The average trimmed length was 115.15.
+On average, the cut bases were: 6.05 (left), 3.18 (right).
+The average read quality was 37.436.
+-----
+
+01/31/2018 11:16:44 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0170.S86.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0170.S86.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:47 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 194854 sequences were utter shi7, quality-wise.
+And 571230 sequences were decent.
+The average trimmed length was 115.97.
+On average, the cut bases were: 5.67 (left), 2.93 (right).
+The average read quality was 37.496.
+-----
+
+01/31/2018 11:16:47 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0173.S98.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0173.S98.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:53 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 458146 sequences were utter shi7, quality-wise.
+And 1334848 sequences were decent.
+The average trimmed length was 115.79.
+On average, the cut bases were: 5.85 (left), 2.85 (right).
+The average read quality was 37.505.
+-----
+
+01/31/2018 11:16:53 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0179.S110.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0179.S110.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:58 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 273427 sequences were utter shi7, quality-wise.
+And 961421 sequences were decent.
+The average trimmed length was 116.15.
+On average, the cut bases were: 5.59 (left), 2.73 (right).
+The average read quality was 37.538.
+-----
+
+01/31/2018 11:16:58 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0185.S27.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0185.S27.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:58 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 456 sequences were utter shi7, quality-wise.
+And 302 sequences were decent.
+The average trimmed length was 113.97.
+On average, the cut bases were: 6.68 (left), 4.85 (right).
+The average read quality was 37.141.
+-----
+
+01/31/2018 11:16:58 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0189.S39.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0189.S39.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:16:59 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 171091 sequences were utter shi7, quality-wise.
+And 187247 sequences were decent.
+The average trimmed length was 110.03.
+On average, the cut bases were: 5.74 (left), 1.75 (right).
+The average read quality was 37.640.
+-----
+
+01/31/2018 11:16:59 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0217.S51.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0217.S51.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:03 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 309260 sequences were utter shi7, quality-wise.
+And 857136 sequences were decent.
+The average trimmed length was 115.52.
+On average, the cut bases were: 5.79 (left), 2.96 (right).
+The average read quality was 37.495.
+-----
+
+01/31/2018 11:17:03 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0231.S63.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0231.S63.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:07 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 287849 sequences were utter shi7, quality-wise.
+And 922218 sequences were decent.
+The average trimmed length was 116.06.
+On average, the cut bases were: 5.75 (left), 2.18 (right).
+The average read quality was 37.586.
+-----
+
+01/31/2018 11:17:07 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0232.S75.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0232.S75.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:11 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 346347 sequences were utter shi7, quality-wise.
+And 929155 sequences were decent.
+The average trimmed length was 115.41.
+On average, the cut bases were: 6.01 (left), 2.93 (right).
+The average read quality was 37.474.
+-----
+
+01/31/2018 11:17:11 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0242.S87.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0242.S87.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:16 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 295293 sequences were utter shi7, quality-wise.
+And 822389 sequences were decent.
+The average trimmed length was 115.63.
+On average, the cut bases were: 5.68 (left), 3.03 (right).
+The average read quality was 37.486.
+-----
+
+01/31/2018 11:17:16 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0243.S99.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0243.S99.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:20 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 290536 sequences were utter shi7, quality-wise.
+And 946474 sequences were decent.
+The average trimmed length was 116.16.
+On average, the cut bases were: 5.81 (left), 2.57 (right).
+The average read quality was 37.534.
+-----
+
+01/31/2018 11:17:20 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0244.S111.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0244.S111.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:24 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 265111 sequences were utter shi7, quality-wise.
+And 834415 sequences were decent.
+The average trimmed length was 116.06.
+On average, the cut bases were: 5.67 (left), 3.01 (right).
+The average read quality was 37.487.
+-----
+
+01/31/2018 11:17:24 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0246.S28.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0246.S28.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:27 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 274456 sequences were utter shi7, quality-wise.
+And 667394 sequences were decent.
+The average trimmed length was 115.48.
+On average, the cut bases were: 5.82 (left), 3.21 (right).
+The average read quality was 37.454.
+-----
+
+01/31/2018 11:17:27 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0268.S40.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0268.S40.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:30 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 275743 sequences were utter shi7, quality-wise.
+And 618099 sequences were decent.
+The average trimmed length was 114.56.
+On average, the cut bases were: 6.20 (left), 3.57 (right).
+The average read quality was 37.414.
+-----
+
+01/31/2018 11:17:30 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0272.S52.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0272.S52.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:35 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 335569 sequences were utter shi7, quality-wise.
+And 908409 sequences were decent.
+The average trimmed length was 115.37.
+On average, the cut bases were: 5.82 (left), 3.10 (right).
+The average read quality was 37.474.
+-----
+
+01/31/2018 11:17:35 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0278.S64.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0278.S64.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:38 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 236685 sequences were utter shi7, quality-wise.
+And 631722 sequences were decent.
+The average trimmed length was 115.69.
+On average, the cut bases were: 5.77 (left), 2.88 (right).
+The average read quality was 37.500.
+-----
+
+01/31/2018 11:17:38 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0287.S76.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0287.S76.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:41 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 314364 sequences were utter shi7, quality-wise.
+And 803539 sequences were decent.
+The average trimmed length was 115.14.
+On average, the cut bases were: 6.01 (left), 3.05 (right).
+The average read quality was 37.458.
+-----
+
+01/31/2018 11:17:41 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0290.S88.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0290.S88.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:45 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 294300 sequences were utter shi7, quality-wise.
+And 921841 sequences were decent.
+The average trimmed length was 115.28.
+On average, the cut bases were: 5.57 (left), 2.31 (right).
+The average read quality was 37.590.
+-----
+
+01/31/2018 11:17:45 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0300.S100.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0300.S100.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:49 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 255767 sequences were utter shi7, quality-wise.
+And 634364 sequences were decent.
+The average trimmed length was 115.30.
+On average, the cut bases were: 5.95 (left), 3.29 (right).
+The average read quality was 37.439.
+-----
+
+01/31/2018 11:17:49 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0307.S112.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0307.S112.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:52 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 248281 sequences were utter shi7, quality-wise.
+And 771055 sequences were decent.
+The average trimmed length was 115.78.
+On average, the cut bases were: 5.64 (left), 3.06 (right).
+The average read quality was 37.495.
+-----
+
+01/31/2018 11:17:52 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0315.S29.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0315.S29.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:17:56 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 231651 sequences were utter shi7, quality-wise.
+And 858000 sequences were decent.
+The average trimmed length was 116.43.
+On average, the cut bases were: 5.70 (left), 2.39 (right).
+The average read quality was 37.581.
+-----
+
+01/31/2018 11:17:56 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0316.S41.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0316.S41.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:00 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 269171 sequences were utter shi7, quality-wise.
+And 766474 sequences were decent.
+The average trimmed length was 115.38.
+On average, the cut bases were: 5.97 (left), 3.01 (right).
+The average read quality was 37.502.
+-----
+
+01/31/2018 11:18:00 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0317.S53.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0317.S53.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:04 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 334936 sequences were utter shi7, quality-wise.
+And 926946 sequences were decent.
+The average trimmed length was 115.41.
+On average, the cut bases were: 5.77 (left), 2.93 (right).
+The average read quality was 37.498.
+-----
+
+01/31/2018 11:18:04 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0322.S65.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0322.S65.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:08 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 264765 sequences were utter shi7, quality-wise.
+And 718352 sequences were decent.
+The average trimmed length was 115.93.
+On average, the cut bases were: 5.79 (left), 2.93 (right).
+The average read quality was 37.493.
+-----
+
+01/31/2018 11:18:08 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0331.S77.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0331.S77.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:15 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 723169 sequences were utter shi7, quality-wise.
+And 2068782 sequences were decent.
+The average trimmed length was 115.18.
+On average, the cut bases were: 5.89 (left), 2.63 (right).
+The average read quality was 37.553.
+-----
+
+01/31/2018 11:18:15 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0334.S89.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0334.S89.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:18 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 355693 sequences were utter shi7, quality-wise.
+And 472891 sequences were decent.
+The average trimmed length was 110.92.
+On average, the cut bases were: 5.59 (left), 2.43 (right).
+The average read quality was 37.567.
+-----
+
+01/31/2018 11:18:18 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0335.S101.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0335.S101.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:22 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 287564 sequences were utter shi7, quality-wise.
+And 852507 sequences were decent.
+The average trimmed length was 115.84.
+On average, the cut bases were: 5.86 (left), 2.84 (right).
+The average read quality was 37.503.
+-----
+
+01/31/2018 11:18:22 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0337.S113.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0337.S113.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:25 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 191810 sequences were utter shi7, quality-wise.
+And 746586 sequences were decent.
+The average trimmed length was 116.51.
+On average, the cut bases were: 5.53 (left), 2.49 (right).
+The average read quality was 37.580.
+-----
+
+01/31/2018 11:18:25 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0339.S30.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0339.S30.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:30 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 339555 sequences were utter shi7, quality-wise.
+And 1094782 sequences were decent.
+The average trimmed length was 116.04.
+On average, the cut bases were: 5.73 (left), 2.69 (right).
+The average read quality was 37.536.
+-----
+
+01/31/2018 11:18:30 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0367.S42.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0367.S42.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:34 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 223167 sequences were utter shi7, quality-wise.
+And 730930 sequences were decent.
+The average trimmed length was 115.63.
+On average, the cut bases were: 5.82 (left), 2.55 (right).
+The average read quality was 37.569.
+-----
+
+01/31/2018 11:18:34 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0374.S54.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0374.S54.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:37 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 228199 sequences were utter shi7, quality-wise.
+And 644786 sequences were decent.
+The average trimmed length was 115.28.
+On average, the cut bases were: 5.73 (left), 2.85 (right).
+The average read quality was 37.522.
+-----
+
+01/31/2018 11:18:37 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0396.S66.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0396.S66.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:41 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 255993 sequences were utter shi7, quality-wise.
+And 741627 sequences were decent.
+The average trimmed length was 115.92.
+On average, the cut bases were: 5.77 (left), 2.57 (right).
+The average read quality was 37.535.
+-----
+
+01/31/2018 11:18:41 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0402.S78.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0402.S78.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:44 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 282630 sequences were utter shi7, quality-wise.
+And 721233 sequences were decent.
+The average trimmed length was 115.19.
+On average, the cut bases were: 6.01 (left), 3.03 (right).
+The average read quality was 37.464.
+-----
+
+01/31/2018 11:18:44 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0417.S90.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0417.S90.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:47 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 289751 sequences were utter shi7, quality-wise.
+And 694004 sequences were decent.
+The average trimmed length was 115.21.
+On average, the cut bases were: 5.75 (left), 3.49 (right).
+The average read quality was 37.429.
+-----
+
+01/31/2018 11:18:47 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0428.S102.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0428.S102.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:52 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 285222 sequences were utter shi7, quality-wise.
+And 758193 sequences were decent.
+The average trimmed length was 115.32.
+On average, the cut bases were: 5.90 (left), 2.85 (right).
+The average read quality was 37.491.
+-----
+
+01/31/2018 11:18:52 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0429.S114.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0429.S114.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:54 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 192148 sequences were utter shi7, quality-wise.
+And 533545 sequences were decent.
+The average trimmed length was 115.42.
+On average, the cut bases were: 5.70 (left), 3.19 (right).
+The average read quality was 37.464.
+-----
+
+01/31/2018 11:18:54 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0433.S31.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0433.S31.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:18:59 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 293362 sequences were utter shi7, quality-wise.
+And 673683 sequences were decent.
+The average trimmed length was 115.32.
+On average, the cut bases were: 5.84 (left), 3.37 (right).
+The average read quality was 37.436.
+-----
+
+01/31/2018 11:18:59 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0435.S43.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0435.S43.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:06 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 418851 sequences were utter shi7, quality-wise.
+And 1240388 sequences were decent.
+The average trimmed length was 115.58.
+On average, the cut bases were: 5.91 (left), 2.79 (right).
+The average read quality was 37.528.
+-----
+
+01/31/2018 11:19:06 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0440.S55.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0440.S55.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:10 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 300969 sequences were utter shi7, quality-wise.
+And 729824 sequences were decent.
+The average trimmed length was 114.86.
+On average, the cut bases were: 5.84 (left), 3.44 (right).
+The average read quality was 37.447.
+-----
+
+01/31/2018 11:19:10 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0456.S79.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0456.S79.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:14 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 358800 sequences were utter shi7, quality-wise.
+And 829451 sequences were decent.
+The average trimmed length was 115.00.
+On average, the cut bases were: 6.07 (left), 3.30 (right).
+The average read quality was 37.420.
+-----
+
+01/31/2018 11:19:14 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0465.S91.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0465.S91.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:18 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 344984 sequences were utter shi7, quality-wise.
+And 965781 sequences were decent.
+The average trimmed length was 115.60.
+On average, the cut bases were: 5.66 (left), 2.98 (right).
+The average read quality was 37.499.
+-----
+
+01/31/2018 11:19:18 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0471.S103.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0471.S103.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:22 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 292594 sequences were utter shi7, quality-wise.
+And 731281 sequences were decent.
+The average trimmed length was 115.27.
+On average, the cut bases were: 5.93 (left), 3.24 (right).
+The average read quality was 37.445.
+-----
+
+01/31/2018 11:19:22 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0473.S115.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0473.S115.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:26 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 248079 sequences were utter shi7, quality-wise.
+And 637741 sequences were decent.
+The average trimmed length was 115.04.
+On average, the cut bases were: 5.72 (left), 3.56 (right).
+The average read quality was 37.427.
+-----
+
+01/31/2018 11:19:26 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0484.S32.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0484.S32.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:26 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 604 sequences were utter shi7, quality-wise.
+And 435 sequences were decent.
+The average trimmed length was 113.69.
+On average, the cut bases were: 6.73 (left), 5.14 (right).
+The average read quality was 37.179.
+-----
+
+01/31/2018 11:19:26 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0514.S44.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0514.S44.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:32 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 590742 sequences were utter shi7, quality-wise.
+And 1124502 sequences were decent.
+The average trimmed length was 112.76.
+On average, the cut bases were: 5.70 (left), 1.82 (right).
+The average read quality was 37.654.
+-----
+
+01/31/2018 11:19:32 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0526.S56.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0526.S56.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:37 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 365235 sequences were utter shi7, quality-wise.
+And 960122 sequences were decent.
+The average trimmed length was 115.13.
+On average, the cut bases were: 5.82 (left), 3.06 (right).
+The average read quality was 37.482.
+-----
+
+01/31/2018 11:19:37 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0527.S68.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0527.S68.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:42 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 385923 sequences were utter shi7, quality-wise.
+And 1278284 sequences were decent.
+The average trimmed length was 116.17.
+On average, the cut bases were: 5.73 (left), 2.21 (right).
+The average read quality was 37.586.
+-----
+
+01/31/2018 11:19:42 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0531.S80.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0531.S80.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:46 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 312195 sequences were utter shi7, quality-wise.
+And 825446 sequences were decent.
+The average trimmed length was 115.09.
+On average, the cut bases were: 5.99 (left), 2.81 (right).
+The average read quality was 37.492.
+-----
+
+01/31/2018 11:19:46 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0532.S92.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0532.S92.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:51 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 372661 sequences were utter shi7, quality-wise.
+And 1006924 sequences were decent.
+The average trimmed length was 115.54.
+On average, the cut bases were: 5.69 (left), 3.04 (right).
+The average read quality was 37.483.
+-----
+
+01/31/2018 11:19:51 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0537.S104.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0537.S104.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:19:58 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 473139 sequences were utter shi7, quality-wise.
+And 1403739 sequences were decent.
+The average trimmed length was 115.61.
+On average, the cut bases were: 5.86 (left), 2.71 (right).
+The average read quality was 37.517.
+-----
+
+01/31/2018 11:19:58 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0538.S116.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0538.S116.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:03 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 383009 sequences were utter shi7, quality-wise.
+And 1070819 sequences were decent.
+The average trimmed length was 115.32.
+On average, the cut bases were: 5.65 (left), 3.10 (right).
+The average read quality was 37.497.
+-----
+
+01/31/2018 11:20:03 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0539.S33.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0539.S33.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:11 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 763274 sequences were utter shi7, quality-wise.
+And 1977716 sequences were decent.
+The average trimmed length was 115.70.
+On average, the cut bases were: 5.80 (left), 3.07 (right).
+The average read quality was 37.475.
+-----
+
+01/31/2018 11:20:11 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0541.S45.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0541.S45.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:16 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 327817 sequences were utter shi7, quality-wise.
+And 940714 sequences were decent.
+The average trimmed length was 115.47.
+On average, the cut bases were: 5.97 (left), 2.92 (right).
+The average read quality was 37.507.
+-----
+
+01/31/2018 11:20:16 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0542.S57.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0542.S57.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:20 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 356671 sequences were utter shi7, quality-wise.
+And 1045873 sequences were decent.
+The average trimmed length was 115.54.
+On average, the cut bases were: 5.75 (left), 2.76 (right).
+The average read quality was 37.518.
+-----
+
+01/31/2018 11:20:20 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0543.S69.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0543.S69.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:23 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 202340 sequences were utter shi7, quality-wise.
+And 574083 sequences were decent.
+The average trimmed length was 115.99.
+On average, the cut bases were: 5.77 (left), 2.80 (right).
+The average read quality was 37.512.
+-----
+
+01/31/2018 11:20:23 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0547.S81.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0547.S81.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:27 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 276005 sequences were utter shi7, quality-wise.
+And 733108 sequences were decent.
+The average trimmed length was 115.10.
+On average, the cut bases were: 5.99 (left), 2.77 (right).
+The average read quality was 37.484.
+-----
+
+01/31/2018 11:20:27 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0549.S93.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0549.S93.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:30 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 240413 sequences were utter shi7, quality-wise.
+And 638735 sequences were decent.
+The average trimmed length was 115.47.
+On average, the cut bases were: 5.69 (left), 3.21 (right).
+The average read quality was 37.468.
+-----
+
+01/31/2018 11:20:30 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0551.S105.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0551.S105.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:35 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 346264 sequences were utter shi7, quality-wise.
+And 1095975 sequences were decent.
+The average trimmed length was 115.90.
+On average, the cut bases were: 5.85 (left), 2.51 (right).
+The average read quality was 37.539.
+-----
+
+01/31/2018 11:20:35 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/magic.0552.S117.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/magic.0552.S117.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:40 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 344780 sequences were utter shi7, quality-wise.
+And 1116284 sequences were decent.
+The average trimmed length was 115.81.
+On average, the cut bases were: 5.60 (left), 2.86 (right).
+The average read quality was 37.523.
+-----
+
+01/31/2018 11:20:40 AM shi7_trimmer /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/axe/Postive.Control.S107.R1.001.fq /panfs/roc/groups/8/knightsd/cole0463/magic/learnt/single/temp/trimmer/Postive.Control.S107.R1.001 80 34 FLOOR 5 ASS_QUALITY 36
+01/31/2018 11:20:40 AM Chucking reads of ass quality (36).
+Using FLOOR of 5 bases.
+The minimum length a read can be is 80 bases.
+Trimming while quality < 34 on left, < 34 on right.
+Done. 347 sequences were utter shi7, quality-wise.
+And 350 sequences were decent.
+The average trimmed length was 114.56.
+On average, the cut bases were: 6.26 (left), 4.65 (right).
+The average read quality was 37.180.
+-----
+
+01/31/2018 11:20:47 AM Final quality trimming complete!
+01/31/2018 11:31:00 AM Convert and combine FASTQs done!
+01/31/2018 11:31:05 AM Execution time: 0:29:00.119530

@@ -1,0 +1,12 @@
+#!/usr/bin/env ipython
+
+input = "/scratch.global/gabe/ngs_data/raw/combined_seqsBOTH.fna"
+database = "/scratch.global/ben/projects/analysis_SHOGUN/data/references/rep82"
+threads = 32
+outfolder = "/scratch.global/ben/projects/analysis_MCT/results/shogun"
+
+# Run SHOGUN
+#shogun, version v0.0.1+300.gc1f6d87.dirty
+shogun_command = "/usr/bin/time -v shogun --log debug align --input {input} --database {database} --aligner embalmer --output {outfolder} --threads {threads} --level species &> {outfolder}/timing.threads.{threads}.txt"
+cmd = shogun_command.format(input=input, database=database, outfolder=outfolder, threads=threads)
+!{cmd}

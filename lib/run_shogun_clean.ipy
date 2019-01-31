@@ -1,0 +1,23 @@
+#!/usr/bin/env ipython
+from multiprocessing import Process
+
+input = "/scratch.global/ben/projects/analysis_MCT/data/embalmer_taxatable_clean.txt"
+database = "/home/knightsd/hillm096/globus/SHOGUN/rep82"
+threads = 32
+outfolder = "/scratch.global/ben/projects/analysis_MCT/results/shogun_function"
+
+ps = []
+
+# Run SHOGUN
+#shogun, version v0.0.1+300.gc1f6d87.dirty
+
+# Run functional analysis
+function_command_species = "/usr/bin/time -v shogun --log debug functional --input {input} --database {database} --output {outfolder}/filtered_functions --level species &> {outfolder}/timing.species.function.log"
+func_cmd = function_command_species.format(input=input, outfolder=outfolder, database=database)
+def fun_func_cmd():
+    !{func_cmd}
+ps.append(Process(target = fun_func_cmd))
+
+# Run ASYNC commands
+[p.start() for p in ps]
+[p.join() for p in ps]
